@@ -12,7 +12,7 @@ Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spa
 
 Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. There is no other plugin, or service, available for WordPress that can claim 100% accuracy with zero false positives, not even Akismet.
 
-This plugin was born out of necessity in September of 2007 when HollywoodGrind.com was getting a lot a traffic, and with it a lot of spam that multiple plugins could not stop, but instead increased the load on the server fighting the spam. Since its birth, Spam Free WordPress has been tested successfully under real world heavy traffic, and heavy comment spam, conditions. Once Spam Free WordPress is installed, no other comment spam plugins are needed, and it is recommended that all other plugins be disabled since they will cause undesirable false positives.
+This plugin was born out of necessity in September of 2007 when [HollywoodGrind](http://www.hollywoodgrind.com/) was getting a lot a traffic, and with it a lot of spam that multiple plugins could not stop, but instead increased the load on the server fighting the spam. Since its birth, Spam Free WordPress has been tested successfully under real world heavy traffic, and heavy comment spam, conditions. Once Spam Free WordPress is installed, no other comment spam plugins are needed, and it is recommended that all other plugins be disabled since they will cause undesirable false positives.
 
 It is my goal for Spam Free WordPress to help WordPress become the world’s first and only comment spam free blogging platform.
 
@@ -63,13 +63,15 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 
 == Installation ==
 
+= Wordpress 3.0 and up =
+
 If you're running Wordpress 3.0 and up, and are using the comment_form() function to output (create) the comment form for use within a theme template in the comments.php file
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
 3. You're done
 
-
+= Wordpress 3.0 and up - NOT using the `comment_form()` =
 
 If you're running Wordpress 3.0 and up, and but are NOT using the comment_form() function to output (create) the comment form for use within a theme template in the comments.php file. If you activate the plugin, but don't see the password field in the comment form, then the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
 
@@ -77,11 +79,11 @@ If you're running Wordpress 3.0 and up, and but are NOT using the comment_form()
 2. Activate
 3. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site).
 
-<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>
+`<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
 
 4. You're done
 
-
+= Wordpress 2.8 or 2.9 = 
 
 If you're running Wordpress 2.8 or 2.9.
 
@@ -89,17 +91,15 @@ If you're running Wordpress 2.8 or 2.9.
 2. Activate
 3. Copy and paste the following line into your comments.php (comes with your theme files) file right after the last form field for either the email address or the URL (web site).
 
-<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>
+`<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
 
 4. You're done
 
-
-
-Thesis Theme:
+= Thesis Theme =
 
 1. Go to Thesis -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file.
 
-2. add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');
+2. `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
 
 3. Save changes.
 

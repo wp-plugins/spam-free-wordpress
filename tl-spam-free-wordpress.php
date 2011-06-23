@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.4.1
+Version: 1.4.3
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 */
@@ -68,7 +68,7 @@ When editing a post, sfw_comment_form_password is the Custom Fields name, and th
 */
 
 // Plugin version
-$spam_free_wordpress_version = "1.4.1";
+$spam_free_wordpress_version = "1.4.3";
 
 // variable used as global to retrieve option array for functions
 $wp_sfw_options = get_option('spam_free_wordpress');
@@ -449,7 +449,7 @@ function spam_free_wordpress_options_page() {
 }
 
 // Strips out html from comment form when enabled
-if ($wp_sfw_options['toggle_html'] == "enable") {
+if ($wp_sfw_options['toggle_html'] == "enable" && version_compare($wp_version, '3.0', '>=' )) {
 	sfw_strip_html();
 	add_filter('comment_form_defaults','sfw_remove_allowed_tags_field');
 }

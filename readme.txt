@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: http://www.toddlahman.com/spam-free-wordpress/
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress
 Tested up to: 3.1.3
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -14,7 +14,7 @@ Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the au
 
 This plugin was born out of necessity in September of 2007 when [HollywoodGrind](http://www.hollywoodgrind.com/) was getting a lot a traffic, and with it a lot of spam that multiple plugins could not stop, but instead increased the load on the server fighting the spam. Since its birth, Spam Free WordPress has been tested successfully under real world heavy traffic, and heavy comment spam, conditions. Once Spam Free WordPress is installed, no other comment spam plugins are needed, and it is recommended that all other plugins be disabled since they will cause undesirable false positives.
 
-It is my goal for Spam Free WordPress to help WordPress become the world’s first and only comment spam free blogging platform.
+It is my goal for Spam Free WordPress to help WordPress become the world's first and only comment spam free blogging platform.
 
 = Spam Free WordPress Features =
 
@@ -28,11 +28,11 @@ It is my goal for Spam Free WordPress to help WordPress become the world’s first
 
 = Automatically Blocks Automated Comment Spam =
 
-Spam Free WordPress uses anonymous password authentication to block 100% of all comment spam with zero false positives. Either the password is submitted with the comment form, or it’s spam. Each post is a assigned a password. The password is generated only after it is visited for the first time, and the password only changes when a comment is left. The password is only generated and changed when necessary to eliminate unnecessary load on the database. The reader leaving a comment copies and pastes the password into the comment field to authenticate while remaining anonymous, thus eliminating the need to login to an different account on each blog. Logged in readers will not be required to use the comment form password.
+Spam Free WordPress uses anonymous password authentication to block 100% of all comment spam with zero false positives. Either the password is submitted with the comment form, or it's spam. Each post is a assigned a password. The password is generated only after it is visited for the first time, and the password only changes when a comment is left. The password is only generated and changed when necessary to eliminate unnecessary load on the database. The reader leaving a comment copies and pastes the password into the comment field to authenticate while remaining anonymous, thus eliminating the need to login to an different account on each blog. Logged in readers will not be required to use the comment form password.
 
 CAPTCHA is not used because it is hard to read, unnecessary, easily cracked, and reduces the number of real comments substantially. There is an interesting article about CAPTCHA here.
 
-Automated spam bots use the wp-comments-post.php core WordPress file to submit comment spam even if the comment form doesn’t exist like when DISQUS is used to handle comments. Spam Free WordPress hooks into wp-comments-post.php to block automated spam by requiring the same password authentication used on the comment form. Spam Free WordPress eliminates the spam DISQUS users continue to experience.
+Automated spam bots use the wp-comments-post.php core WordPress file to submit comment spam even if the comment form doesn't exist like when DISQUS is used to handle comments. Spam Free WordPress hooks into wp-comments-post.php to block automated spam by requiring the same password authentication used on the comment form. Spam Free WordPress eliminates the spam DISQUS users continue to experience.
 
 = Local and Remote Blocklist =
 
@@ -63,7 +63,7 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 
 == Installation ==
 
-= Wordpress 3.0 and up - Using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) =
+= Wordpress 3.0 and up - Using the comment_form function =
 
 If you're running Wordpress 3.0 and up, and ARE using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file
 
@@ -71,9 +71,9 @@ If you're running Wordpress 3.0 and up, and ARE using the [comment_form()](http:
 2. Activate
 3. You're done
 
-= Wordpress 3.0 and up - NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) =
+= Wordpress 3.0 and up - NOT using the comment_form function =
 
-If you're running Wordpress 3.0 and up, but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file. If you activate the plugin, and don't see the password field in the comment form, then the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
+If you're running Wordpress 3.0 and up, but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file, then when you activate the plugin, you will not see the password field in the comment form. This means the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
@@ -106,7 +106,13 @@ If you're running Wordpress 2.8 or 2.9.
 
 == Frequently Asked Questions ==
 
-None at this time.
+= Is Spam Free Wordpress compatible with other comment spam plugins? =
+
+Yes, however, other comment spam plugins will cause false positives, so it is best to disable all of them, including Akismet.
+
+= Will the password update on cached post pages? =
+
+This has been tested this on many platforms, and in many different caching scenarios. So far every configuration tried has been successful. If a new comment will cause the page to be refreshed, then the password will be refreshed.
 
 
 == Screenshots ==
@@ -115,11 +121,15 @@ None at this time.
 
 == Upgrade Notice ==
 
-= 1.3.6 =
+= 1.3.7 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.3.7 =
+
+* readme.txt file edit for proper formatting for WordPress SVN
 
 = 1.3.6 =
 

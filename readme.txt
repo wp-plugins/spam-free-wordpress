@@ -63,17 +63,17 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 
 == Installation ==
 
-= Wordpress 3.0 and up =
+= Wordpress 3.0 and up - Using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) =
 
-If you're running Wordpress 3.0 and up, and are using the comment_form() function to output (create) the comment form for use within a theme template in the comments.php file
+If you're running Wordpress 3.0 and up, and are using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
 3. You're done
 
-= Wordpress 3.0 and up - NOT using the `comment_form()` =
+= Wordpress 3.0 and up - NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) =
 
-If you're running Wordpress 3.0 and up, and but are NOT using the comment_form() function to output (create) the comment form for use within a theme template in the comments.php file. If you activate the plugin, but don't see the password field in the comment form, then the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
+If you're running Wordpress 3.0 and up, and but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file. If you activate the plugin, but don't see the password field in the comment form, then the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
 
 1. Upload to the /wp-content/plugins directory
 2. Activate

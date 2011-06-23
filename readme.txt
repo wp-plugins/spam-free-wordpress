@@ -67,7 +67,7 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 
 If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment. An example can be viewed using the Screenshots tab above, or for a live example visit [HollywoodGrind](http://www.hollywoodgrind.com/).
 
-Need help? Then visit [HollywoodGrind](http://wordpress.org/tags/spam-free-wordpress).
+[Need help?](http://wordpress.org/tags/spam-free-wordpress)
 
 = Wordpress 3.0 and up - Using the comment_form function =
 

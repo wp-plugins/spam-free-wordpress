@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: http://www.toddlahman.com/spam-free-wordpress/
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress
 Tested up to: 3.1.3
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -63,6 +63,12 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 
 == Installation ==
 
+= Proper Installation Example =
+
+If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment. An example can be viewed using the Screenshots tab above, or for a live example visit [HollywoodGrind](http://www.hollywoodgrind.com/).
+
+Need help? Then visit [HollywoodGrind](http://wordpress.org/tags/spam-free-wordpress).
+
 = Wordpress 3.0 and up - Using the comment_form function =
 
 If you're running Wordpress 3.0 and up, and ARE using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file
@@ -112,20 +118,29 @@ Yes, however, other comment spam plugins will cause false positives, so it is be
 
 = Will the password update on cached post pages? =
 
-This has been tested this on many platforms, and in many different caching scenarios. So far every configuration tried has been successful. If a new comment will cause the page to be refreshed, then the password will be refreshed.
+This has been tested on many platforms, and in many different caching scenarios. So far every configuration tried has been successful. If a new comment will cause the page to be refreshed, then the password will be refreshed.
 
+= Does this plugin work in Multi-User mode? =
+
+Yes.
 
 == Screenshots ==
 
 1. Spam Free Wordpress has very powerful features that are optional, but most of the work blocking spam is automated upon plugin activation.
 
+2. If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment.
+
 == Upgrade Notice ==
 
-= 1.3.7 =
+= 1.3.8 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.3.8 =
+
+* Added screen shot of comment form password field
 
 = 1.3.7 =
 

@@ -127,7 +127,8 @@ Yes.
 == Screenshots ==
 
 1. Spam Free Wordpress has very powerful features that are optional, but most of the work blocking spam is automated upon plugin activation.
-2. If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment.
+
+2. If Spam Free Wordpress is installed correctly there will be a Password field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment.
 
 == Upgrade Notice ==
 

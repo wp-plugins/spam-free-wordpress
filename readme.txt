@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: http://www.toddlahman.com/spam-free-wordpress/
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress
 Tested up to: 3.1.3
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -65,7 +65,7 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 
 = Wordpress 3.0 and up - Using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) =
 
-If you're running Wordpress 3.0 and up, and are using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file
+If you're running Wordpress 3.0 and up, and ARE using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
@@ -73,7 +73,7 @@ If you're running Wordpress 3.0 and up, and are using the [comment_form()](http:
 
 = Wordpress 3.0 and up - NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) =
 
-If you're running Wordpress 3.0 and up, and but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file. If you activate the plugin, but don't see the password field in the comment form, then the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
+If you're running Wordpress 3.0 and up, but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to output (create) the comment form for use within a theme template in the comments.php file. If you activate the plugin, and don't see the password field in the comment form, then the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
@@ -116,6 +116,10 @@ None at this time.
 
 == Changelog ==
 
+= 1.3.5 =
+
+* readme.txt file edit for proper formatting
+
 = 1.3.4 =
 
 * Initial release. In development since September 2007.
@@ -123,5 +127,6 @@ None at this time.
 
 == Upgrade Notice ==
 
-= 1.3.4 =
+= 1.3.5 =
+
 Upgrade immediately to keep your blog comment spam free.

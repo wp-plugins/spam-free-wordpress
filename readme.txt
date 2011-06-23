@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: http://www.toddlahman.com/spam-free-wordpress/
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress
 Tested up to: 3.1.3
-Stable tag: 1.3.9
+Stable tag: 1.4.0
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -132,11 +132,15 @@ Yes.
 
 == Upgrade Notice ==
 
-= 1.3.9 =
+= 1.4.0 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.4.0 =
+
+* Added screen shot of comment form password field
 
 = 1.3.9 =
 

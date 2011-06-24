@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.4.3
+Version: 1.4.4
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 */
@@ -12,9 +12,8 @@ Author URI: http://www.toddlahman.com/
 	Copyright 2007 - 2011 by Todd Lahman, LLC.
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,7 +22,7 @@ Author URI: http://www.toddlahman.com/
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 // To remove all sfw_comment_form_password entries in the wp_postmeta table use the following SQL statement
@@ -68,7 +67,7 @@ When editing a post, sfw_comment_form_password is the Custom Fields name, and th
 */
 
 // Plugin version
-$spam_free_wordpress_version = "1.4.3";
+$spam_free_wordpress_version = "1.4.4";
 
 // variable used as global to retrieve option array for functions
 $wp_sfw_options = get_option('spam_free_wordpress');
@@ -294,22 +293,6 @@ function do_spam_free_wordpress_automation() {
 	}
 }
 
-// Remove note after comment box that says which HTML tags can be used in comment
-function sfw_remove_allowed_tags_field($no_allowed_tags) {
-    unset($no_allowed_tags['comment_notes_after']);
-    return $no_allowed_tags;
-}
-
-// Removes all HTML from comment text
-function sfw_strip_html() {
-	// calls the fucntion to remove all HTML tags from comment text
-	add_action('after_setup_theme','start_removal_of_allowed_tags');
-	// Removes all HTML from comments and leaves it only as text
-	add_filter('comment_text', 'wp_filter_nohtml_kses');
-	add_filter('comment_text_rss', 'wp_filter_nohtml_kses');
-	add_filter('comment_excerpt', 'wp_filter_nohtml_kses');
-}
-
 // Register Admin Options Page
 function register_spam_free_wordpress_options_page() {
 	add_options_page('Spam Free Wordpress Configuration', 'Spam Free Wordpress', 'manage_options', __FILE__, 'spam_free_wordpress_options_page');
@@ -448,9 +431,19 @@ function spam_free_wordpress_options_page() {
 
 }
 
+// Remove note after comment box that says which HTML tags can be used in comment
+function sfw_remove_allowed_tags_field($no_allowed_tags) {
+    unset($no_allowed_tags['comment_notes_after']);
+    return $no_allowed_tags;
+}
+
 // Strips out html from comment form when enabled
 if ($wp_sfw_options['toggle_html'] == "enable" && version_compare($wp_version, '3.0', '>=' )) {
-	sfw_strip_html();
+	// Removes all HTML from comments and leaves it only as text
+	add_filter('comment_text', 'wp_filter_nohtml_kses');
+	add_filter('comment_text_rss', 'wp_filter_nohtml_kses');
+	add_filter('comment_excerpt', 'wp_filter_nohtml_kses');
+	// remove tags from below comment form
 	add_filter('comment_form_defaults','sfw_remove_allowed_tags_field');
 }
 

@@ -1,9 +1,9 @@
 === Spam Free WordPress ===
 Contributors: toddlahman
 Donate link: http://www.toddlahman.com/spam-free-wordpress/
-Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress
+Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam
 Tested up to: 3.1.3
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -24,7 +24,8 @@ It is my goal for Spam Free WordPress to help WordPress become the world's first
 4. Significantly reduces database load compared to other spam plugins
 5, Zero false positives
 6. Option to strip HTML from comments
-7. Saves time and money by eliminating the need to empty the comment spam folder
+7. No CAPTCHA, cookies, or Javascript needed
+8. Saves time and money by eliminating the need to empty the comment spam folder
 
 = Automatically Blocks Automated Comment Spam =
 
@@ -60,12 +61,18 @@ Comment form passwords will properly refresh on cached pages, provided the cache
 
 See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage for updates, and to read comments related to the plugin.
 
+= Cookies and Javascript Not Required =
+
+Readers do not need to accept cookies or to have Javascript enabled for Spam Free Wordpress to work.
+
 
 == Installation ==
 
 = Proper Installation Example =
 
 If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment. An example can be viewed using the Screenshots tab above, or for a live example visit [HollywoodGrind](http://www.hollywoodgrind.com/).
+
+To see the password field you must be logged out of your WordPress blog account. Step 1 is making sure Spam Free Wordpress is configured to work with your theme's comments.php file.
 
 [Need help?](http://wordpress.org/tags/spam-free-wordpress)
 
@@ -124,6 +131,14 @@ This has been tested on many platforms, and in many different caching scenarios.
 
 Yes.
 
+= Why can't I see the password field on the comment form =
+
+To see the password field you must be logged out of your WordPress blog account. Step 1 is making sure Spam Free Wordpress is configured to work with your theme's comments.php file.
+
+= Do readers need to accept cookies or to have Javascript enabled? =
+
+No. Spam Free Wordpress uses anonymous password authentication the reader types into the comment form.
+
 == Screenshots ==
 
 1. If Spam Free Wordpress is installed correctly there will be a Password field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment.
@@ -132,47 +147,27 @@ Yes.
 
 == Upgrade Notice ==
 
-= 1.4.3 =
+= 1.4.4 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
 
+= 1.4.4 =
+
+* orphan function start_removal_of_allowed_tags removed to fix error
+
 = 1.4.3 =
 
 * start_removal_of_allowed_tags error fixed for WordPress versions < 3.0
 
-= 1.4.2 =
+= 1.3.8 to 1.4.2 =
 
-* The SVN doesn't always work as expected
+* Added screen shot of comment form password field, repository issues
 
-= 1.4.1 =
+= 1.3.5 to 1.3.7 =
 
-* Added screen shot of comment form password field
-
-= 1.4.0 =
-
-* Added screen shot of comment form password field
-
-= 1.3.9 =
-
-* Added screen shot of comment form password field
-
-= 1.3.8 =
-
-* Added screen shot of comment form password field
-
-= 1.3.7 =
-
-* readme.txt file edit for proper formatting for WordPress SVN
-
-= 1.3.6 =
-
-* Forgot to increment version
-
-= 1.3.5 =
-
-* readme.txt file edit for proper formatting
+* readme.txt file edit for proper formatting, repository issues
 
 = 1.3.4 =
 

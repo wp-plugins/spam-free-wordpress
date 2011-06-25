@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.4.4
+Version: 1.4.7
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 */
@@ -25,16 +25,12 @@ Author URI: http://www.toddlahman.com/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// To remove all sfw_comment_form_password entries in the wp_postmeta table use the following SQL statement
-// sfw_comment_form_password is the Custom Field name that stores the password value for the comment form authentication
-// DELETE from wp_postmeta WHERE meta_key = "sfw_comment_form_password" ;
-
 // Add default database settings on plugin activation
 function add_default_data() {
 	$sfw_options = array(
 	'blocklist_keys' => '',
 	'remote_blocked_list' => '',
-	'pw_field_size' => '',
+	'pw_field_size' => '20',
 	'tab_index' => '',
 	'affiliate_msg' => '',
 	'toggle_stats_update' => 'disable',
@@ -47,33 +43,29 @@ function add_default_data() {
 // Runs add_default_data function above when plugin activated
 register_activation_hook( __FILE__, 'add_default_data' );
 
-// Delete the default options from database when plugin deactivated, but only if register_deactivation_hook is uncommented and active.
-// Remove // to activate register_deactivation_hook below
+// Delete the default options from database when plugin deactivated,
+// The post comment passwords can be deleted also using the following SQL statement.
+// DELETE from wp_postmeta WHERE meta_key = "sfw_comment_form_password" ;
+
+/*
+// Runs remove_default_data function above when plugin deactivated
+// Uncomment this code block if you want the all options to be deleted when plugin is deactivated, this includes number of spam blocked
 function remove_default_data() {
 delete_option('spam_free_wordpress');
 delete_option('sfw_spam_hits');
 }
 
-// Runs remove_default_data function above when plugin deactivated
 // register_deactivation_hook( __FILE__, 'remove_default_data' );
-
-/*
-The SQL statement below will delete from the wp_postmeta table the meta_key sfw_comment_form_password
-
-DELETE from wp_postmeta WHERE meta_key = "sfw_comment_form_password" ;
-
-The sfw_comment_form_password is a password assigned to each post for comment authentication.
-When editing a post, sfw_comment_form_password is the Custom Fields name, and the password is the value.
 */
 
 // Plugin version
-$spam_free_wordpress_version = "1.4.4";
+$spam_free_wordpress_version = "1.4.7";
 
 // variable used as global to retrieve option array for functions
 $wp_sfw_options = get_option('spam_free_wordpress');
 
 // Displays message on Admin settings page if using a Wordpress version older than 3.x
-function older_wp_notice () {
+function older_wp_notice() {
 	global $wp_version;
 
 	if ( version_compare($wp_version, '3.0', '<' ) ) {
@@ -81,31 +73,30 @@ function older_wp_notice () {
 	}
 }
 
-// Checks to see if key 2 comment form password exists and if not creates one in custom fields
-function comment_pass_cf_2 () {
+
+// Checks to see if comment form password exists and if not creates one in custom fields
+function sfw_comment_pass_exist_check() {
 	global $post;
-	$post_id = $post->ID;
-	$key2 = wp_generate_password(12, false);
+	$new_post_comment_pwd = wp_generate_password(12, false);
+	$sfw_pwd_exists_check = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
 	
-	if( !get_post_meta( $post_id, 'sfw_comment_form_password', true ) && comments_open() ) {
-		update_post_meta($post_id, 'sfw_comment_form_password', $key2);
+	if( empty($sfw_pwd_exists_check) || !$sfw_pwd_exists_check  && comments_open() ) {
+		update_post_meta($post->ID, 'sfw_comment_form_password', $new_post_comment_pwd);
 	}
 }
+add_action('loop_start', 'sfw_comment_pass_exist_check', 1);
 
-// Calls the function that adds key 2 password to custom fields when post is loaded for the first time
-add_action('wp_head', 'comment_pass_cf_2', 1);
-
-// Creates a new key 2 comment form password each time a comment is saved in the database.
-function comment_pass_cf_new_pw () {
+// Creates a new comment form password each time a comment is saved in the database
+function sfw_new_comment_pass() {
 	global $post;
-	$post_id = $post->ID;
-	$key2 = wp_generate_password(12, false);
+	$new_comment_pwd = wp_generate_password(12, false);
+	$old_password = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
 	
-	update_post_meta($post_id, 'sfw_comment_form_password', $key2);
+	update_post_meta($post->ID, 'sfw_comment_form_password', $new_comment_pwd, $old_password);
 }
 
 // Call the function to change key 2 password to custom fields when after each new comment is saved in the database.
-add_action('comment_post', 'comment_pass_cf_new_pw', 1);
+add_action('comment_post', 'sfw_new_comment_pass', 1);
 
 // Gets the remote IP address even if behind a proxy
 function get_remote_ip_address() {
@@ -121,7 +112,7 @@ function get_remote_ip_address() {
 	return $ip_address;
 }
 
-// Returns Blocklist
+// Returns Local Blocklist
 function wp_blocklist_check() {
 	global $wp_sfw_options;
 
@@ -129,22 +120,22 @@ function wp_blocklist_check() {
 	$comment_author_ip = get_remote_ip_address();
 	// do_action('wp_blocklist_check', $comment_author_ip);
 
-	$block_keys = trim( $wp_sfw_options['blocklist_keys'] );
-	if ( '' == $block_keys )
+	$local_blocklist_keys = trim( $wp_sfw_options['blocklist_keys'] );
+	if ( '' == $local_blocklist_keys )
 		return false; // If blocklist keys are empty
-	$words = explode("\n", $block_keys );
+	$local_key = explode("\n", $local_blocklist_keys );
 
-	foreach ( (array) $words as $word ) {
-		$word = trim($word);
+	foreach ( (array) $local_key as $lkey ) {
+		$lkey = trim($lkey);
 
 		// Skip empty lines
-		if ( empty($word) ) { continue; }
+		if ( empty($lkey) ) { continue; }
 
 		// Do some escaping magic so that '#' chars in the
 		// spam words don't break things:
-		$word = preg_quote($word, '#');
+		$lkey = preg_quote($lkey, '#');
 
-		$pattern = "#$word#i";
+		$pattern = "#$lkey#i";
 		if (
 			   preg_match($pattern, $comment_author_ip)
 		 )
@@ -160,22 +151,22 @@ function wp_realtime_blocklist_check() {
 	// Gets IP address of commenter
 	$comment_author_ip = get_remote_ip_address();
 
-	$block_keys = trim( wp_remote_get($wp_sfw_options['remote_blocked_list']) );
-	if ( '' == $block_keys )
+	$remote_blocklist_keys = trim( wp_remote_get($wp_sfw_options['remote_blocked_list']) );
+	if ( '' == $remote_blocklist_keys )
 		return false; // If blocklist keys are empty
-	$words = explode("\n", $block_keys );
+	$remote_key = explode("\n", $remote_blocklist_keys );
 
-	foreach ( (array) $words as $word ) {
-		$word = trim($word);
+	foreach ( (array) $remote_key as $rkey ) {
+		$rkey = trim($rkey);
 
 		// Skip empty lines
-		if ( empty($word) ) { continue; }
+		if ( empty($rkey) ) { continue; }
 
 		// Do some escaping magic so that '#' chars in the
 		// spam words don't break things:
-		$word = preg_quote($word, '#');
+		$rkey = preg_quote($rkey, '#');
 
-		$pattern = "#$word#i";
+		$pattern = "#$rkey#i";
 		if (
 			   preg_match($pattern, $comment_author_ip)
 		 )
@@ -200,10 +191,16 @@ function custom_affiliate_link() {
 // Function for comments.php file
 function tl_spam_free_wordpress_comments_form() {
 	global $wp_sfw_options;
-
 	global $post;
-	$post_id = $post->ID;
-	$sfw_comment_form_password = get_post_meta( $post_id, 'sfw_comment_form_password', true );
+	global $wp_version;
+	
+	$sfw_comment_form_password_var = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
+	// Checks to see if comment form password exists and if not creates one in custom fields
+	$new_sfw_comment_form_pwd = wp_generate_password(12, false);
+	if( empty($sfw_comment_form_password_var) || !$sfw_comment_form_password_var  && comments_open() ) {
+	update_post_meta($post->ID, 'sfw_comment_form_password', $new_sfw_comment_form_pwd);
+	}
+	
 	$sfw_pw_field_size = $wp_sfw_options['pw_field_size'];
 	$sfw_tab_index = $wp_sfw_options['tab_index'];
 
@@ -214,8 +211,9 @@ function tl_spam_free_wordpress_comments_form() {
 		// Commenter IP address
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".get_remote_ip_address()."' />";
 		// Reader must enter this password manually on the comment form
-		echo "<p><label for='pwdmsg'><span class='pwmsg'></span> Copy and Paste Password Below</label></p>";
-		echo "<p><label for='passthis'><span class='required'>*</span> Password: ".$sfw_comment_form_password."</label>
+		echo "<p><label for='pwd_text'>* Copy this password:</label>
+		<input type='text' value='".$sfw_comment_form_password_var."' onclick='this.select()' size='20' /></p>";
+		echo "<p><label for='passthis'>* Type or paste password here:</label>
 		<input type='text' name='passthis' id='passthis' value='".$comment_passthis."' size='".$sfw_pw_field_size."' tabindex='".$sfw_tab_index."' /></p>";
 		// Shows how many comment spam have been killed on the comment form
 		if ($wp_sfw_options['toggle_stats_update'] == "enable") {
@@ -229,14 +227,19 @@ function tl_spam_free_wordpress_comments_form() {
 // Function for wp-comments-post.php file located in the root Wordpress directory. The same directory as the wp-config.php file.
 function tl_spam_free_wordpress_comments_post() {
 	global $post;
-	$post_id = $post->ID;
-	$sfw_comment_form_password = get_post_meta( $post_id, 'sfw_comment_form_password', true );
+	
+	$sfw_comment_script = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
+	// Checks to see if comment form password exists and if not creates one in custom fields
+	$new_sfw_comment_script_pwd = wp_generate_password(12, false);
+	if( empty($sfw_comment_script) || !$sfw_comment_script  && comments_open() ) {
+	update_post_meta($post->ID, 'sfw_comment_form_password', $new_sfw_comment_script_pwd);
+	}
 	
 	// If the reader is logged in don't require password for wp-comments-post.php
 	if ( !is_user_logged_in() ) {
 
 		// Comment form manual password (key 2)
-		if ($_POST['passthis'] == '' || $_POST['passthis'] != $sfw_comment_form_password)
+		if ($_POST['passthis'] == '' || $_POST['passthis'] != $sfw_comment_script)
 			wp_die( __('Error 1: Click back and type in the password.', spam_counter()) );
 		
 		// Compares commenter IP address to blocked list and realtime blocked list
@@ -279,18 +282,6 @@ function spam_counter() {
 function display_spam_hits() {
 	$s_hits = get_option('sfw_spam_hits');
 	return $s_hits;
-}
-
-// Comment form filter functions for Wordpress 3.x to automatically add code to comments.php and wp-comments-post.php
-function do_spam_free_wordpress_automation() {
-	global $wp_version;
-	
-	// run the following code only if using Wordpress 3.x or greater
-	if ( version_compare($wp_version, '3.0', '>=' ) ) {
-
-		// Calls the password form for comments.php if the comment_form function is outputting comment form fields
-		add_filter('comment_form_after_fields', 'tl_spam_free_wordpress_comments_form', 1);
-	}
 }
 
 // Register Admin Options Page
@@ -351,7 +342,7 @@ function spam_free_wordpress_options_page() {
 				
 			<h3>Password Form Customization</h3>
 				<fieldset>
-					<label><p>Password Field Size <input type="text" name="wp_sfw_options[pw_field_size]" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" /></label>
+					<label><p>Password Field Size <input type="text" name="wp_sfw_options[pw_field_size]" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" /> Default is 20.</label>
 				</fieldset>
 				<fieldset>
 					<label>Tab Index </font><input type="text" name="wp_sfw_options[tab_index]" value="<?php echo $wp_sfw_options['tab_index']; ?>" /></p></label>
@@ -383,7 +374,7 @@ function spam_free_wordpress_options_page() {
 			<p>Copy and paste the line of code below into a template file to display the custom share link.</p>
 			<code>&lt;?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?&gt;</code>
 			
-			<input type="hidden" name="page_options" value="wp_sfw_options" />
+			<input type="hidden" name="page_options" value="<?php echo $wp_sfw_options ?>" />
 			<input type="hidden" name="action" value="update" />
 			<p class="submit">
 			<input type="submit" name="Submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
@@ -447,10 +438,22 @@ if ($wp_sfw_options['toggle_html'] == "enable" && version_compare($wp_version, '
 	add_filter('comment_form_defaults','sfw_remove_allowed_tags_field');
 }
 
-// Calls the wp-comments-post.php authentication
-add_action('pre_comment_on_post', 'tl_spam_free_wordpress_comments_post', 1);
+// Adds password field to comment form is > Wordpress 3.0 and using comment_form function to generate comment form
+function do_spam_free_wordpress_automation() {
+	global $wp_version;
+	
+	// run the following code only if using Wordpress 3.x or greater
+	if ( version_compare($wp_version, '3.0', '>=' ) ) {
+
+		// Calls the password form for comments.php if the comment_form function is outputting comment form fields
+		add_filter('comment_form_after_fields', 'tl_spam_free_wordpress_comments_form', 1);
+	}
+}
+
 // Calls the Wordpress 3.x code for admin settings page
 add_action('init', 'do_spam_free_wordpress_automation', 1);
+// Calls the wp-comments-post.php authentication
+add_action('pre_comment_on_post', 'tl_spam_free_wordpress_comments_post', 1);
 // Add Admin Options Page
 add_action('admin_menu', 'register_spam_free_wordpress_options_page');
 

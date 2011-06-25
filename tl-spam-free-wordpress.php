@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.4.7
+Version: 1.4.8
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 */
@@ -29,7 +29,7 @@ Author URI: http://www.toddlahman.com/
 function add_default_data() {
 	$sfw_options = array(
 	'blocklist_keys' => '',
-	'remote_blocked_list' => '',
+	//'remote_blocked_list' => '',
 	'pw_field_size' => '20',
 	'tab_index' => '',
 	'affiliate_msg' => '',
@@ -59,7 +59,7 @@ delete_option('sfw_spam_hits');
 */
 
 // Plugin version
-$spam_free_wordpress_version = "1.4.7";
+$spam_free_wordpress_version = "1.4.8";
 
 // variable used as global to retrieve option array for functions
 $wp_sfw_options = get_option('spam_free_wordpress');
@@ -143,7 +143,7 @@ function wp_blocklist_check() {
 	}
 	return false;
 }
-
+/*
 // Returns Remote Realtime Comment Blocklist
 function wp_realtime_blocklist_check() {
 	global $wp_sfw_options;
@@ -174,6 +174,7 @@ function wp_realtime_blocklist_check() {
 	}
 	return false;
 }
+*/
 
 // Customizable Affiliate link
 function custom_affiliate_link() {
@@ -246,8 +247,8 @@ function tl_spam_free_wordpress_comments_post() {
 		if ($_POST['comment_ip'] == '' || $_POST['comment_ip'] == wp_blocklist_check() )
 			wp_die( __('Spam Blocked by Spam Free Wordpress (local blocklist)', spam_counter()) );
 		
-		if ($_POST['comment_ip'] == '' || $_POST['comment_ip'] == wp_realtime_blocklist_check() )
-			wp_die( __('Spam Blocked by Spam Free Wordpress (remote blocklist)', spam_counter()) );
+		//if ($_POST['comment_ip'] == '' || $_POST['comment_ip'] == wp_realtime_blocklist_check() )
+		//	wp_die( __('Spam Blocked by Spam Free Wordpress (remote blocklist)', spam_counter()) );
 
 	}
 }
@@ -334,11 +335,7 @@ function spam_free_wordpress_options_page() {
 					<label><textarea name="wp_sfw_options[blocklist_keys]" cols='40' rows='12' ><?php echo $wp_sfw_options['blocklist_keys']; ?></textarea></label><br />
 				</fieldset>
 				
-			<h3>Remote Comment Blocklist</h3>
-			<p>The Remote Comment Blocklist accesses a text file list of IP addresses on a remote server to block comment spam. This allows a global IP address blocklist to be shared with multiple blogs. It is also possible to use the Local Comment Blocklist for blog specific blocking, and the Remote Comment Blocklist for global blocking used by mutliple blogs at the same time. Remote Comment Blocklist works exactly the same way as the Local Comment Blocklist, except it is on a remote server. The URL to the remote text file could be for example: <code>http://www.spamfreewordpress.com/mybl/spamlist.txt</code></p>
-				<fieldset>
-					<label><p>Remote Blocklist <input type="text" size="60" name="wp_sfw_options[remote_blocked_list]" value="<?php echo $wp_sfw_options['remote_blocked_list']; ?>" /> Enter URL to remote text file.</p></label>
-				</fieldset>
+
 				
 			<h3>Password Form Customization</h3>
 				<fieldset>

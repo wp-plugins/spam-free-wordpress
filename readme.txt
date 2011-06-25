@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: http://www.toddlahman.com/spam-free-wordpress/
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam
 Tested up to: 3.1.3
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -147,11 +147,15 @@ No. Spam Free Wordpress uses anonymous password authentication the reader types 
 
 == Upgrade Notice ==
 
-= 1.4.7 =
+= 1.4.8 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.4.8 =
+
+* Removed remote blocklist until error resolved
 
 = 1.4.7 =
 

@@ -96,6 +96,8 @@ Incorrect:
 
 Correct:
 	`<?php comment_form(); ?>`
+	
+If the comments.php file is custom, and it is not desirable to use the `comment_form()` function, then follow the directions for Wordpress 2.8 or 2.9 below.
 
 = Wordpress 2.8 or 2.9 = 
 

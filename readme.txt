@@ -1,7 +1,7 @@
 === Spam Free WordPress ===
 Contributors: toddlahman
 Donate link: http://www.toddlahman.com/spam-free-wordpress/
-Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam
+Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker
 Tested up to: 3.1.3
 Stable tag: 1.4.8
 Requires at least: 2.8
@@ -68,9 +68,28 @@ Readers do not need to accept cookies or to have Javascript enabled for Spam Fre
 
 == Installation ==
 
+= Easiest Installation =
+
+*NOTE: This only works with WordPress 3.0 or above.*
+
+1. Save a backup copy of comments.php
+1. Go to Appearance -> Editor. Edit comments.php
+1. Replace all code between the <form> and </form> tags, including the <form> and </form> tags with the code below:
+`<?php comment_form(); ?>`
+1. Click Update File to save changes.
+1. If the file gets messed up use the backup comments.php code to restore everything.
+
+Incorrect:
+`<form>`
+`<?php comment_form(); ?>`
+`</form>`
+
+Correct:
+'<?php comment_form(); ?>'
+
 = Proper Installation Example =
 
-If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment. An example can be viewed using the Screenshots tab above, or for a live example visit [HollywoodGrind](http://www.hollywoodgrind.com/).
+If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment. An example can be viewed using the Screenshots tab above, or for a live example visit [Spam Free Wordpress](http://www.toddlahman.com/spam-free-wordpress/).
 
 To see the password field you must be logged out of your WordPress blog account. Step 1 is making sure Spam Free Wordpress is configured to work with your theme's comments.php file.
 
@@ -81,40 +100,34 @@ To see the password field you must be logged out of your WordPress blog account.
 If you're running Wordpress 3.0 and up, and ARE using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to generate the comment form for use within a theme template in the comments.php file
 
 1. Upload to the /wp-content/plugins directory
-2. Activate
-3. You're done
+1. Activate
+1. You're done
 
 = Wordpress 3.0 and up - NOT using the comment_form function =
 
 If you're running Wordpress 3.0 and up, but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to generate the comment form for use within a theme template in the comments.php file, then when you activate the plugin, you will not see the password field in the comment form. This means the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
 
 1. Upload to the /wp-content/plugins directory
-2. Activate
-3. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site).
-
+1. Activate
+1. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site).
 `<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
-
-4. You're done
+1. You're done
 
 = Wordpress 2.8 or 2.9 = 
 
 If you're running Wordpress 2.8 or 2.9.
 
 1. Upload to the /wp-content/plugins directory
-2. Activate
-3. Copy and paste the following line into your comments.php (comes with your theme files) file right after the last form field for either the email address or the URL (web site).
-
+1. Activate
+1. Copy and paste the following line into your comments.php (comes with your theme files) file right after the last form field for either the email address or the URL (web site).
 `<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
-
-4. You're done
+1. You're done
 
 = Thesis Theme =
 
 1. Go to Thesis -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file.
-
-2. `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
-
-3. Save changes.
+1. `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
+1. Save changes.
 
 
 == Frequently Asked Questions ==
@@ -155,31 +168,5 @@ Upgrade immediately to keep your blog comment spam free.
 
 = 1.4.8 =
 
-* Removed remote blocklist until error resolved
-
-= 1.4.7 =
-
-* Removed wp_head requirement.
-* Additional checks to make sure password is not empty on post load.
-* New password form field with auto select password if Javascript on.
-* Duplicate password on same post fixed.
-
-= 1.4.4 =
-
-* Orphan function start_removal_of_allowed_tags removed to fix error.
-
-= 1.4.3 =
-
-* start_removal_of_allowed_tags error fixed for WordPress versions < 3.0.
-
-= 1.3.8 to 1.4.2 =
-
-* Added screen shot of comment form password field, repository issues.
-
-= 1.3.5 to 1.3.7 =
-
-* readme.txt file edit for proper formatting, repository issues.
-
-= 1.3.4 =
-
 * Initial release. In development since September 2007.
+* Global remote blocklist left out pending code rewrite.

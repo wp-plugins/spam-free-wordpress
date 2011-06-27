@@ -16,6 +16,8 @@ This plugin was born out of necessity in September of 2007 when [HollywoodGrind]
 
 It is my goal for Spam Free WordPress to help WordPress become the world's first and only comment spam free blogging platform.
 
+See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage for updates, and to read comments related to the plugin.
+
 = Spam Free WordPress Features =
 
 1. Automatically blocks 100% of automated comment spam
@@ -59,8 +61,6 @@ It is very common for manual and automated comment spam to include a URL that li
 
 Comment form passwords will properly refresh on cached pages, provided the cache program is set to refresh the page on changes to the page, or if a comment has been submitted. Spam Free WordPress has been tested with WP Super Cache, Batcahe, W3 Total Cache using APC, Memcache, and Xcache, and with the super fast Nginx web server using its core NCache module, and PHP served with PHP-FPM, with Apache serving PHP, and with other caching programs, all of which worked properly.
 
-See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage for updates, and to read comments related to the plugin.
-
 = Cookies and Javascript Not Required =
 
 Readers do not need to accept cookies or to have Javascript enabled for Spam Free Wordpress to work.
@@ -68,51 +68,34 @@ Readers do not need to accept cookies or to have Javascript enabled for Spam Fre
 
 == Installation ==
 
-= Easiest Installation =
-
-*NOTE: This only works with WordPress 3.0 or above.*
-
-1. If the `comment_form()` function is already in the comments.php nothing needs to be done. Otherwise go to step 2.
-2. Save a backup copy of comments.php
-3. Go to Appearance -> Editor. Edit comments.php
-4. Replace all code between the `<form>` and `</form>` tags, including the `<form>` and `</form>` tags with the code below:
-`<?php comment_form(); ?>`
-5. Click Update File to save changes.
-6. If the file gets messed up use the backup comments.php code to restore everything.
-
-Incorrect:
-`<form>`
-`<?php comment_form(); ?>`
-`</form>`
-
-Correct:
-`<?php comment_form(); ?>`
-
 = Proper Installation Example =
 
-If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment. An example can be viewed using the Screenshots tab above, or for a live example visit [Spam Free Wordpress](http://www.toddlahman.com/spam-free-wordpress/).
+If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. An example can be viewed using the Screenshots tab above, or for a live example visit [Spam Free Wordpress](http://www.toddlahman.com/spam-free-wordpress/).
 
-To see the password field you must be logged out of your WordPress blog account. Step 1 is making sure Spam Free Wordpress is configured to work with your theme's comments.php file.
+To see the password field you must be logged out of your WordPress blog account.
 
 [Need help?](http://wordpress.org/tags/spam-free-wordpress)
 
-= Wordpress 3.0 and up - Using the comment_form function =
+*NOTE: Clear the blog cache, like [WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/), after installation.*
 
-If you're running Wordpress 3.0 and up, and ARE using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to generate the comment form for use within a theme template in the comments.php file
-
-1. Upload to the /wp-content/plugins directory
-2. Activate
-3. You're done
-
-= Wordpress 3.0 and up - NOT using the comment_form function =
-
-If you're running Wordpress 3.0 and up, but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to generate the comment form for use within a theme template in the comments.php file, then when you activate the plugin, you will not see the password field in the comment form. This means the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
+= WordPress 3.0 and Above =
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
-3. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site):
-`<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
-4. You're done
+3. If the `comment_form()` function is already in the comments.php file, then nothing else needs to be done. Otherwise go to step 4.
+4. Save a backup copy of comments.php
+5. Go to Appearance -> Editor. Edit comments.php
+6. Replace the `<form>` and `</form>` tags, and all the code between the `<form>` and `</form>` tags, with the following line of code: `<?php comment_form(); ?>`
+7. Click "Update File" to save changes.
+8. If the file gets messed up, use the backup comments.php code to restore everything.
+
+Incorrect:
+	`<form>`
+	`<?php comment_form(); ?>`
+	`</form>`
+
+Correct:
+	`<?php comment_form(); ?>`
 
 = Wordpress 2.8 or 2.9 = 
 
@@ -120,15 +103,12 @@ If you're running Wordpress 2.8 or 2.9.
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
-3. Copy and paste the following line into your comments.php (comes with your theme files) file right after the last form field for either the email address or the URL (web site):
-`<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
-4. You're done
+3. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site): `<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
 
 = Thesis Theme =
 
-1. Go to Thesis -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file:
-2. `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
-3. Save changes.
+1. Go to Thesis -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file: `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
+2. Save changes.
 
 
 == Frequently Asked Questions ==

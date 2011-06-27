@@ -339,7 +339,7 @@ function spam_free_wordpress_options_page() {
 				
 			<h3>Password Form Customization</h3>
 				<fieldset>
-					<label><p>Password Field Size <input type="text" name="wp_sfw_options[pw_field_size]" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" /> Default is 20.</label>
+					<label><p>Password Field Size <input type="text" name="wp_sfw_options[pw_field_size]" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" /> Default is 30.</label>
 				</fieldset>
 				<fieldset>
 					<label>Tab Index </font><input type="text" name="wp_sfw_options[tab_index]" value="<?php echo $wp_sfw_options['tab_index']; ?>" /></p></label>

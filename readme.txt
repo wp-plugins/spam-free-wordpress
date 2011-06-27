@@ -99,8 +99,6 @@ Correct:
 
 = Wordpress 2.8 or 2.9 = 
 
-If you're running Wordpress 2.8 or 2.9.
-
 1. Upload to the /wp-content/plugins directory
 2. Activate
 3. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site): `<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`

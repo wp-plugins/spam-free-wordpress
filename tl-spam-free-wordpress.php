@@ -30,7 +30,7 @@ function add_default_data() {
 	$sfw_options = array(
 	'blocklist_keys' => '',
 	//'remote_blocked_list' => '',
-	'pw_field_size' => '20',
+	'pw_field_size' => '30',
 	'tab_index' => '',
 	'affiliate_msg' => '',
 	'toggle_stats_update' => 'disable',
@@ -213,7 +213,7 @@ function tl_spam_free_wordpress_comments_form() {
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".get_remote_ip_address()."' />";
 		// Reader must enter this password manually on the comment form
 		echo "<p><label for='pwd_text'>* Copy this password:</label>
-		<input type='text' value='".$sfw_comment_form_password_var."' onclick='this.select()' size='20' /></p>";
+		<input type='text' value='".$sfw_comment_form_password_var."' onclick='this.select()' size='".$sfw_pw_field_size."' /></p>";
 		echo "<p><label for='passthis'>* Type or paste password here:</label>
 		<input type='text' name='passthis' id='passthis' value='".$comment_passthis."' size='".$sfw_pw_field_size."' tabindex='".$sfw_tab_index."' /></p>";
 		// Shows how many comment spam have been killed on the comment form

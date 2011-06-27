@@ -72,12 +72,13 @@ Readers do not need to accept cookies or to have Javascript enabled for Spam Fre
 
 *NOTE: This only works with WordPress 3.0 or above.*
 
-1. Save a backup copy of comments.php
-1. Go to Appearance -> Editor. Edit comments.php
-1. Replace all code between the <form> and </form> tags, including the <form> and </form> tags with the code below:
+1. If the `comment_form()` function is already in the comments.php nothing needs to be done. Otherwise go to step 2.
+2. Save a backup copy of comments.php
+3. Go to Appearance -> Editor. Edit comments.php
+4. Replace all code between the `<form>` and `</form>` tags, including the `<form>` and `</form>` tags with the code below:
 `<?php comment_form(); ?>`
-1. Click Update File to save changes.
-1. If the file gets messed up use the backup comments.php code to restore everything.
+5. Click Update File to save changes.
+6. If the file gets messed up use the backup comments.php code to restore everything.
 
 Incorrect:
 `<form>`
@@ -85,7 +86,7 @@ Incorrect:
 `</form>`
 
 Correct:
-'<?php comment_form(); ?>'
+`<?php comment_form(); ?>`
 
 = Proper Installation Example =
 
@@ -100,34 +101,34 @@ To see the password field you must be logged out of your WordPress blog account.
 If you're running Wordpress 3.0 and up, and ARE using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to generate the comment form for use within a theme template in the comments.php file
 
 1. Upload to the /wp-content/plugins directory
-1. Activate
-1. You're done
+2. Activate
+3. You're done
 
 = Wordpress 3.0 and up - NOT using the comment_form function =
 
 If you're running Wordpress 3.0 and up, but are NOT using the [comment_form()](http://codex.wordpress.org/Function_Reference/comment_form) function to generate the comment form for use within a theme template in the comments.php file, then when you activate the plugin, you will not see the password field in the comment form. This means the comment_form() function is not outputting the comment form on the post page, so you will need to follow step 3 below.
 
 1. Upload to the /wp-content/plugins directory
-1. Activate
-1. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site).
+2. Activate
+3. Copy and paste the following line into your comments.php file right after the last form field for either the email address or the URL (web site):
 `<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
-1. You're done
+4. You're done
 
 = Wordpress 2.8 or 2.9 = 
 
 If you're running Wordpress 2.8 or 2.9.
 
 1. Upload to the /wp-content/plugins directory
-1. Activate
-1. Copy and paste the following line into your comments.php (comes with your theme files) file right after the last form field for either the email address or the URL (web site).
+2. Activate
+3. Copy and paste the following line into your comments.php (comes with your theme files) file right after the last form field for either the email address or the URL (web site):
 `<?php if(function_exists ('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?>`
-1. You're done
+4. You're done
 
 = Thesis Theme =
 
-1. Go to Thesis -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file.
-1. `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
-1. Save changes.
+1. Go to Thesis -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file:
+2. `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
+3. Save changes.
 
 
 == Frequently Asked Questions ==

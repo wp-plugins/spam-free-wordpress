@@ -339,15 +339,15 @@ function spam_free_wordpress_options_page() {
 				
 			<h3>Password Form Customization</h3>
 				<fieldset>
-					<label><p>Password Field Size <input type="text" name="wp_sfw_options[pw_field_size]" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" /> Default is 30.</label>
+					<label><p><input type="text" name="wp_sfw_options[pw_field_size]" size="4" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" /> Password Field Size. Default is 30.</label>
 				</fieldset>
 				<fieldset>
-					<label>Tab Index </font><input type="text" name="wp_sfw_options[tab_index]" value="<?php echo $wp_sfw_options['tab_index']; ?>" /></p></label>
+					<label><input type="text" name="wp_sfw_options[tab_index]" size="4" value="<?php echo $wp_sfw_options['tab_index']; ?>" /> Tab Index </p></label>
 				</fieldset>
 				
 			<h3>Comment Form Spam Stats</h3>
 			<p>When spam comment stats are ON they will be shown alongside a nofollow link to spamfreewordpress.com, and if an affiliate ID is entered below the link to spamfreewordpress.com will be transformed into the affiliate link.</p>
-				<label><p>Turn Spam Stats On or Off
+				<label><p>
 					<select name="wp_sfw_options[toggle_stats_update]" class="toggle_stats">
 						<option value="disable" <?php selected( 'disable', $wp_sfw_options['toggle_stats_update'] ); ?> ><?php _e( 'Spam Stats OFF' ) ?></option>
 						<option value="enable" <?php selected( 'enable', $wp_sfw_options['toggle_stats_update'] ); ?> ><?php _e( 'Spam Stats ON' ) ?></option>
@@ -356,7 +356,7 @@ function spam_free_wordpress_options_page() {
 				
 			<h3>Remove HTML from Comments</h3>
 			<p>It is very common for manual and automated comment spam to include a URL that links to a web site. This feature will automatically strip out HTML from comments so that links will show up as plain text, and it removes the allowed HTML tags from below the comment text box.</p>
-				<label><p>Turn HTML Filter On or Off
+				<label><p>
 					<select name="wp_sfw_options[toggle_html]" class="toggle_html">
 						<option value="disable" <?php selected( 'disable', $wp_sfw_options['toggle_html'] ); ?> ><?php _e( 'Strip HTML OFF' ) ?></option>
 						<option value="enable" <?php selected( 'enable', $wp_sfw_options['toggle_html'] ); ?> ><?php _e( 'Strip HTML ON' ) ?></option>

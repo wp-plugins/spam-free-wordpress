@@ -377,40 +377,31 @@ function spam_free_wordpress_options_page() {
 			<input type="submit" name="Submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 			</p>
 </form>
+
+			<h3>Donate to Help Fight Spam</h3>
+			<p>Your donation will help WordPress become the world's first and only comment spam free blogging platform.</p>
+			<p>Even $1 can make a difference.</p>
+			<p>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="hosted_button_id" value="SFVH6PCCC6TLG">
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+			</p>
+
+			<h3>Installation Instructions</h3>
+			<p>Complete installation instructions are available at <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank">Spam Free Wordpress</a>.
+
+			<hr />
+			<h4><a href="http://www.toddlahman.com/" target="_blank">Spam Free Wordpress</a> was built and created by Todd Lahman.</h4>
 			
 		</td>
 			
 		<td valign="top">
 			<div id="sideblock" style="float:right;width:275px;margin-left:10px;"> 		 
-				<iframe width="275" height="800" frameborder="0" src="http://www.toddlahman.com/plugin-news/sfw/spw-plugin-news.html?utm_source=sfw-plugin&utm_medium=sfw-plugin&utm_campaign=sfw-plugin"></iframe>
+				<iframe width="275" height="1070" frameborder="0" src="http://www.toddlahman.com/plugin-news/sfw/spw-plugin-news.html?utm_source=sfw-plugin&utm_medium=sfw-plugin&utm_campaign=sfw-plugin"></iframe>
 			</div>
-		</td>
-	</tr>
-</table>
-
-<table class="form-table">
-	<tr>
-		<td>
-		<h3>Instructions</h3>
-			<p>The password comment form field is required for <strong>Spam Free Wordpress</strong> to block comment spam. Below are instructions to make sure the comment form password field is working properly.</p>
-			<p>If you are running Wordpress 3.x and up, and your comments.php file is using the comment_form() function to output the comment form fields, then <strong>Spam Free Wordpress</strong> will automatically add the password field to your comment form.</p>
-			<p>If you don't see a password field in your comment form when you visit a post page then follow the instructions below.</p>
-			<p>If you are running Wordpress 3.x and up, and your comments.php file IS NOT using the comment_form() function to output the comment form fields, then you will need to copy and paste the following line of code to your comments.php file just below the website address, or email address field.<br /><code>&lt;?php if(function_exists('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?&gt;</code></p>
-			<p>If you are using Wordpress 2.8 or 2.9 then you will need to copy and paste the following line of code to your comments.php file just below the website address, or email address field.<br /><code>&lt;?php if(function_exists('tl_spam_free_wordpress_comments_form')) { tl_spam_free_wordpress_comments_form(); } ?&gt;</code></p>
-			<p>Refer to the readme.txt file for more detailed information.</p>
-			<p><strong>Thesis Theme</strong></p>
-			<p>Go to <a href="http://ngurl.me/thesis" target="_blank">Thesis</a> -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file.</p>
-			<p><code>add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');</code></p>
-			<p>Save changes.</p>
-		</td>
-	</tr>
-</table>
-
-<table class="form-table">
-	<tr>
-		<td>
-			<hr />
-			<h4><a href="http://www.toddlahman.com/" target="_blank">Spam Free Wordpress</a> was built and created by Todd Lahman.</h4>
 		</td>
 	</tr>
 </table>

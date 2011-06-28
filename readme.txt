@@ -1,7 +1,7 @@
 === Spam Free WordPress ===
 Contributors: toddlahman
-Donate link: http://www.toddlahman.com/spam-free-wordpress/
-Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
+Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache
 Tested up to: 3.1.3
 Stable tag: 1.4.8
 Requires at least: 2.8
@@ -10,7 +10,7 @@ Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spa
 
 == Description ==
 
-Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. There is no other plugin, or service, available for WordPress that can claim 100% accuracy with zero false positives, not even Akismet.
+Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. There is no other plugin, or service, available for WordPress that can claim 100% accuracy with zero false positives, not even Akismet. Manual spam is blocked with an IP address blocklist.
 
 This plugin was born out of necessity in September of 2007 when [HollywoodGrind](http://www.hollywoodgrind.com/) was getting a lot a traffic, and with it a lot of spam that multiple plugins could not stop, but instead increased the load on the server fighting the spam. Since its birth, Spam Free WordPress has been tested successfully under real world heavy traffic, and heavy comment spam, conditions. Once Spam Free WordPress is installed, no other comment spam plugins are needed, and it is recommended that all other plugins be disabled since they will cause undesirable false positives.
 
@@ -138,6 +138,8 @@ No. Spam Free Wordpress uses anonymous password authentication the reader types 
 1. If Spam Free Wordpress is installed correctly there will be a Password field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment.
 
 2. Spam Free Wordpress has very powerful features that are optional, but most of the work blocking spam is automated upon plugin activation.
+
+3. Spam Free Wordpress in Action
 
 == Upgrade Notice ==
 

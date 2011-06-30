@@ -1,9 +1,9 @@
 === Spam Free WordPress ===
 Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
-Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache
+Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache, pingbacks, trackbacks
 Tested up to: 3.2
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -143,11 +143,18 @@ No. Spam Free Wordpress uses anonymous password authentication the reader types 
 
 == Upgrade Notice ==
 
-= 1.4.8 =
+= 1.4.9 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.4.9 =
+
+* Added global remote blocklist after code rewrite
+* Added more plugin security features
+* Added plugin to close pingbacks and trackbacks
+* Cleaned up code and admin page a bit
 
 = 1.4.8 =
 

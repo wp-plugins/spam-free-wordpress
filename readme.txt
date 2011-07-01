@@ -1,7 +1,7 @@
 === Spam Free WordPress ===
 Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
-Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache, pingbacks, trackbacks
+Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.2
 Stable tag: 1.4.9
 Requires at least: 2.8
@@ -119,7 +119,7 @@ Yes, however, other comment spam plugins will cause false positives, so it is be
 
 = Will the password update on cached post pages? =
 
-This has been tested on many platforms, and in many different caching scenarios. So far every configuration tried has been successful. If a new comment will cause the page to be refreshed, then the password will be refreshed.
+This has been tested on many platforms, and in many different caching scenarios, so far every configuration tried has been successful. If a new comment will cause the page to be refreshed, then the password will be refreshed.
 
 = Does this plugin work in Multi-User mode? =
 
@@ -127,11 +127,15 @@ Yes.
 
 = Why can't I see the password field on the comment form? =
 
-To see the password field you must be logged out of your WordPress blog account. Step 1 is making sure Spam Free Wordpress is configured to work with your theme's comments.php file.
+To see the password field you must be logged out of your WordPress blog account. Also make sure Spam Free Wordpress is configured to work with your theme's comments.php file.
 
 = Do readers need to accept cookies or to have Javascript enabled? =
 
-No. Spam Free Wordpress uses anonymous password authentication the reader types into the comment form.
+No. Spam Free Wordpress uses anonymous password authentication the reader types into the comment form, which does not require cookies or Javascript.
+
+= Will having a password requirement stop readers from commenting? =
+
+No. If you've ever logged into a blog or forum, like Wordpress.org, with a username and password to leave a comment then you'll know security doesn't stop someone from leaving a comment. Spam Free Wordpress eliminates the need for an account on the blog, and instead uses anonymous password authentication. Readers expect some security on the Internet, and all are aware that spam is a problem.
 
 == Screenshots ==
 

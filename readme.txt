@@ -24,7 +24,7 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 2. Local manual spam and ban policy set with local IP address blocklist
 3. Global manual spam and ban policy set with remote IP address blocklist
 4. Significantly reduces database load compared to other spam plugins
-5, Zero false positives
+5. Zero false positives
 6. Option to strip HTML from comments
 7. No CAPTCHA, cookies, or Javascript needed
 8. Saves time and money by eliminating the need to empty the comment spam folder

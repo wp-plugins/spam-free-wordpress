@@ -3,13 +3,13 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.4.9
+Version: 1.5.0
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 */
 
 // Plugin version
-$spam_free_wordpress_version = "1.4.9";
+$spam_free_wordpress_version = "1.5.0";
 
 /*
 	Copyright 2007 - 2011 by Todd Lahman, LLC.
@@ -206,7 +206,10 @@ function tl_spam_free_wordpress_comments_form() {
 		<input type='text' name='passthis' id='passthis' value='".$comment_passthis."' size='".$sfw_pw_field_size."' tabindex='".$sfw_tab_index."' /></p>";
 		// Shows how many comment spam have been killed on the comment form
 		if ($wp_sfw_options['toggle_stats_update'] == "enable") {
-				echo '<p>'.number_format(display_spam_hits()).' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
+				// number_format will cause errors in other locales, so Wordpress created the undocumented number_format_i18n function that properly localizes the number
+				// There is also a date_i18n function. Example at http://cleverwp.com/date_i18n-reference-and-usage/
+				// more here http://wpcodesnippets.info/blog/7-cool-undocumented-wordpress-functions.html
+				echo '<p>'.number_format_i18n(display_spam_hits()).' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
 		} else {
 				echo "";
 		}
@@ -287,7 +290,7 @@ function spam_free_wordpress_options_page() {
 	<tr>
 		<td valign="top">
 			<h3>How Much Comment Spam Has Been Blocked?</h3>
-					<p>Comment Spam Blocked: <font style="BACKGROUND-COLOR: #ffffff"><b><?php echo number_format(get_option('sfw_spam_hits')); ?></b></font></p>
+					<p>Comment Spam Blocked: <font style="BACKGROUND-COLOR: #ffffff"><b><?php echo number_format_i18n(get_option('sfw_spam_hits')); ?></b></font></p>
 				
 			<h3>Local Comment Blocklist</h3>
 			<p>The Local Blocklist is a list of blocked IP addresses stored in the blog database. When a comment comes from an IP address matching the Blocklist it will be blocked, which means you will never see it as waiting for approval or marked as spam. Blocked commenters will be able to view your blog, but any comments they submit will be blocked, which means not saved to the database, and they will see the message &#8220;Spam Blocked.&#8221;</p>

@@ -3,13 +3,13 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.5.0
+Version: 1.5.1
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 */
 
 // Plugin version
-$spam_free_wordpress_version = "1.5.0";
+$spam_free_wordpress_version = "1.5.1";
 
 /*
 	Copyright 2007 - 2011 by Todd Lahman, LLC.
@@ -29,43 +29,43 @@ $spam_free_wordpress_version = "1.5.0";
 */
 
 // Add default database settings on plugin activation
-function add_default_data() {
+function sfw_add_default_data() {
 	$sfw_options = array(
-	'blocklist_keys' => '',
-	'remote_blocked_list' => '',
-	'pw_field_size' => '30',
-	'tab_index' => '',
-	'affiliate_msg' => '',
-	'toggle_stats_update' => 'disable',
-	'toggle_html' => 'disable'
-	);
+		'blocklist_keys' => '',
+		'lbl_enable_disable' => 'disable',
+		'remote_blocked_list' => '',
+		'rbl_enable_disable' => 'disable',
+		'pw_field_size' => '30',
+		'tab_index' => '',
+		'affiliate_msg' => '',
+		'toggle_stats_update' => 'disable',
+		'toggle_html' => 'disable'
+		// 'sfw_version' => '1.5.1'
+		);
 	add_option('spam_free_wordpress', $sfw_options);
 	add_option('sfw_spam_hits', '');
 }
 
+// variable used as global to retrieve option array for functions
+$wp_sfw_options = get_option('spam_free_wordpress');
+
 // Runs add_default_data function above when plugin activated
-register_activation_hook( __FILE__, 'add_default_data' );
+register_activation_hook( __FILE__, 'sfw_add_default_data' );
 
 // Delete the default options from database when plugin deactivated,
 // The post comment passwords can be deleted also using the following SQL statement.
 // DELETE from wp_postmeta WHERE meta_key = "sfw_comment_form_password" ;
 
 
-// Runs remove_default_data function above when plugin deactivated
-// Uncomment this code block if you want the all options to be deleted when plugin is deactivated, this includes number of spam blocked
-/*
-function remove_default_data() {
-delete_option('spam_free_wordpress');
-delete_option('sfw_spam_hits');
-delete_option('remote_blocked_list');
+// Deletes all options listed in remove_default_data when plugin deactivated
+// Remove // to enable an option to be deleted
+function sfw_remove_default_data() {
+// delete_option('spam_free_wordpress');
+// delete_option('sfw_spam_hits');
 }
-*/
 
-// Uncomment this code block if you want the all options to be deleted when plugin is deactivated, this includes number of spam blocked
-//register_deactivation_hook( __FILE__, 'remove_default_data' );
-
-// variable used as global to retrieve option array for functions
-$wp_sfw_options = get_option('spam_free_wordpress');
+// Deletes all options listed in remove_default_data when plugin deactivated
+register_deactivation_hook( __FILE__, 'sfw_remove_default_data' );
 
 // Checks to see if comment form password exists and if not creates one in custom fields
 function sfw_comment_pass_exist_check() {
@@ -106,12 +106,11 @@ function get_remote_ip_address() {
 }
 
 // Returns Local Blocklist
-function wp_blocklist_check() {
+function sfw_local_blocklist_check() {
 	global $wp_sfw_options;
 
 	// Gets IP address of commenter
 	$comment_author_ip = get_remote_ip_address();
-	// do_action('wp_blocklist_check', $comment_author_ip);
 
 	$local_blocklist_keys = trim( $wp_sfw_options['blocklist_keys'] );
 	if ( '' == $local_blocklist_keys )
@@ -136,8 +135,8 @@ function wp_blocklist_check() {
 	return false;
 }
 
-// Returns Remote Realtime Comment Blocklist
-function wp_realtime_blocklist_check() {
+// Returns Remote Blocklist
+function sfw_remote_blocklist_check() {
 	global $wp_sfw_options;
 	
 	// Gets IP address of commenter
@@ -184,9 +183,7 @@ function custom_affiliate_link() {
 
 // Function for comments.php file
 function tl_spam_free_wordpress_comments_form() {
-	global $wp_sfw_options;
-	global $post;
-	global $wp_version;
+	global $wp_sfw_options, $post, $spam_free_wordpress_version, $wp_version;
 	
 	$sfw_comment_form_password_var = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
 	
@@ -195,20 +192,24 @@ function tl_spam_free_wordpress_comments_form() {
 
 	// If the reader is logged in don't require password for comments.php
 	if ( !is_user_logged_in() ) {
-		// extra hidden passwords
-		echo '<!-- Comment Spam Protection provided by Spam Free Wordpress located at http://www.toddlahman.com/spam-free-wordpress/ -->';
+		// Hidden credit
+		echo '<!-- '.number_format_i18n(display_spam_hits()).' Spam Comments Blocked so far by Spam Free Wordpress version '.$spam_free_wordpress_version.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
 		// Commenter IP address
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".get_remote_ip_address()."' />";
 		// Reader must enter this password manually on the comment form
-		echo "<p><label for='pwd_text'>* Copy this password:</label>
+		echo "<p>* Copy this password:
 		<input type='text' value='".$sfw_comment_form_password_var."' onclick='this.select()' size='".$sfw_pw_field_size."' /></p>";
-		echo "<p><label for='passthis'>* Type or paste password here:</label>
+		echo "<p>* Type or paste password here:
 		<input type='text' name='passthis' id='passthis' value='".$comment_passthis."' size='".$sfw_pw_field_size."' tabindex='".$sfw_tab_index."' /></p>";
 		// Shows how many comment spam have been killed on the comment form
 		if ($wp_sfw_options['toggle_stats_update'] == "enable") {
 				// number_format will cause errors in other locales, so Wordpress created the undocumented number_format_i18n function that properly localizes the number
-				// There is also a date_i18n function. Example at http://cleverwp.com/date_i18n-reference-and-usage/
+				// Examples:
+				// http://cleverwp.com/date_i18n-reference-and-usage/
 				// more here http://wpcodesnippets.info/blog/7-cool-undocumented-wordpress-functions.html
+				// http://wpengineer.com/1918/24th-door-the-wpe-quit-smoking-widget/
+				// http://hitchhackerguide.com/2011/02/12/number_format_i18n/
+				// http://hitchhackerguide.com/2011/02/12/number_format_i18n-2/
 				echo '<p>'.number_format_i18n(display_spam_hits()).' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
 		} else {
 				echo "";
@@ -218,23 +219,28 @@ function tl_spam_free_wordpress_comments_form() {
 
 // Function for wp-comments-post.php file located in the root Wordpress directory. The same directory as the wp-config.php file.
 function tl_spam_free_wordpress_comments_post() {
-	global $post;
+	global $post, $wp_sfw_options;
 	
 	$sfw_comment_script = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
 	
 	// If the reader is logged in don't require password for wp-comments-post.php
 	if ( !is_user_logged_in() ) {
 
-		// Comment form manual password (key 2)
+		// Compares current comment form password with current password for post
 		if ($_POST['passthis'] == '' || $_POST['passthis'] != $sfw_comment_script)
 			wp_die( __('Error 1: Click back and type in the password.', spam_counter()) );
 		
-		// Compares commenter IP address to blocked list and realtime blocked list
-		if ($_POST['comment_ip'] == '' || $_POST['comment_ip'] == wp_blocklist_check() )
-			wp_die( __('Spam Blocked by Spam Free Wordpress (local blocklist)', spam_counter()) );
+		// Compares commenter IP address to local blocklist
+		if ($wp_sfw_options['lbl_enable_disable'] == 'enable') {
+			if ($_POST['comment_ip'] == '' || $_POST['comment_ip'] == sfw_local_blocklist_check() )
+				wp_die( __('Spam Blocked by Spam Free Wordpress (local blocklist)', spam_counter()) );
+		}
 		
-		if ($_POST['comment_ip'] == '' || $_POST['comment_ip'] == wp_realtime_blocklist_check() )
-			wp_die( __('Spam Blocked by Spam Free Wordpress (remote blocklist)', spam_counter()) );
+		// Compares commenter IP address to remote blocklist
+		if ($wp_sfw_options['rbl_enable_disable'] == 'enable') {
+			if ($_POST['comment_ip'] == '' || $_POST['comment_ip'] == sfw_remote_blocklist_check() )
+				wp_die( __('Spam Blocked by Spam Free Wordpress (remote blocklist)', spam_counter()) );
+		}
 
 	}
 }
@@ -288,60 +294,55 @@ function spam_free_wordpress_options_page() {
 
 <table class="form-table">
 	<tr>
-		<td valign="top">
-			<h3>How Much Comment Spam Has Been Blocked?</h3>
-					<p>Comment Spam Blocked: <font style="BACKGROUND-COLOR: #ffffff"><b><?php echo number_format_i18n(get_option('sfw_spam_hits')); ?></b></font></p>
-				
+		<td valign="top">		
 			<h3>Local Comment Blocklist</h3>
 			<p>The Local Blocklist is a list of blocked IP addresses stored in the blog database. When a comment comes from an IP address matching the Blocklist it will be blocked, which means you will never see it as waiting for approval or marked as spam. Blocked commenters will be able to view your blog, but any comments they submit will be blocked, which means not saved to the database, and they will see the message &#8220;Spam Blocked.&#8221;</p>
 			<p>Enter one IP address (for example 192.168.1.1) per line. Wildcards like 192.168.1.* will not work.</p>
 			<p><code>#</code> can be used to comment out an IP address.</p>
 				<fieldset>
-					<label><textarea name="wp_sfw_options[blocklist_keys]" cols='40' rows='12' ><?php echo $wp_sfw_options['blocklist_keys']; ?></textarea></label><br />
+					<p>On <input type="radio" name="wp_sfw_options[lbl_enable_disable]" <?php echo (($wp_sfw_options['lbl_enable_disable'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[lbl_enable_disable]" <?php echo (($wp_sfw_options['lbl_enable_disable'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" />
+				</fieldset>
+				<fieldset>
+					<textarea name="wp_sfw_options[blocklist_keys]" cols='20' rows='12' ><?php echo $wp_sfw_options['blocklist_keys']; ?></textarea>
 				</fieldset>
 
 			<h3>Remote Comment Blocklist</h3>
 			<p>The Remote Comment Blocklist accesses a text file list of IP addresses on a remote server to block comment spam. This allows a global IP address blocklist to be shared with multiple blogs. It is also possible to use the Local Comment Blocklist for blog specific blocking, and the Remote Comment Blocklist for global blocking used by mutliple blogs at the same time. Remote Comment Blocklist works exactly the same way as the Local Comment Blocklist, except it is on a remote server. The URL to the remote text file could be for example: <code>http://www.example.com/mybl/bl.txt</code></p>
 			<p><code>#</code> can be used to comment out an IP address.</p>
 				<fieldset>
-					<label><p><input type="text" size="60" name="wp_sfw_options[remote_blocked_list]" value="<?php echo $wp_sfw_options['remote_blocked_list']; ?>" /> Enter URL to remote text file.</p></label>
+					<p>On <input type="radio" name="wp_sfw_options[rbl_enable_disable]" <?php echo (($wp_sfw_options['rbl_enable_disable'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[rbl_enable_disable]" <?php echo (($wp_sfw_options['rbl_enable_disable'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="60" name="wp_sfw_options[remote_blocked_list]" value="<?php echo $wp_sfw_options['remote_blocked_list']; ?>" />&nbsp;&nbsp; Enter URL to remote text file.</p>
 				</fieldset>
 				
 			<h3>Password Form Customization</h3>
 				<fieldset>
-					<label><p><input type="text" name="wp_sfw_options[pw_field_size]" size="4" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" /> Password Field Size. Default is 30.</label>
-				</fieldset>
-				<fieldset>
-					<label><input type="text" name="wp_sfw_options[tab_index]" size="4" value="<?php echo $wp_sfw_options['tab_index']; ?>" /> Tab Index </p></label>
+					<p>
+					<input type="text" name="wp_sfw_options[pw_field_size]" size="4" value="<?php echo $wp_sfw_options['pw_field_size']; ?>" />&nbsp;&nbsp; Password Field Size. Default is 30.
+					&nbsp;&nbsp;&nbsp;<input type="text" name="wp_sfw_options[tab_index]" size="4" value="<?php echo $wp_sfw_options['tab_index']; ?>" />&nbsp;&nbsp; Tab Index
+					</p>
 				</fieldset>
 				
 			<h3>Comment Form Spam Stats</h3>
 			<p>When spam comment stats are ON they will be shown alongside a nofollow link to spamfreewordpress.com, and if an affiliate ID is entered below the link to spamfreewordpress.com will be transformed into the affiliate link.</p>
-				<label><p>
-					<select name="wp_sfw_options[toggle_stats_update]" class="toggle_stats">
-						<option value="disable" <?php selected( 'disable', $wp_sfw_options['toggle_stats_update'] ); ?> ><?php _e( 'Spam Stats OFF' ) ?></option>
-						<option value="enable" <?php selected( 'enable', $wp_sfw_options['toggle_stats_update'] ); ?> ><?php _e( 'Spam Stats ON' ) ?></option>
-					</select>
-				Leave on to make others aware of Spam Free Wordpress.</p></label>
+				<fieldset>
+					<p>On <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" />&nbsp;&nbsp; Leave on to make others aware of Spam Free Wordpress.</p>
+				</fieldset>
 				
 			<h3>Remove HTML from Comments</h3>
-			<p>It is very common for manual and automated comment spam to include a URL that links to a web site. This feature will automatically strip out HTML from comments so that links will show up as plain text, and it removes the allowed HTML tags from below the comment text box.</p>
-				<label><p>
-					<select name="wp_sfw_options[toggle_html]" class="toggle_html">
-						<option value="disable" <?php selected( 'disable', $wp_sfw_options['toggle_html'] ); ?> ><?php _e( 'Strip HTML OFF' ) ?></option>
-						<option value="enable" <?php selected( 'enable', $wp_sfw_options['toggle_html'] ); ?> ><?php _e( 'Strip HTML ON' ) ?></option>
-					</select>
-				</p></label>
+			<p>It is very common for manual and automated comment spam to include a URL that links to a web site. This feature will automatically strip out HTML from comments so that links will show up as plain text, and it removes the allowed HTML tags from below the comment text box.</p>			
+				<fieldset>
+					<p>On <input type="radio" name="wp_sfw_options[toggle_html]" <?php echo (($wp_sfw_options['toggle_html'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[toggle_html]" <?php echo (($wp_sfw_options['toggle_html'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" /></p>
+				</fieldset>
 				
 			<h3>Pingbacks and Trackbacks</h3>
 			<p>The plugin below will close pingbacks and trackbacks on all posts and pages on a blog.</p>
 			<p>Download the Auto Close Pings and Trackbacks plugin from the <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank">Spam Free Wordpress</a> homepage.</p>
 			<p>To make sure pingbacks and trackbacks are closed on future posts and pages, go to <code>Settings -> Discussion</code> and uncheck the box next to <code>Allow link notifications from other blogs (pingbacks and trackbacks)</code>.</p>
-		
+
 			<h3>Share Link Custom Message</h3>
 			<p>Customize a URL link to the Spam Free Wordpress plugin page below if you want to share it with others somewhere else on your blog other than the comment form.</p>
 				<fieldset>
-					<label><p>Link Message <input type="text" size="60" name="wp_sfw_options[affiliate_msg]" value="<?php echo $wp_sfw_options['affiliate_msg']; ?>" /> <?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?></p></label>
+					<p>Link Message &nbsp;&nbsp;<input type="text" size="60" name="wp_sfw_options[affiliate_msg]" value="<?php echo $wp_sfw_options['affiliate_msg']; ?>" /> &nbsp;&nbsp;<?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?></p>
 				</fieldset>
 			<p>Copy and paste the line of code below into a template file to display the custom share link.</p>
 			<code>&lt;?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?&gt;</code>
@@ -350,10 +351,8 @@ function spam_free_wordpress_options_page() {
 			<input type="submit" name="options" class="button-primary" value="<?php _e('Save Changes') ?>" />
 			</p>
 </form>
-
-			<h3>Donate to Help Fight Spam</h3>
-			<p>Your donation will help WordPress become the world's first and only comment spam free blogging platform.</p>
-			<p>Even $1 can make a difference.</p>
+			<h2><font style="BACKGROUND-COLOR: #ffffff">What Am I Worth?</font></h2>
+			<p><font style="BACKGROUND-COLOR: #ffffff"><h2><tt>Is a reliable spam fighting plugin worth a dollar?</tt></h2></font></p>
 			<p>
 			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 			<input type="hidden" name="cmd" value="_s-xclick">
@@ -362,7 +361,8 @@ function spam_free_wordpress_options_page() {
 			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 			</form>
 			</p>
-
+			<br />
+			
 			<h3>Installation Instructions</h3>
 			<p>Complete installation instructions are available at <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank">Spam Free Wordpress</a>.
 
@@ -371,9 +371,13 @@ function spam_free_wordpress_options_page() {
 			
 		</td>
 			
-		<td valign="top">
-			<div id="sideblock" style="float:right;width:275px;margin-left:10px;"> 		 
-				<iframe width="275" height="1070" frameborder="0" src="http://www.toddlahman.com/plugin-news/sfw/spw-plugin-news.html?utm_source=sfw-plugin&utm_medium=sfw-plugin&utm_campaign=sfw-plugin"></iframe>
+		<td valign="top" bgcolor="#FFFFFF">
+						<div align="center"><h3>Blocked Comment Spam</h3></div>
+						<p align="center"><b><big><?php echo number_format_i18n(get_option('sfw_spam_hits')); ?></big></b></p>
+						<br />
+		
+			<div id="sideblock" style="float:right;width:275px;margin-left:10px;">
+					<iframe width="275" height="1070" frameborder="0" src="http://www.toddlahman.com/plugin-news/sfw/spw-plugin-news.html?utm_source=sfw-plugin&utm_medium=sfw-plugin&utm_campaign=sfw-plugin"></iframe>
 			</div>
 		</td>
 	</tr>

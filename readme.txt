@@ -155,6 +155,7 @@ Upgrade immediately to keep your blog comment spam free.
 
 = 1.5.1 =
 
+* Fix for number_format error
 * Ability to turn blocklists on or off
 * Easier Admin page
 * Backend improvements

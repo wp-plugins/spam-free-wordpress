@@ -48,6 +48,8 @@ function sfw_add_default_data() {
 
 // variable used as global to retrieve option array for functions
 $wp_sfw_options = get_option('spam_free_wordpress');
+// Gets Spam Blocked Count
+$sfw_count = number_format_i18n(get_option('sfw_spam_hits'));
 
 // Runs add_default_data function above when plugin activated
 register_activation_hook( __FILE__, 'sfw_add_default_data' );
@@ -183,7 +185,7 @@ function custom_affiliate_link() {
 
 // Function for comments.php file
 function tl_spam_free_wordpress_comments_form() {
-	global $wp_sfw_options, $post, $spam_free_wordpress_version, $wp_version;
+	global $wp_sfw_options, $post, $spam_free_wordpress_version, $wp_version, $sfw_count;
 	
 	$sfw_comment_form_password_var = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
 	
@@ -193,9 +195,7 @@ function tl_spam_free_wordpress_comments_form() {
 	// If the reader is logged in don't require password for comments.php
 	if ( !is_user_logged_in() ) {
 		// Hidden credit
-		echo '<!-- ';
-		echo number_format_i18n(get_option('sfw_spam_hits'));
-		echo ' Spam Comments Blocked so far by Spam Free Wordpress version '.$spam_free_wordpress_version.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
+		echo '<!-- ' . $sfw_count . ' Spam Comments Blocked so far by Spam Free Wordpress version '.$spam_free_wordpress_version.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
 		// Commenter IP address
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".get_remote_ip_address()."' />";
 		// Reader must enter this password manually on the comment form
@@ -212,9 +212,7 @@ function tl_spam_free_wordpress_comments_form() {
 				// http://wpengineer.com/1918/24th-door-the-wpe-quit-smoking-widget/
 				// http://hitchhackerguide.com/2011/02/12/number_format_i18n/
 				// http://hitchhackerguide.com/2011/02/12/number_format_i18n-2/
-				echo '<p>';
-				echo number_format_i18n(get_option('sfw_spam_hits'));
-				echo ' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
+				echo '<p>' . $sfw_count . ' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
 		} else {
 				echo "";
 		}
@@ -274,8 +272,7 @@ function spam_free_wordpress_options_page() {
       wp_die( __('You do not have sufficient permissions to access this page.') );
     }
 
-	global $spam_free_wordpress_version;
-	global $wp_sfw_options;
+	global $spam_free_wordpress_version, $wp_sfw_options, $sfw_count;
 
 ?>
 <div class="wrap">
@@ -377,7 +374,7 @@ function spam_free_wordpress_options_page() {
 			
 		<td valign="top" bgcolor="#FFFFFF">
 						<div align="center"><h3>Blocked Comment Spam</h3></div>
-						<p align="center"><b><big><?php echo number_format_i18n(get_option('sfw_spam_hits')); ?></big></b></p>
+						<p align="center"><b><big><?php echo $sfw_count; ?></big></b></p>
 						<br />
 		
 			<div id="sideblock" style="float:right;width:275px;margin-left:10px;">

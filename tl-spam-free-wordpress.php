@@ -43,7 +43,7 @@ function sfw_add_default_data() {
 		// 'sfw_version' => '1.5.1'
 		);
 	add_option('spam_free_wordpress', $sfw_options);
-	add_option('sfw_spam_hits', '');
+	add_option('sfw_spam_hits', '1');
 }
 
 // variable used as global to retrieve option array for functions

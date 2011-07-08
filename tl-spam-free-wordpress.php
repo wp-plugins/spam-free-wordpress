@@ -193,7 +193,9 @@ function tl_spam_free_wordpress_comments_form() {
 	// If the reader is logged in don't require password for comments.php
 	if ( !is_user_logged_in() ) {
 		// Hidden credit
-		echo '<!-- '.number_format_i18n(display_spam_hits()).' Spam Comments Blocked so far by Spam Free Wordpress version '.$spam_free_wordpress_version.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
+		echo '<!-- ';
+		echo number_format_i18n(get_option('sfw_spam_hits'));
+		echo ' Spam Comments Blocked so far by Spam Free Wordpress version '.$spam_free_wordpress_version.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
 		// Commenter IP address
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".get_remote_ip_address()."' />";
 		// Reader must enter this password manually on the comment form
@@ -210,7 +212,9 @@ function tl_spam_free_wordpress_comments_form() {
 				// http://wpengineer.com/1918/24th-door-the-wpe-quit-smoking-widget/
 				// http://hitchhackerguide.com/2011/02/12/number_format_i18n/
 				// http://hitchhackerguide.com/2011/02/12/number_format_i18n-2/
-				echo '<p>'.number_format_i18n(display_spam_hits()).' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
+				echo '<p>';
+				echo number_format_i18n(get_option('sfw_spam_hits'));
+				echo ' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
 		} else {
 				echo "";
 		}

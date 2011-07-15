@@ -38,7 +38,7 @@ function sfw_add_default_data() {
 		'pw_field_size' => '30',
 		'tab_index' => '',
 		'affiliate_msg' => '',
-		'toggle_stats_update' => 'disable',
+		'toggle_stats_update' => 'enable',
 		'toggle_html' => 'disable'
 		// 'sfw_version' => '1.5.1'
 		);
@@ -177,9 +177,9 @@ function custom_affiliate_link() {
 	$aff_msg = $wp_sfw_options['affiliate_msg'];
 	
 	if ($wp_sfw_options['affiliate_msg'] =='') {
-		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/' rel='nofollow'>Make Your Blog Spam Free</a>";
+		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/'>Make Your Blog Spam Free</a>";
 	} else {
-		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/' rel='nofollow'>".$aff_msg."</a>";
+		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/'>".$aff_msg."</a>";
 	}
 }
 
@@ -212,7 +212,7 @@ function tl_spam_free_wordpress_comments_form() {
 				// http://wpengineer.com/1918/24th-door-the-wpe-quit-smoking-widget/
 				// http://hitchhackerguide.com/2011/02/12/number_format_i18n/
 				// http://hitchhackerguide.com/2011/02/12/number_format_i18n-2/
-				echo '<p>' . $sfw_count . ' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank" rel="nofollow">Spam Free Wordpress</a></p>';
+				echo '<p>' . $sfw_count . ' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank">Spam Free Wordpress</a></p>';
 		} else {
 				echo "";
 		}
@@ -324,13 +324,13 @@ function spam_free_wordpress_options_page() {
 				</fieldset>
 				
 			<h3>Comment Form Spam Stats</h3>
-			<p>When spam comment stats are ON they will be shown alongside a nofollow link to spamfreewordpress.com, and if an affiliate ID is entered below the link to spamfreewordpress.com will be transformed into the affiliate link.</p>
+			<p>Displays the number of spam comments blocked on the comment form, followed by a link to the Spam Free Wordpress homepage.</p>
 				<fieldset>
 					<p>On <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" />&nbsp;&nbsp; Leave on to make others aware of Spam Free Wordpress.</p>
 				</fieldset>
 				
 			<h3>Remove HTML from Comments</h3>
-			<p>It is very common for manual and automated comment spam to include a URL that links to a web site. This feature will automatically strip out HTML from comments so that links will show up as plain text, and it removes the allowed HTML tags from below the comment text box.</p>			
+			<p>Strips the HTML from comments to render spam links as plain text. Also removes the allowed HTML tags message from below the comment box.</p>			
 				<fieldset>
 					<p>On <input type="radio" name="wp_sfw_options[toggle_html]" <?php echo (($wp_sfw_options['toggle_html'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[toggle_html]" <?php echo (($wp_sfw_options['toggle_html'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" /></p>
 				</fieldset>

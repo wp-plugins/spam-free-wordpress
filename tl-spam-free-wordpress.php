@@ -48,6 +48,7 @@ function sfw_add_default_data() {
 
 // variable used as global to retrieve option array for functions
 $wp_sfw_options = get_option('spam_free_wordpress');
+
 // Gets Spam Blocked Count
 $sfw_count = number_format_i18n(get_option('sfw_spam_hits'));
 
@@ -172,7 +173,7 @@ function sfw_remote_blocklist_check() {
 
 // Customizable Affiliate link
 function custom_affiliate_link() {
-	global $wp_sfw_options;
+	$wp_sfw_options = get_option('spam_free_wordpress');
 
 	$aff_msg = $wp_sfw_options['affiliate_msg'];
 	
@@ -272,7 +273,7 @@ function spam_free_wordpress_options_page() {
       wp_die( __('You do not have sufficient permissions to access this page.') );
     }
 
-	global $spam_free_wordpress_version, $wp_sfw_options, $sfw_count;
+	global $spam_free_wordpress_version, $sfw_count;
 
 ?>
 <div class="wrap">
@@ -291,6 +292,9 @@ function spam_free_wordpress_options_page() {
 		$msg_status = 'Spam Free Wordpress settings saved.';
 		_e('<div id="message" class="updated fade"><p>' . $msg_status . '</p></div>');
 		}
+		
+	$wp_sfw_options = get_option('spam_free_wordpress');
+		
 ?>
 
 <table class="form-table">

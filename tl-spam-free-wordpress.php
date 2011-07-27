@@ -327,12 +327,6 @@ function spam_free_wordpress_options_page() {
 					</p>
 				</fieldset>
 				
-			<h3>Comment Form Spam Stats</h3>
-			<p>Displays the number of spam comments blocked on the comment form, followed by a link to the Spam Free Wordpress homepage.</p>
-				<fieldset>
-					<p>On <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" />&nbsp;&nbsp; Leave on to make others aware of Spam Free Wordpress.</p>
-				</fieldset>
-				
 			<h3>Remove HTML from Comments</h3>
 			<p>Strips the HTML from comments to render spam links as plain text. Also removes the allowed HTML tags message from below the comment box.</p>			
 				<fieldset>
@@ -351,6 +345,13 @@ function spam_free_wordpress_options_page() {
 				</fieldset>
 			<p>Copy and paste the line of code below into a template file to display the custom share link.</p>
 			<code>&lt;?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?&gt;</code>
+			
+			<h3>Comment Form Spam Stats</h3>
+			<p>Displays the number of spam comments blocked on the comment form, followed by a link to the Spam Free Wordpress homepage.</p>
+			<p><b>Although PayPal donations are welcome, leaving this on is welcome compensation for this free plugin.</b></p>
+				<fieldset>
+					<p>On <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="wp_sfw_options[toggle_stats_update]" <?php echo (($wp_sfw_options['toggle_stats_update'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" /></p>
+				</fieldset>
 			
 			<p class="submit">
 			<input type="submit" name="options" class="button-primary" value="<?php _e('Save Changes') ?>" />

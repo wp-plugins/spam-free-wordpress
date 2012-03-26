@@ -38,7 +38,7 @@ function sfw_add_default_data() {
 		'pw_field_size' => '30',
 		'tab_index' => '',
 		'affiliate_msg' => '',
-		'toggle_stats_update' => 'enable',
+		'toggle_stats_update' => 'disable',
 		'toggle_html' => 'disable'
 		// 'sfw_version' => '1.5.1'
 		);

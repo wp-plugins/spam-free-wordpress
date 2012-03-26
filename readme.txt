@@ -2,13 +2,15 @@
 Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
-Tested up to: 3.2
+Tested up to: 3.5
 Stable tag: 1.5.1
 Requires at least: 2.8
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
 
 == Description ==
+
+Update 3-26-2012: Support requests on the WordPress.org forum will no longer be answered. All requests for support should be made at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. There is no other plugin, or service, available for WordPress that can claim 100% accuracy with zero false positives, not even Akismet. Manual spam is blocked with an IP address blocklist.
 
@@ -68,6 +70,8 @@ Readers do not need to accept cookies or to have Javascript enabled for Spam Fre
 
 == Installation ==
 
+Update 3-26-2012: Support requests on the WordPress.org forum will no longer be answered. All requests for support should be made at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+
 = Proper Installation Example =
 
 If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. An example can be viewed using the Screenshots tab above, or for a live example visit [Spam Free Wordpress](http://www.toddlahman.com/spam-free-wordpress/).
@@ -112,6 +116,8 @@ If the comments.php file is custom, and it is not desirable to use the `comment_
 
 
 == Frequently Asked Questions ==
+
+Update 3-26-2012: Support requests on the WordPress.org forum will no longer be answered. All requests for support should be made at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 = Is Spam Free Wordpress compatible with other comment spam plugins? =
 

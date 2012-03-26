@@ -147,9 +147,7 @@ No. If you've ever logged into a blog or forum, like Wordpress.org, with a usern
 
 1. If Spam Free Wordpress is installed correctly there will be a Password field on the comment form. Each time a reader leaves a comment they type in that password, or copy and paste it, to leave a comment.
 
-2. Spam Free Wordpress has very powerful features that are optional, but most of the work blocking spam is automated upon plugin activation.
-
-3. Spam Free Wordpress in Action
+2. Spam Free Wordpress in Action
 
 == Upgrade Notice ==
 

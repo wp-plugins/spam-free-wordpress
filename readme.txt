@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.5
 Stable tag: 1.5.1
-Requires at least: 2.8
+Requires at least: 3.0
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
 
@@ -78,7 +78,7 @@ If Spam Free Wordpress is installed correctly there will be a "Password:" field 
 
 To see the password field you must be logged out of your WordPress blog account.
 
-[Need help?](http://wordpress.org/tags/spam-free-wordpress)
+[Need help?](http://www.toddlahman.com/spam-free-wordpress/)
 
 *NOTE: Clear the blog cache, like [WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/), after installation.*
 

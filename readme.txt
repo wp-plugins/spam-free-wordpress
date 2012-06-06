@@ -3,10 +3,10 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.5
-Stable tag: 1.5.1
+Stable tag: 1.6
 Requires at least: 3.0
 
-Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
+Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. All requests for support should be made at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 == Description ==
 
@@ -151,11 +151,25 @@ No. If you've ever logged into a blog or forum, like Wordpress.org, with a usern
 
 == Upgrade Notice ==
 
-= 1.5.1 =
+= 1.6 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.6 =
+
+* Added disable pingback/trackback
+* Added disable user registration
+* Added settings link to plugin row menu
+* Added remove url form field
+* Added remove comment author clickable link
+* Admin page has a new look
+* Fixed donation link
+* Added uninstall to cleanup database on deletion
+* Made invalid or empty password error more clear
+* Added automatic theme support for popular themes
+* Minor code changes
 
 = 1.5.1 =
 

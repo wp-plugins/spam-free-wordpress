@@ -68,6 +68,30 @@ if ( is_admin() ) {
 	require_once( dirname( __FILE__ ) . '/includes/admin.php' );
 }
 
+/**
+* Upgrade from 1.51. or 1.6 to 1.6.1
+* http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks/#comment-11989
+* http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks-no-longer-fire-for-updates/
+*/
+if( get_option( 'spam_free_wordpress' ) && !$spam_free_wordpress_options['remove_author_url_field'] ) {
+	upgrade_to_new_version();
+}
+
+function upgrade_to_new_version() {
+	$spam_free_wordpress_options = get_option('spam_free_wordpress');
+	
+	$oldver = $spam_free_wordpress_options;
+	$newver = array(
+		'remove_author_url_field' => 'disable',
+		'remove_author_url' => 'disable',
+		'pingback' => 'enable',
+		'user_registration' => 'enable'
+		);
+	$mergever = array_merge( $oldver, $newver );
+	
+	update_option('spam_free_wordpress', $mergever);
+}
+
 /*
 // Censor comments
 // use preg_match or preg_match_all to match profanity in submitted comment and replacing the word before saving in database.

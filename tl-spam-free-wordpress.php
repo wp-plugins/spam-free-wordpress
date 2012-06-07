@@ -23,10 +23,8 @@ if ( !get_option('sfw_version') ) {
 	update_option( 'sfw_version', '1.6.3' );
 }
 
-if ( get_option('sfw_version') ) {
-	if ( version_compare( get_option('sfw_version'), '1.6.3', '<' ) ) {
+if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), '1.6.3', '<' ) ) {
 	update_option( 'sfw_version', '1.6.3' );
-	}
 }
 
 // Set the default settings if not already set

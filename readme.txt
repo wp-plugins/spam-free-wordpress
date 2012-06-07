@@ -30,7 +30,7 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 6. Option to strip HTML from comments
 7. No CAPTCHA, cookies, or Javascript needed
 8. Saves time and money by eliminating the need to empty the comment spam folder
-9. Over 100,000 spam free blogs and counting.
+9. Over 100,000 Spam Free Blogs and Counting!
 
 = Automatically Blocks Automated Comment Spam =
 
@@ -77,9 +77,7 @@ Update 3-26-2012: Support requests on the WordPress.org forum will no longer be 
 
 If Spam Free Wordpress is installed correctly there will be a "Password:" field on the comment form. An example can be viewed using the Screenshots tab above, or for a live example visit [Spam Free Wordpress](http://www.toddlahman.com/spam-free-wordpress/).
 
-To see the password field you must be logged out of your WordPress blog account.
-
-*NOTE: Clear the blog cache, like [WP Super Cache](http://wordpress.org/extend/plugins/wp-super-cache/), after installation.*
+*NOTE: Clear the blog and web browser cache, and log out as Admin.*
 
 = WordPress 3.0 and Above =
 
@@ -113,7 +111,7 @@ Yes.
 
 = Why can't I see the password field on the comment form? =
 
-Log out and clear you browser, and blog cache. If there is still no password field then follow the installation instructions to edit your comments.php file, or ask me to do it for you.
+Log out as Admin and clear your web browser, and blog cache. If there is still no password field then follow the installation instructions to edit your comments.php file, or ask me to do it for you.
 
 = Do readers need to accept cookies or to have Javascript enabled? =
 

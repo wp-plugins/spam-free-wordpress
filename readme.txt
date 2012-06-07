@@ -20,8 +20,6 @@ It is my goal for Spam Free WordPress to help WordPress become the world's first
 
 See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage for updates, and to read comments related to the plugin.
 
-= Over 100,000 Spam Free Blogs and Counting! =
-
 = Spam Free WordPress Features =
 
 1. Automatically blocks 100% of automated comment spam
@@ -32,6 +30,7 @@ See the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) ho
 6. Option to strip HTML from comments
 7. No CAPTCHA, cookies, or Javascript needed
 8. Saves time and money by eliminating the need to empty the comment spam folder
+9. Over 100,000 Spam Free Blogs and Counting!
 
 = Automatically Blocks Automated Comment Spam =
 

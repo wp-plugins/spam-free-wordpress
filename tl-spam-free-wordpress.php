@@ -20,7 +20,7 @@ License: GPLv2
 define( 'SFW_VERSION', '1.6.2' );
 
 if ( !get_option('sfw_version') ) {
-	add_option( 'sfw_version', '1.6.2' );
+	update_option( 'sfw_version', '1.6.2' );
 }
 
 // Set the default settings if not already set

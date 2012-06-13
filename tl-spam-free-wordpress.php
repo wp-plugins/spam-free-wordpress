@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.6.3
+Version: 1.6.4
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv2
@@ -17,14 +17,14 @@ License: GPLv2
 
 
 // Plugin version
-define( 'SFW_VERSION', '1.6.3' );
+define( 'SFW_VERSION', '1.6.4' );
 
 if ( !get_option('sfw_version') ) {
-	update_option( 'sfw_version', '1.6.3' );
+	update_option( 'sfw_version', '1.6.4' );
 }
 
-if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), '1.6.3', '<' ) ) {
-	update_option( 'sfw_version', '1.6.3' );
+if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), '1.6.4', '<' ) ) {
+	update_option( 'sfw_version', '1.6.4' );
 }
 
 // Set the default settings if not already set
@@ -36,9 +36,9 @@ if( !get_option( 'spam_free_wordpress' ) ) {
 function sfw_add_default_data() {
 
 	// Checks to make sure WordPress version is at least 3.0 or above, if not deactivates plugin
-	if ( version_compare( get_bloginfo( 'version' ), '3.0', '<' ) ) {
+	if ( version_compare( get_bloginfo( 'version' ), '3.1', '<' ) ) {
 		deactivate_plugins( basename( __FILE__ ) );
-		wp_die( 'Spam Free Wordpress requires at least WordPress 3.0. Sorry! Click back to continue.' );
+		wp_die( 'Spam Free Wordpress requires at least WordPress 3.1. Sorry! Click back to continue.' );
 	} else {
 		$sfw_options = array(
 		'blocklist_keys' => '',
@@ -73,27 +73,33 @@ if ( is_admin() ) {
 }
 
 /**
-* Upgrade from 1.51, 1.6, or 1.6.1 to 1.6.2
+* Upgrade
 * http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks/#comment-11989
 * http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks-no-longer-fire-for-updates/
 */
-if( get_option( 'spam_free_wordpress' ) && !$spam_free_wordpress_options['remove_author_url_field'] ) {
+if( $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
 	upgrade_to_new_version();
 }
 
 function upgrade_to_new_version() {
-	$spam_free_wordpress_options = get_option('spam_free_wordpress');
+	// Checks to make sure WordPress version is at least 3.0 or above, if not deactivates plugin
+	if ( version_compare( get_bloginfo( 'version' ), '3.1', '<' ) ) {
+		deactivate_plugins( basename( __FILE__ ) );
+		wp_die( 'Spam Free Wordpress requires at least WordPress 3.1. Sorry! Click back to continue.' );
+	} else {
+		$spam_free_wordpress_options = get_option('spam_free_wordpress');
 	
-	$oldver = $spam_free_wordpress_options;
-	$newver = array(
-		'remove_author_url_field' => 'disable',
-		'remove_author_url' => 'disable',
-		'pingback' => 'enable',
-		'user_registration' => 'enable'
-		);
-	$mergever = array_merge( $oldver, $newver );
+		$oldver = $spam_free_wordpress_options;
+		$newver = array(
+			'remove_author_url_field' => 'disable',
+			'remove_author_url' => 'disable',
+			'pingback' => 'enable',
+			'user_registration' => 'enable'
+			);
+		$mergever = array_merge( $oldver, $newver );
 	
-	update_option('spam_free_wordpress', $mergever);
+		update_option('spam_free_wordpress', $mergever);
+	}
 }
 
 /*
@@ -127,20 +133,30 @@ add_action('loop_start', 'sfw_comment_pass_exist_check', 1);
 add_action('comment_post', 'sfw_new_comment_pass', 1);
 
 // Pingbacks and trackbacks are closed automatically if they are open
-if ( isset( $spam_free_wordpress_options['pingback'] ) ) {
-	if ( $spam_free_wordpress_options['pingback'] == 'disable' ) {
+if ( isset( $spam_free_wordpress_options['pingback'] ) && $spam_free_wordpress_options['pingback'] == 'disable' ) {
+	global $pagenow;
+	
+	add_action( 'publish_post', 'sfw_close_spam_pings_auto' );
+	add_action( 'publish_page', 'sfw_close_spam_pings_auto' );
+	add_action( 'publish_future_post', 'sfw_close_spam_pings_auto' );
+	add_action( 'save_post', 'sfw_close_spam_pings_auto' );
+	add_action( 'xmlrpc_publish_post', 'sfw_close_spam_pings_auto' );
+	
+	// Run sfw_close_spam_pings_auto function if on discussion or spam free wordpress settings pages
+	if ( $pagenow == 'options-discussion.php' ) {
+		sfw_close_spam_pings_auto();
+	} else {
 		add_action( 'admin_init', 'sfw_close_spam_pings_auto' );
-		add_action( 'publish_post', 'sfw_close_spam_pings_auto' );
-		add_action( 'publish_page', 'sfw_close_spam_pings_auto' );
-		add_action( 'publish_future_post', 'sfw_close_spam_pings_auto' );
-		add_action( 'save_post', 'sfw_close_spam_pings_auto' );
-		add_action( 'xmlrpc_publish_post', 'sfw_close_spam_pings_auto' );
 	}
 }
 
 // Closes user registration security hole
-if ( isset ($spam_free_wordpress_options['user_registration'] ) ) {
-	if ( $spam_free_wordpress_options['user_registration'] == 'disable' ) {
+if ( isset($spam_free_wordpress_options['user_registration'] ) && $spam_free_wordpress_options['user_registration'] == 'disable' ) {
+	global $pagenow;
+	
+	if ( $pagenow == 'options-general.php' ) {
+		sfw_close_auto_user_registration();
+	} else {
 		add_action( 'admin_init', 'sfw_close_auto_user_registration' );
 	}
 }

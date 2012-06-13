@@ -43,9 +43,6 @@ function spam_free_wordpress_options_page() {
 <table class="form-table">
 	<tr>
 		<td colspan="2" valign="top">
-			<h2><span style="border-bottom: 2px solid #99ccff; padding: 3px;">This plugin can only get better with your support</span></h2>
-			<p><h3>>>> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG">Donate to Support Plugin Development</a> <<<</h3></p>
-			
 			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Comment Form Spam Stats</span></h3>
 			<p><h3>Turn on your stats to say thank you.</h3> This will also display a link to the plugin page on your comment form.</p>
 			<fieldset>

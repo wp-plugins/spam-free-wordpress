@@ -210,7 +210,7 @@ function custom_affiliate_link() {
 
 // Function for comments.php file
 function tl_spam_free_wordpress_comments_form() {
-	global $post, $spam_free_wordpress_version, $spam_free_wordpress_options;
+	global $post, $spam_free_wordpress_options;
 	
 	$sfw_comment_form_password_var = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
 	
@@ -221,7 +221,7 @@ function tl_spam_free_wordpress_comments_form() {
 	if ( !is_user_logged_in() ) {
 		
 		// Spam Count
-		echo '<!-- ' . number_format_i18n(get_option('sfw_spam_hits')) . ' Spam Comments Blocked so far by Spam Free Wordpress version '.$spam_free_wordpress_version.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
+		echo '<!-- ' . number_format_i18n(get_option('sfw_spam_hits')) . ' Spam Comments Blocked so far by Spam Free Wordpress version '.SFW_VERSION.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
 		// Commenter IP address
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".get_remote_ip_address()."' />";
 		// Reader must enter this password manually on the comment form
@@ -279,14 +279,15 @@ Pingbacks and trackbacks are closed automatically if they are open
 function sfw_close_spam_pings_auto() {
 	global $wpdb;
 
-	$sfw_close_ping = $wpdb->posts;
-
-	$wpdb->query("
-		UPDATE $sfw_close_ping
+	$sql =
+		"
+		UPDATE $wpdb->posts
 		SET ping_status = 'closed'
 		WHERE ping_status = 'open'
 		AND post_status = 'publish'
-	");
+		";
+	
+	$sfw_close_ping = $wpdb->query( $wpdb->prepare( $sql ) );
 
 	update_option( 'default_ping_status', 'closed' );
 	update_option( 'default_pingback_flag', '' );

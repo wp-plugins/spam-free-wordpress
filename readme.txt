@@ -79,7 +79,7 @@ If Spam Free Wordpress is installed correctly there will be a "Password:" field 
 
 *NOTE: Clear the blog and web browser cache, and log out as Admin.*
 
-= WordPress 3.0 and Above =
+= WordPress 3.1 and Above =
 
 1. Upload to the /wp-content/plugins directory
 2. Activate

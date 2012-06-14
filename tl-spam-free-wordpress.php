@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.6.5
+Version: 1.6.6
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv2
@@ -17,15 +17,15 @@ License: GPLv2
 
 
 // Plugin version
-define( 'SFW_VERSION', '1.6.5' );
+define( 'SFW_VERSION', '1.6.6' );
 define( 'SFW_PINGBACKS_CLOSED', '<div id="message" class="error"><p><strong>A pingbacks setting was allowing pingback spam on your blog. Spam Free WordPress closed this security hole. Have a nice day. :)</strong></p></div>' );
 
 if ( !get_option('sfw_version') ) {
-	update_option( 'sfw_version', '1.6.5' );
+	update_option( 'sfw_version', '1.6.6' );
 }
 
-if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), '1.6.5', '<' ) ) {
-	update_option( 'sfw_version', '1.6.5' );
+if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), '1.6.6', '<' ) ) {
+	update_option( 'sfw_version', '1.6.6' );
 }
 
 // Set the default settings if not already set
@@ -36,30 +36,34 @@ if( !get_option( 'spam_free_wordpress' ) ) {
 // Add default database settings on plugin activation
 function sfw_add_default_data() {
 
-	// Checks to make sure WordPress version is at least 3.0 or above, if not deactivates plugin
-	if ( version_compare( get_bloginfo( 'version' ), '3.1', '<' ) ) {
-		deactivate_plugins( basename( __FILE__ ) );
-		wp_die( 'Spam Free Wordpress requires at least WordPress 3.1. Sorry! Click back to continue.' );
-	} else {
-		$sfw_options = array(
-		'blocklist_keys' => '',
-		'lbl_enable_disable' => 'disable',
-		'remote_blocked_list' => '',
-		'rbl_enable_disable' => 'disable',
-		'pw_field_size' => '20',
-		'tab_index' => '',
-		'affiliate_msg' => '',
-		'toggle_stats_update' => 'disable',
-		'toggle_html' => 'disable',
-		'remove_author_url_field' => 'disable',
-		'remove_author_url' => 'disable'
-		);
-		update_option( 'spam_free_wordpress', $sfw_options );
-		update_option( 'sfw_spam_hits', '1' );
+	if( !get_option( 'spam_free_wordpress' ) ) {
+		// Checks to make sure WordPress version is at least 3.0 or above, if not deactivates plugin
+		if ( version_compare( get_bloginfo( 'version' ), '3.1', '<' ) ) {
+			deactivate_plugins( basename( __FILE__ ) );
+			wp_die( 'Spam Free Wordpress requires at least WordPress 3.1. Sorry! Click back to continue.' );
+		} else {
+			$sfw_options = array(
+			'blocklist_keys' => '',
+			'lbl_enable_disable' => 'disable',
+			'remote_blocked_list' => '',
+			'rbl_enable_disable' => 'disable',
+			'pw_field_size' => '20',
+			'tab_index' => '',
+			'affiliate_msg' => '',
+			'toggle_stats_update' => 'disable',
+			'toggle_html' => 'disable',
+			'remove_author_url_field' => 'disable',
+			'remove_author_url' => 'disable'
+			);
+			update_option( 'spam_free_wordpress', $sfw_options );
 		
-		// Close pingback default settings
-		update_option( 'default_ping_status', 'closed' );
-		update_option( 'default_pingback_flag', '' );
+			// Close pingback default settings
+			update_option( 'default_ping_status', 'closed' );
+			update_option( 'default_pingback_flag', '' );
+		}
+		if( !get_option( 'sfw_spam_hits' ) ) {
+			update_option( 'sfw_spam_hits', '1' );
+		}
 	}
 }
 
@@ -176,10 +180,17 @@ if ( !$sfw_close_pings_once ) {
 	global $pagenow;
 	
 	if ( $pagenow == 'options-discussion.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) {
-	sfw_close_spam_pings_auto();
-	echo SFW_PINGBACKS_CLOSED;
-	update_option( 'sfw_close_pings_once', true );
+		sfw_close_spam_pings_auto();
+		echo SFW_PINGBACKS_CLOSED;
+		update_option( 'sfw_close_pings_once', true );
 	}
 }
+
+// For testing only
+function sfw_delete() {
+	delete_option( 'spam_free_wordpress' );
+}
+
+// register_deactivation_hook( __FILE__, 'sfw_delete' );
 
 ?>

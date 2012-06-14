@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.6
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -87,10 +87,9 @@ If Spam Free Wordpress is installed correctly there will be a "Password:" field 
 4. If there is no password field on the comment form, then replace the form code with `<?php comment_form(); ?>`.
 5. If you need help editing your comments.php file I will help you on the [Spam Free Wordpress page](http://www.toddlahman.com/spam-free-wordpress/).
 
-= Thesis Theme =
+= Custom Themes =
 
-1. Go to Thesis -> Custom File Editor, choose custom_functions.php, then click Edit selected file. Add the following line of code to that file: `add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');`
-2. Save changes.
+Directions on editing custom themes can be found on the [Spam Free Wordpress page](http://www.toddlahman.com/spam-free-wordpress/)
 
 
 == Frequently Asked Questions ==
@@ -129,11 +128,18 @@ No. If you've ever logged into a blog or forum, like Wordpress.org, with a usern
 
 == Upgrade Notice ==
 
-= 1.6.4 =
+= 1.6.5 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.6.5 =
+
+* Pingbacks now closed automatically by default
+* Reopening pingbacks is no longer an option
+* Pingback/trackback spam is now history
+* Translation support coming soon ...
 
 = 1.6.4 =
 

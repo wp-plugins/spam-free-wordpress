@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.6.4
+Version: 1.6.5
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv2
@@ -17,14 +17,15 @@ License: GPLv2
 
 
 // Plugin version
-define( 'SFW_VERSION', '1.6.4' );
+define( 'SFW_VERSION', '1.6.5' );
+define( 'SFW_PINGBACKS_CLOSED', '<div id="message" class="error"><p><strong>A pingbacks setting was allowing pingback spam on your blog. Spam Free WordPress closed this security hole. Have a nice day. :)</strong></p></div>' );
 
 if ( !get_option('sfw_version') ) {
-	update_option( 'sfw_version', '1.6.4' );
+	update_option( 'sfw_version', '1.6.5' );
 }
 
-if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), '1.6.4', '<' ) ) {
-	update_option( 'sfw_version', '1.6.4' );
+if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), '1.6.5', '<' ) ) {
+	update_option( 'sfw_version', '1.6.5' );
 }
 
 // Set the default settings if not already set
@@ -51,12 +52,14 @@ function sfw_add_default_data() {
 		'toggle_stats_update' => 'disable',
 		'toggle_html' => 'disable',
 		'remove_author_url_field' => 'disable',
-		'remove_author_url' => 'disable',
-		'pingback' => 'enable',
-		'user_registration' => 'enable'
+		'remove_author_url' => 'disable'
 		);
-		update_option('spam_free_wordpress', $sfw_options);
-		update_option('sfw_spam_hits', '1');
+		update_option( 'spam_free_wordpress', $sfw_options );
+		update_option( 'sfw_spam_hits', '1' );
+		
+		// Close pingback default settings
+		update_option( 'default_ping_status', 'closed' );
+		update_option( 'default_pingback_flag', '' );
 	}
 }
 
@@ -77,7 +80,9 @@ if ( is_admin() ) {
 * http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks/#comment-11989
 * http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks-no-longer-fire-for-updates/
 */
-if( $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
+$sfw_run_once = get_option( 'sfw_run_once' );
+
+if( !$sfw_run_once && $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
 	upgrade_to_new_version();
 }
 
@@ -92,13 +97,17 @@ function upgrade_to_new_version() {
 		$oldver = $spam_free_wordpress_options;
 		$newver = array(
 			'remove_author_url_field' => 'disable',
-			'remove_author_url' => 'disable',
-			'pingback' => 'enable',
-			'user_registration' => 'enable'
+			'remove_author_url' => 'disable'
 			);
 		$mergever = array_merge( $oldver, $newver );
 	
-		update_option('spam_free_wordpress', $mergever);
+		update_option( 'spam_free_wordpress', $mergever );
+		
+		update_option('sfw_run_once',true);
+		
+		// Close pingback default settings
+		update_option( 'default_ping_status', 'closed' );
+		update_option( 'default_pingback_flag', '' );
 	}
 }
 
@@ -132,35 +141,6 @@ add_action('loop_start', 'sfw_comment_pass_exist_check', 1);
 // Call the function to change password in custom fields when after each new comment is saved in the database.
 add_action('comment_post', 'sfw_new_comment_pass', 1);
 
-// Pingbacks and trackbacks are closed automatically if they are open
-if ( isset( $spam_free_wordpress_options['pingback'] ) && $spam_free_wordpress_options['pingback'] == 'disable' ) {
-	global $pagenow;
-	
-	add_action( 'publish_post', 'sfw_close_spam_pings_auto' );
-	add_action( 'publish_page', 'sfw_close_spam_pings_auto' );
-	add_action( 'publish_future_post', 'sfw_close_spam_pings_auto' );
-	add_action( 'save_post', 'sfw_close_spam_pings_auto' );
-	add_action( 'xmlrpc_publish_post', 'sfw_close_spam_pings_auto' );
-	
-	// Run sfw_close_spam_pings_auto function if on discussion or spam free wordpress settings pages
-	if ( $pagenow == 'options-discussion.php' ) {
-		sfw_close_spam_pings_auto();
-	} else {
-		add_action( 'admin_init', 'sfw_close_spam_pings_auto' );
-	}
-}
-
-// Closes user registration security hole
-if ( isset($spam_free_wordpress_options['user_registration'] ) && $spam_free_wordpress_options['user_registration'] == 'disable' ) {
-	global $pagenow;
-	
-	if ( $pagenow == 'options-general.php' ) {
-		sfw_close_auto_user_registration();
-	} else {
-		add_action( 'admin_init', 'sfw_close_auto_user_registration' );
-	}
-}
-
 // settings action link
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'sfw_settings_link', 10, 1);
 // "network_admin_plugin_action_links_{$plugin_file}"
@@ -174,6 +154,32 @@ function sfw_donate_link($links, $file) {
 		$links[] = '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG">Donate</a>';
 	}
 	return $links;
+}
+
+
+/**
+* Close pingbacks and trackback automatically if enabled.
+* If ping_status is already closed, and if some posts still have ping enabled, then manual button on settings page needs to be used.
+*/
+if ( get_option( 'default_ping_status' ) == 'open' || get_option( 'default_pingback_flag' ) == '1' ) {
+	sfw_close_spam_pings_auto();
+	echo SFW_PINGBACKS_CLOSED;
+}
+
+
+/**
+* Pingbacks and trackbacks are closed automatically if they are open
+*/
+$sfw_close_pings_once = get_option( 'sfw_close_pings_once' );
+
+if ( !$sfw_close_pings_once ) {
+	global $pagenow;
+	
+	if ( $pagenow == 'options-discussion.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) {
+	sfw_close_spam_pings_auto();
+	echo SFW_PINGBACKS_CLOSED;
+	update_option( 'sfw_close_pings_once', true );
+	}
 }
 
 ?>

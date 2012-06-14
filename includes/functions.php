@@ -284,13 +284,32 @@ function sfw_close_spam_pings_auto() {
 		UPDATE $wpdb->posts
 		SET ping_status = 'closed'
 		WHERE ping_status = 'open'
-		AND post_status = 'publish'
 		";
 	
 	$sfw_close_ping = $wpdb->query( $wpdb->prepare( $sql ) );
 
 	update_option( 'default_ping_status', 'closed' );
 	update_option( 'default_pingback_flag', '' );
+	
+	wp_cache_flush();
+}
+
+function sfw_close_pingbacks_manual() {
+	global $wpdb;
+
+	$sql =
+		"
+		UPDATE $wpdb->posts
+		SET ping_status = 'closed'
+		WHERE ping_status = 'open'
+		";
+	
+	$sfw_close_ping = $wpdb->query( $wpdb->prepare( $sql ) );
+
+	update_option( 'default_ping_status', 'closed' );
+	update_option( 'default_pingback_flag', '' );
+	
+	wp_cache_flush();
 }
 
 /*-----------------------------------------

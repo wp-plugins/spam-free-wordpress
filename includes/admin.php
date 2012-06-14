@@ -36,6 +36,10 @@ function spam_free_wordpress_options_page() {
 			// Display saved message when options are updated.
 			_e('<div id="message" class="updated"><p>Spam Free Wordpress settings saved.</p></div>');
 		}
+		if (isset( $_POST['pingbacks'] ) ) {
+			sfw_close_pingbacks_manual();
+			echo '<div id="message" class="updated"><p><strong>All pingbacks closed. Have a nice day. :)</strong></p></div>';
+		}
 		
 		$spam_free_wordpress_options = get_option('spam_free_wordpress');
 ?>
@@ -53,16 +57,6 @@ function spam_free_wordpress_options_page() {
 			<p>If the Spam Free Wordpress password field is not visible on the comment form then review the instructions available at <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank">Spam Free Wordpress</a>.</p>
 			<p>If you still need help getting the password field to show on the comment form:</p>
 			</p>Post all of the code from your original comments.php file to <a href="http://pastebin.com/" target="_blank">Pastbin</a>, paste a link to that code <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank">here</a>, and I will reply with a link to pastebin with the new code for your comments.php file.</p>
-
-			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Pingbacks and Trackbacks</span></h3>
-			<fieldset>
-				<p><?php sfw_unchecked( 'pingback' ); ?> Close Pingbacks and Trackbacks on Past and Future Posts (Recommended)</p>
-			</fieldset>
-				
-			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">User Registration</span></h3>
-			<fieldset>
-				<p><?php sfw_unchecked( 'user_registration' ); ?> Close User Registration to Prevent Unauthorized Accounts (Recommended)</p>
-			</fieldset>
 			
 			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Remove HTML from Comments</span></h3>
 			<p>Strips the HTML from comments to render spam links as plain text. Also removes the allowed HTML tags message from below the comment box.</p>			
@@ -105,6 +99,9 @@ function spam_free_wordpress_options_page() {
 				</fieldset>
 			<p>Copy and paste the line of code below into a template file to display the custom share link.</p>
 			<code>&lt;?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?&gt;</code>
+			
+			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Manually Close Pingbacks</span></h3>
+			<?php submit_button( 'Close Pingbacks', 'secondary', 'pingbacks' ); ?>
 			
 			<td valign="top">
 				<div align="center"><h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Blocked Spam Comments</span></h3>

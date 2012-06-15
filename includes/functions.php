@@ -276,7 +276,7 @@ function spam_counter() {
 Pingbacks and trackbacks are closed automatically if they are open
 --------------------------------------------------------------------------*/
 
-function sfw_close_spam_pings_auto() {
+function sfw_close_pingbacks() {
 	global $wpdb;
 
 	$sql =
@@ -290,26 +290,24 @@ function sfw_close_spam_pings_auto() {
 
 	update_option( 'default_ping_status', 'closed' );
 	update_option( 'default_pingback_flag', '' );
-	
-	wp_cache_flush();
+
 }
 
-function sfw_close_pingbacks_manual() {
+function sfw_open_pingbacks() {
 	global $wpdb;
 
 	$sql =
 		"
 		UPDATE $wpdb->posts
-		SET ping_status = 'closed'
-		WHERE ping_status = 'open'
+		SET ping_status = 'open'
+		WHERE ping_status = 'closed'
 		";
 	
-	$sfw_close_ping = $wpdb->query( $wpdb->prepare( $sql ) );
+	$sfw_open_ping = $wpdb->query( $wpdb->prepare( $sql ) );
 
-	update_option( 'default_ping_status', 'closed' );
-	update_option( 'default_pingback_flag', '' );
-	
-	wp_cache_flush();
+	update_option( 'default_ping_status', 'open' );
+	update_option( 'default_pingback_flag', '1' );
+
 }
 
 /*-----------------------------------------

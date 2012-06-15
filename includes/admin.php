@@ -34,11 +34,13 @@ function spam_free_wordpress_options_page() {
 		if (isset( $_POST['options'] ) ) {
 			update_option('spam_free_wordpress', $_POST['spam_free_wordpress_options']);
 			// Display saved message when options are updated.
+			$spam_free_wordpress_options = get_option('spam_free_wordpress');
+			if( $spam_free_wordpress_options['ping_status'] == 'open' ) {
+				sfw_open_pingbacks();
+			} elseif( $spam_free_wordpress_options['ping_status'] == 'closed' ) {
+				sfw_close_pingbacks();
+			}
 			_e('<div id="message" class="updated"><p>Spam Free Wordpress settings saved.</p></div>');
-		}
-		if (isset( $_POST['pingbacks'] ) ) {
-			sfw_close_pingbacks_manual();
-			echo '<div id="message" class="updated"><p><strong>All pingbacks closed. Have a nice day. :)</strong></p></div>';
 		}
 		
 		$spam_free_wordpress_options = get_option('spam_free_wordpress');
@@ -100,8 +102,12 @@ function spam_free_wordpress_options_page() {
 			<p>Copy and paste the line of code below into a template file to display the custom share link.</p>
 			<code>&lt;?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?&gt;</code>
 			
-			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Manually Close Pingbacks</span></h3>
-			<?php submit_button( 'Close Pingbacks', 'secondary', 'pingbacks' ); ?>
+			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Pingbacks and Trackbacks</span></h3>
+			<p><strong>It is highly recommended to keep pingbacks CLOSED to eliminate that form of spam entirely.</strong></p>
+			<p>Pingbacks can cause a downgrade in SEO ranking, and are almost entirely spam. Pingbacks are not worth the trouble they bring, but if you still want them it is your choice.</p>
+				<fieldset>
+					<p>Open <input type="radio" name="spam_free_wordpress_options[ping_status]" <?php echo (($spam_free_wordpress_options['ping_status'] == "open") ? 'checked="checked"' : '') ;  ?> value="open" />&nbsp;&nbsp; Closed <input type="radio" name="spam_free_wordpress_options[ping_status]" <?php echo (($spam_free_wordpress_options['ping_status'] == "closed") ? 'checked="checked"' : '') ;  ?> value="closed" /></p>
+				</fieldset>
 			
 			<td valign="top">
 				<div align="center"><h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;">Blocked Spam Comments</span></h3>

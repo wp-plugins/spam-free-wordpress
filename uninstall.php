@@ -11,7 +11,15 @@ global $wpdb;
 delete_option( 'spam_free_wordpress' );
 //delete_option( 'sfw_spam_hits' );
 delete_option('sfw_version');
-$wpdb->query("DELETE FROM $wpdb->postmeta WHERE meta_key LIKE 'sfw_comment_form_password'");
+
+$sql =
+	"
+	DELETE FROM $wpdb->postmeta
+	WHERE meta_key
+	LIKE 'sfw_comment_form_password'
+	";
+	
+$delete_metadata = $wpdb->query( $wpdb->prepare( $sql ) );
 
 // The post comment passwords can be deleted also using the following SQL statement.
 // DELETE from wp_postmeta WHERE meta_key = "sfw_comment_form_password" ;

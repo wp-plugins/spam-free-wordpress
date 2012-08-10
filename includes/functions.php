@@ -230,7 +230,9 @@ function tl_spam_free_wordpress_comments_form() {
 		// Reader must enter this password manually on the comment form
 		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
 		echo "<input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' />";
-		echo '<button type="button" id="pwdbtn">'._e( 'Click for Password', 'spam-free-wordpress' ).'</button>';
+		echo '<button type="button" id="pwdbtn">';
+		_e( 'Click for Password', 'spam-free-wordpress' );
+		echo '</button>';
 		echo '<p id="cip"></p>';
 		echo '<p id="comment_ready"></p>';
 		

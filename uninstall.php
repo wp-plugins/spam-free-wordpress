@@ -5,23 +5,16 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     exit();
 }
 
-global $wpdb;
-
 // Removes all Spam Free Wordpress data from the database
 delete_option( 'spam_free_wordpress' );
 //delete_option( 'sfw_spam_hits' );
 delete_option('sfw_version');
 
-$sql =
-	"
-	DELETE FROM $wpdb->postmeta
-	WHERE meta_key
-	LIKE 'sfw_comment_form_password'
-	";
-	
-$delete_metadata = $wpdb->query( $wpdb->prepare( $sql ) );
+// Delete postmeta meta_key sfw_comment_form_password database entries, since we don't use them anymore
+$sfw_allposts = get_posts('numberposts=-1&post_type=post&post_status=any');
 
-// The post comment passwords can be deleted also using the following SQL statement.
-// DELETE from wp_postmeta WHERE meta_key = "sfw_comment_form_password" ;
+foreach( $sfw_allposts as $sfw_postinfo) {
+	delete_post_meta($sfw_postinfo->ID, 'sfw_comment_form_password');
+}
 
 ?>

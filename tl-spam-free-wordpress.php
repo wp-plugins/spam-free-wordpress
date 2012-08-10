@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.7.1
+Version: 1.7.2
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -18,7 +18,7 @@ License: GPLv3
 
 // Plugin version
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.7.1' );
+	define( 'SFW_VERSION', '1.7.2' );
 
 // Ready for translation
 load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
@@ -244,9 +244,8 @@ function sfw_load_pwd() {
 		$js_path =  SFW_URL . 'js/sfw-load-pwd.js?' . filemtime( SFW_PATH . 'js/sfw-load-pwd.js' );
 		
 		wp_enqueue_script( 'sfw_pwd', $js_path, array( 'jquery' ) );
-		wp_enqueue_script( 'sfw_client_ip', $js_path, array( 'jquery' ) );
 		wp_localize_script( 'sfw_pwd', 'sfw_pwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_client_ip', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'sfw_pwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 	
 //register with hook 'wp_enqueue_scripts' which can be used for front end CSS and JavaScript

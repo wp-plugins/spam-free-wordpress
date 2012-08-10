@@ -95,7 +95,7 @@ Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
 
-= 1.7.1 =
+= 1.7.2 =
 
 * Corrected jQuery file loading twice
 

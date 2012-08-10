@@ -7,6 +7,10 @@ function do_spam_free_wordpress_automation() {
 	// Calls the password form for comments.php if the comment_form function is outputting comment form fields
 	add_action('comment_form_after_fields', 'tl_spam_free_wordpress_comments_form', 1);
 	
+	if ($spam_free_wordpress_options['comment_form'] == "on") {
+		add_action('comment_form_after_fields', 'sfw_special_message');
+	}
+	
 	// Strips out html from comment form when enabled
 	if ( $spam_free_wordpress_options['toggle_html'] == "enable" ) {
 		// Removes all HTML from comments and leaves it only as text
@@ -77,12 +81,14 @@ function sfw_remove_allowed_tags_field($no_allowed_tags) {
 
 // Friendly no HTML allowed notice under comment form
 function sfw_no_html_notice($nohtml) {
-	$nohtml['comment_notes_after'] = '<p><b>HTML tags and attributes are not allowed.</b></p>';
+	$sfw_tag_msg = __( 'HTML tags are not allowed.', 'spam-free-wordpress' );
+	$nohtml['comment_notes_after'] = '<p><b>'. $sfw_tag_msg .'</b></p>';
 	return $nohtml;
 }
 
 function sfw_no_html_notice_action() {
-	echo '<p><b>HTML tags and attributes are not allowed.</b></p>';
+	$sfw_tag_msg = __( 'HTML tags and attributes are not allowed.', 'spam-free-wordpress' );
+	echo '<p><b>'. $sfw_tag_msg .'</b></p>';
 }
 
 // Remove url field from comment form, but only if the comment form uses the comment_form function
@@ -93,29 +99,6 @@ function sfw_remove_url_field_off($no_url) {
 // Remove comment author link
 function strip_author_url($content = "") {
   return "";
-}
-
-/*---------------------------------------------------------------------------------------------
-Checks to see if comment form password exists and if not creates one in custom fields
------------------------------------------------------------------------------------------------*/
-
-function sfw_comment_pass_exist_check() {
-	global $post;
-	$new_post_comment_pwd = wp_generate_password(12, false);
-	$sfw_pwd_exists_check = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
-	
-	if( empty($sfw_pwd_exists_check) || !$sfw_pwd_exists_check  && is_singular() && comments_open() ) {
-		update_post_meta($post->ID, 'sfw_comment_form_password', $new_post_comment_pwd);
-	}
-}
-
-// Creates a new comment form password each time a comment is saved in the database
-function sfw_new_comment_pass() {
-	global $post;
-	$new_comment_pwd = wp_generate_password(12, false);
-	$old_password = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
-	
-	update_post_meta($post->ID, 'sfw_comment_form_password', $new_comment_pwd, $old_password);
 }
 
 // Gets the remote IP address even if behind a proxy
@@ -132,12 +115,25 @@ function get_remote_ip_address() {
 	return $ip_address;
 }
 
-// Returns Local Blocklist
-function sfw_local_blocklist_check() {
-	global $spam_free_wordpress_options;
+// AJAX function to obtain client IP address
+function get_remote_ip_address_ajax() {
+	if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+	} else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} else if(!empty($_SERVER['REMOTE_ADDR'])) {
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+	} else {
+		$ip_address = '';
+	}
+	echo $ip_address;
+	
+	die();
+}
 
-	// Gets IP address of commenter
-	$comment_author_ip = get_remote_ip_address();
+// Returns Local Blocklist
+function sfw_local_blocklist_check( $cip ) {
+	global $spam_free_wordpress_options;
 
 	$local_blocklist_keys = trim( $spam_free_wordpress_options['blocklist_keys'] );
 	if ( '' == $local_blocklist_keys )
@@ -155,7 +151,7 @@ function sfw_local_blocklist_check() {
 
 		$pattern = "#$lkey#i";
 		if (
-			   preg_match($pattern, $comment_author_ip)
+			   preg_match($pattern, $cip)
 		 )
 			return true;
 	}
@@ -163,11 +159,9 @@ function sfw_local_blocklist_check() {
 }
 
 // Returns Remote Blocklist
-function sfw_remote_blocklist_check() {
+function sfw_remote_blocklist_check( $cip ) {
 	global $spam_free_wordpress_options;
 	
-	// Gets IP address of commenter
-	$comment_author_ip = get_remote_ip_address();
 	// Retrieves remote blocklist url from database
 	$rbl_url = $spam_free_wordpress_options['remote_blocked_list'];
 	// Uses a URL to retrieve a list of IP address in an array
@@ -188,7 +182,7 @@ function sfw_remote_blocklist_check() {
 
 		$pattern = "#$rkey#i";
 		if (
-			   preg_match($pattern, $comment_author_ip)
+			   preg_match($pattern, $cip)
 		 )
 			return true;
 	}
@@ -199,10 +193,11 @@ function sfw_remote_blocklist_check() {
 function custom_affiliate_link() {
 	$spam_free_wordpress_options = get_option('spam_free_wordpress');
 
+	$default_aff_msg = __( 'Make Your Blog Spam Free', 'spam-free-wordpress' );
 	$aff_msg = $spam_free_wordpress_options['affiliate_msg'];
 	
 	if ($spam_free_wordpress_options['affiliate_msg'] =='') {
-		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/'>Make Your Blog Spam Free</a>";
+		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/'>". $default_aff_msg ."</a>";
 	} else {
 		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/'>".$aff_msg."</a>";
 	}
@@ -221,48 +216,71 @@ function tl_spam_free_wordpress_comments_form() {
 	if ( !is_user_logged_in() ) {
 		
 		// Spam Count
-		echo '<!-- ' . number_format_i18n(get_option('sfw_spam_hits')) . ' Spam Comments Blocked so far by Spam Free Wordpress version '.SFW_VERSION.' located at http://www.toddlahman.com/spam-free-wordpress/ -->';
+		echo '<!-- ' . number_format_i18n( get_option( 'sfw_spam_hits' ) );
+		_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
+		echo 'Spam Free Wordpress';
+		_e( ' version ', 'spam-free-wordpress' );
+		echo SFW_VERSION;
+		_e( ' located at ', 'spam-free-wordpress' );
+		echo "http://www.toddlahman.com/spam-free-wordpress/ -->\n";
+		
 		// Commenter IP address
-		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".get_remote_ip_address()."' />";
+		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+		
 		// Reader must enter this password manually on the comment form
-		echo "<p><input type='text' value='".$sfw_comment_form_password_var."' onclick='this.select()' size='".$sfw_pw_field_size."' />
-		<b>* Copy This Password *</b></p>";
-		echo "<p><input type='text' name='passthis' id='passthis' value='' size='".$sfw_pw_field_size."' tabindex='".$sfw_tab_index."' />
-		<b>* Type Or Paste Password Here *</b></p>";
+		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
+		echo "<input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' />";
+		echo '<button type="button" id="pwdbtn">'._e( 'Click for Password', 'spam-free-wordpress' ).'</button>';
+		echo '<p id="cip"></p>';
+		echo '<p id="comment_ready"></p>';
+		
 		// Shows how many comment spam have been killed on the comment form
 		if ($spam_free_wordpress_options['toggle_stats_update'] == "enable") {
-				echo '<p>' . number_format_i18n(get_option('sfw_spam_hits')) . ' Spam Comments Blocked so far by <a href="http://www.toddlahman.com/spam-free-wordpress/" target="_blank">Spam Free Wordpress</a></p>';
+				echo '<p>' . number_format_i18n( get_option('sfw_spam_hits' ) );
+				_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
+				echo '<a href="http://www.toddlahman.com/spam-free-wordpress/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>';
 		} else {
 				echo "";
 		}
 	}
 }
 
+function sfw_special_message() {
+	global $spam_free_wordpress_options;
+	
+	echo stripslashes( $spam_free_wordpress_options['special_msg'] );
+}
+
 // Function for wp-comments-post.php file located in the root Wordpress directory. The same directory as the wp-config.php file.
 function tl_spam_free_wordpress_comments_post() {
 	global $post, $spam_free_wordpress_options;
 	
-	$sfw_comment_script = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
+	//$sfw_comment_script = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
+	$sfw_comment_script = get_transient( $post->ID. '-' .$_POST['pwdfield'] );
+	
+	$cip = $_POST['comment_ip'];
 	
 	// If the reader is logged in don't require password for wp-comments-post.php
 	if ( !is_user_logged_in() ) {
-
+		// Nonce check
+		if ( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
+			wp_die( __( 'Spam Free Wordpress rejected your comment because you failed a critical security check.', 'spam-free-wordpress' ) . spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+		
 		// Compares current comment form password with current password for post
-		if ( empty( $_POST['passthis'] ) || $_POST['passthis'] != $sfw_comment_script)
-			wp_die( __('Click back and type in the correct password. (Spam Free Wordpress)', spam_counter()) );
+		if ( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
+			wp_die( __( 'Spam Free Wordpress rejected your comment because you did not enter the correct password or it was empty.', 'spam-free-wordpress' ) . spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
 		// Compares commenter IP address to local blocklist
-		if ($spam_free_wordpress_options['lbl_enable_disable'] == 'enable') {
-			if ( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check() )
-				wp_die( __('Spam Blocked by Spam Free Wordpress (local blocklist)', spam_counter()) );
+		if ( $spam_free_wordpress_options['lbl_enable_disable'] == 'enable' ) {
+			if ( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check( $cip ) )
+				wp_die( __( 'Comment blocked by Spam Free Wordpress because your IP address is in the local blocklist, or you forgot to type a comment.', 'spam-free-wordpress' ) . spam_counter(), 'Spam Blocked by Spam Free Wordpress local blocklist', array( 'response' => 200, 'back_link' => true ) );
 		}
 		
 		// Compares commenter IP address to remote blocklist
-		if ($spam_free_wordpress_options['rbl_enable_disable'] == 'enable') {
-			if ( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_remote_blocklist_check() )
-				wp_die( __('Spam Blocked by Spam Free Wordpress (remote blocklist)', spam_counter()) );
+		if ( $spam_free_wordpress_options['rbl_enable_disable'] == 'enable' ) {
+			if ( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_remote_blocklist_check( $cip ) )
+				wp_die( __( 'Comment blocked by Spam Free Wordpress because your IP address is in the remote blocklist, or you forgot to type a comment.', 'spam-free-wordpress' ) . spam_counter(), 'Spam Blocked by Spam Free Wordpress remote blocklist', array( 'response' => 200, 'back_link' => true ) );
 		}
-
 	}
 }
 
@@ -329,6 +347,8 @@ function sfw_settings_link($links) {
 * Unfortunately a value is not stored in the database when unchecked. This problem can be corrected when using the Settings API which stores a value if checked or unchecked using a Ternary Operator
 * http://wordpress.org/support/topic/problem-with-checked-function?replies=6
 * Box starts out unchecked
+* http://wordpress.stackexchange.com/questions/43752/settings-api-easiest-way-of-validating-checkboxes
+* $valid_input[$setting] = ( isset( $input[$setting] ) && true == $input[$setting] ? true : false );
 */
 function sfw_unchecked( $checkoption ) {
 	$spam_free_wordpress_options = get_option('spam_free_wordpress');
@@ -337,5 +357,36 @@ function sfw_unchecked( $checkoption ) {
 	}
 	echo '<input type="checkbox" name="spam_free_wordpress_options['. $checkoption .']" value="disable"'. checked( $spam_free_wordpress_options[$checkoption], 'disable', false ) .' />';
 }
+
+
+/*-----------------------------------------
+Generates temporary passwords
+------------------------------------------*/
+
+function sfw_get_pwd() {
+	$postid = $_POST['post_id'];
+	
+	$pwd = wp_generate_password(12, false);
+	set_transient( $postid. '-' .$pwd, $pwd, 60 * 20 ); // expire password after 20 minutes
+	$pwd_key = get_transient( $postid. '-' .$pwd );
+	
+	echo $pwd_key;
+	
+	die();
+}
+
+/*--------------------------------------------------------------------
+* X-Autocomplete Comment Form Fields for Chrome 15 and above
+* http://wiki.whatwg.org/wiki/Autocompletetype
+* http://googlewebmastercentral.blogspot.com/2012/01/making-form-filling-faster-easier-and.html
+---------------------------------------------------------------------*/
+
+function sfw_add_x_autocompletetype( $fields ) {
+	$fields['author'] = str_replace( '<input', '<input x-autocompletetype="name-full"', $fields['author'] );
+	$fields['email'] = str_replace( '<input', '<input x-autocompletetype="email"', $fields['email'] );
+	return $fields;
+}
+
+add_filter('comment_form_default_fields','sfw_add_x_autocompletetype');
 
 ?>

@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.7.2
+Version: 1.7.3
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -18,7 +18,7 @@ License: GPLv3
 
 // Plugin version
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.7.2' );
+	define( 'SFW_VERSION', '1.7.3' );
 
 // Ready for translation
 load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
@@ -230,6 +230,18 @@ function sfw_delete() {
 
 //register_deactivation_hook( __FILE__, 'sfw_delete' );
 
+
+/*-----------------------------------------------------------------------------------------------------------------------
+* Before the comment form can be automatically generated, make sure JetPack Comments module is not active
+-------------------------------------------------------------------------------------------------------------------------*/
+
+if ( class_exists( 'Jetpack' ) ) {
+	if ( 1 == Jetpack::get_option( 'activated' ) ) {
+		if ( in_array( 'comments', Jetpack::get_active_modules() ) ) {
+			Jetpack::deactivate_module( 'comments' );
+		}
+	}
+}
 
 // automatically generate comment form
 function sfw_comment_form_init() {

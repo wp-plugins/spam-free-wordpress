@@ -244,6 +244,10 @@ function tl_spam_free_wordpress_comments_form() {
 		} else {
 				echo "";
 		}
+		
+		// Automatically cleanup Post Meta Custom Fields since transients are now used
+		delete_post_meta( $post->ID, 'sfw_comment_form_password' );
+		
 	}
 }
 

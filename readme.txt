@@ -14,7 +14,7 @@ Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-
 
 Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. 
 
-This plugin was born out of necessity in September of 2007. An comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of traffic or spam.
+This plugin was born out of necessity in September of 2007. A comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of traffic or spam.
 
 It is my goal for Spam Free WordPress to help WordPress become the world's first and only comment spam free blogging platform. This goal can only be met if you activate the link on the plugin settings page back to the plugin homepage, and tell others about the plugin.
 
@@ -29,17 +29,18 @@ It is my goal for Spam Free WordPress to help WordPress become the world's first
  7. No CAPTCHA
  8. Saves time and money by eliminating the need to empty the comment spam folder
  9. Over 166,000 Spam Free Blogs and Counting!
-10. Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
 
-Read about how [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) works in detail on the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
+
+Read about how Spam Free WordPress works in detail on the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 = About the Author =
 
-Todd Lahman is a [WordPress Consultant, and a Search Engine Optimization expert](http://www.toddlahman.com/hire-todd-lahman/).
+Todd Lahman is a [WordPress Consultant](http://www.toddlahman.com/hire-todd-lahman/), and a [Search Engine Optimization expert](http://www.toddlahman.com/hire-todd-lahman/).
 
 == Installation ==
 
-Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.Min361Rnst
+Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 
 = WordPress 3.1 and Above =

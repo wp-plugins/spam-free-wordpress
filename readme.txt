@@ -97,6 +97,7 @@ Upgrade immediately to keep your blog comment spam free.
 * Removed password button
 * Password field automatically generates password when clicked
 * Added notice for non-JavaScript readers to turn it on to leave a comment
+* Added readonly attribute to password field - Thanks Thomas
 
 = 1.7.3 =
 

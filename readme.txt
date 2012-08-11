@@ -52,7 +52,7 @@ Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-
 
 == Frequently Asked Questions ==
 
-Update 3-26-2012: Support requests on the WordPress.org forum will no longer be answered. All requests for support should be made at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 = Is Spam Free Wordpress compatible with other comment spam plugins? =
 
@@ -80,7 +80,7 @@ No, but it will stop spam.
 
 == Screenshots ==
 
-1. If Spam Free Wordpress is installed correctly there will be a Password field on the comment form.
+1. If Spam Free Wordpress is installed correctly there will be a password field on the comment form.
 
 2. Spam Free Wordpress in Action
 

@@ -229,18 +229,17 @@ function tl_spam_free_wordpress_comments_form() {
 		
 		// Reader must enter this password manually on the comment form
 		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo "<input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' />";
-		echo '<button type="button" id="pwdbtn">';
-		_e( 'Click for Password', 'spam-free-wordpress' );
-		echo '</button>';
-		echo '<p id="cip"></p>';
-		echo '<p id="comment_ready"></p>';
+
+		echo "\n<p><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' size='".$sfw_pw_field_size."' /></p>\n";
+		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
+		echo '<p id="cip"></p>'."\n";
+		echo '<p id="comment_ready"></p>'."\n";
 		
 		// Shows how many comment spam have been killed on the comment form
 		if ($spam_free_wordpress_options['toggle_stats_update'] == "enable") {
 				echo '<p>' . number_format_i18n( get_option('sfw_spam_hits' ) );
 				_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
-				echo '<a href="http://www.toddlahman.com/spam-free-wordpress/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>';
+				echo '<a href="http://www.toddlahman.com/spam-free-wordpress/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>'."\n";
 		} else {
 				echo "";
 		}

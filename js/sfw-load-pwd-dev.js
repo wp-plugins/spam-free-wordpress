@@ -7,11 +7,43 @@
 			id = $this.attr('id').replace('post-', '');
 		});
 		*/
-		// Grab post-id from hidden comment form field 
+		
+		//prepopulate fields that need default values (using rel attribute)
+		$('.pwddefault').each(function(){
+				$(this).val( $(this).attr('rel') );
+		});
+
+		// get the comment post id
 		$('#comment_post_ID').each(function() {
 			$this = $(this);
 			pid = $this.val();
 		});
+		
+		//clear default value and add '.not-empty' class on click
+		$('.pwddefault').focus( function(){
+			$.post(sfw_pwd.ajaxurl, { action: 'sfw_ajax_hook', post_id : pid }, function( response ) {
+				$( '.pwddefault' ).val( response );
+				$( '#comment_ready' ).html('<strong>Please leave your comment now.</strong>');
+				return false;
+			});
+			if( $(this).val() == $(this).attr('rel') ){
+				$(this).val('').addClass('pwdnotempty'); 
+			}
+		});   
+
+		//restore default value and remove '.not-empty' class if left blank after click
+		$('.pwddefault').blur(function(){
+			if( $(this).val() =='' ){
+			$(this).val( $(this).attr('rel') ).removeClass('pwdnotempty');
+			}
+		});
+
+		// Grab post-id from hidden comment form field 
+		/*$('#comment_post_ID').each(function() {
+			$this = $(this);
+			pid = $this.val();
+		});
+		
 		$( '#pwdbtn' ).on( 'click', function() {
 			$.post(sfw_pwd.ajaxurl, { action: 'sfw_ajax_hook', post_id : pid }, function( response ) {
 				$( '#pwdfield' ).val( response );
@@ -19,7 +51,8 @@
 				$( '#comment_ready' ).html('<strong>Please leave your comment now.</strong>');
 				return false;
 			});
-		});
+		});*/
+		
 		$( '#comment' ).keydown(function() {
 			$.post(sfw_client_ip.ajaxurl, { action: 'sfw_ajax_client_ip_hook' }, function( response ) {
 				$( '#comment_ip' ).val( response );
@@ -28,6 +61,8 @@
 		});
 	});
 })(jQuery);
+
+
 
 
 /* Notes

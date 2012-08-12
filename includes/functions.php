@@ -33,28 +33,29 @@ function do_spam_free_wordpress_automation() {
 		// Suffusion
 		if ( $sfw_get_current_theme == 'Suffusion' ) {
 			add_filter('suffusion_comment_form_fields','sfw_no_html_notice');
-			}
+		}
 			
 		// Genesis
 		if ( $sfw_get_current_theme == 'Genesis/genesis' ) {
 			add_action('genesis_after_comment_form','sfw_no_html_notice_action');
-			}
+		}
 			
 		// Graphene
 		if ( $sfw_get_current_theme == 'Graphene' ) {
 			add_filter('graphene_comment_form_args','sfw_no_html_notice');
-			}
+		}
 			
 		// Thesis
 		if ( $sfw_get_current_theme == 'Thesis' ) {
 			add_action('thesis_hook_comment_field', 'tl_spam_free_wordpress_comments_form');
 			add_action('thesis_hook_after_comment_box','sfw_no_html_notice_action');
-			}
+		}
 			
 		// Thematic
 		if ( $sfw_get_current_theme == 'Thematic' ) {
+			define('THEMATIC_COMPATIBLE_COMMENT_FORM', true);
 			add_filter('thematic_comment_form_args','sfw_no_html_notice');
-			}
+		}
 	
 	}
 
@@ -87,7 +88,7 @@ function sfw_no_html_notice($nohtml) {
 }
 
 function sfw_no_html_notice_action() {
-	$sfw_tag_msg = __( 'HTML tags and attributes are not allowed.', 'spam-free-wordpress' );
+	$sfw_tag_msg = __( 'HTML tags are not allowed.', 'spam-free-wordpress' );
 	echo '<p><b>'. $sfw_tag_msg .'</b></p>';
 }
 

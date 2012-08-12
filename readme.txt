@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.6
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -86,11 +86,25 @@ No, but it will stop spam.
 
 == Upgrade Notice ==
 
-= 1.7.4 =
+= 1.7.5 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.7.5 =
+
+* Fixed automatic comment form generation not turning off due to code error
+* Added full Thematic comment form support
+* Added full Genesis comment form support
+* Added full PageLines comment form support
+* Added full Graphene comment form support
+* Added full Atahualpa comment form support
+* Added full Suffusion comment form support
+* Added full Picture Perfect comment form support
+* Thesis only allows password and no tags message on comment form
+* Replaced German translation - Thanks Marco
+* Turn mouse cursor into a pointer when over password field - Thanks Joe
 
 = 1.7.4 =
 

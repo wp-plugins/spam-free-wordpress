@@ -19,8 +19,13 @@
 			pid = $this.val();
 		});
 		
+		// Turn cursor into pointer when over password field
+		$('.pwddefault').on( 'mouseover', function(){
+			$('.pwddefault').css('cursor', 'pointer');
+		}); 
+		
 		//clear default value and add '.not-empty' class on click
-		$('.pwddefault').focus( function(){
+		$('.pwddefault').on( 'focus', function(){
 			$.post(sfw_pwd.ajaxurl, { action: 'sfw_ajax_hook', post_id : pid }, function( response ) {
 				$( '.pwddefault' ).val( response );
 				$( '#comment_ready' ).html('<strong>Please leave your comment now.</strong>');
@@ -32,7 +37,7 @@
 		});   
 
 		//restore default value and remove '.not-empty' class if left blank after click
-		$('.pwddefault').blur(function(){
+		$('.pwddefault').on( 'blur', function(){
 			if( $(this).val() =='' ){
 			$(this).val( $(this).attr('rel') ).removeClass('pwdnotempty');
 			}
@@ -53,7 +58,7 @@
 			});
 		});*/
 		
-		$( '#comment' ).keydown(function() {
+		$( '#comment' ).on( 'keydown', function() {
 			$.post(sfw_client_ip.ajaxurl, { action: 'sfw_ajax_client_ip_hook' }, function( response ) {
 				$( '#comment_ip' ).val( response );
 				return false;

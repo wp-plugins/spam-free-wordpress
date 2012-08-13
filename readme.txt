@@ -74,9 +74,9 @@ Yes.
 
 1. The invisible password secures the comment form without bothering the reader.
 
-2. A clickable password can secures the comment form if you want a visual password.
+2. A clickable field can secure the comment form if you want a visual password.
 
-3. A click for password can secures the comment form if you want a visual password.
+3. A password button can secure the comment form if you want a visual password.
 
 4. Spam Free Wordpress in action.
 

@@ -95,10 +95,7 @@ register_activation_hook( __FILE__, 'sfw_add_default_data' );
 $spam_free_wordpress_options = get_option('spam_free_wordpress');
 
 require_once( dirname( __FILE__ ) . '/includes/functions.php' );
-
-if ( is_admin() ) {
-	require_once( dirname( __FILE__ ) . '/includes/upgradedb.php' );
-}
+require_once( dirname( __FILE__ ) . '/includes/upgradedb.php' );
 
 if ( is_admin() ) {
 	require_once( dirname( __FILE__ ) . '/includes/admin.php' );

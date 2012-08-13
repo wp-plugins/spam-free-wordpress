@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.6
-Stable tag: 1.7.5
+Stable tag: 1.7.6
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -28,9 +28,13 @@ It is my goal for Spam Free WordPress to help WordPress become the world's first
  6. Option to strip HTML from comments
  7. No CAPTCHA
  8. Saves time and money by eliminating the need to empty the comment spam folder
- 9. Over 166,000 Spam Free Blogs and Counting!
+ 9. Over 172,000 Spam Free Blogs and Counting!
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
+
+The comment form can be secured with an invisible password, a clickable password field, or a click password button. There is other security also built-in that works automatically.
+
+With the invisible password turned on, the reader doesn't even know there are security checks being performed. The reader just leaves a comment, and spam bots are blocked.
 
 Read about how Spam Free WordPress works in detail on the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
@@ -47,7 +51,7 @@ Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-
 
 1. Upload to the /wp-content/plugins directory
 2. Activate
-3. If there is a password field on the comment form when you are logged out as Admin, then nothing else needs to be done.
+3. Turn on the Spam Stats, and try to leave a comment to make sure it is working.
 
 
 == Frequently Asked Questions ==
@@ -58,39 +62,35 @@ Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-
 
 Yes, however, other comment spam plugins will cause false positives, so it is best to disable all of them, including Akismet.
 
-= Will the password update on cached post pages? =
-
-Yes.
-
 = Does this plugin work on WordPress Multisite? =
 
 Yes.
 
-= Why can't I see the password field on the comment form? =
-
-Log out as Admin and clear your web browser, and blog cache. If there is still no password field then request help at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress-support/) support page.
-
-= Do readers need to accept cookies or to have Javascript enabled? =
+= Do readers need to have Javascript enabled? =
 
 Yes.
 
-= Will having a password requirement stop readers from commenting? =
-
-No, but it will stop spam.
-
 == Screenshots ==
 
-1. If Spam Free Wordpress is installed correctly there will be a password field on the comment form.
+1. The invisible password secures the comment form without bothering the reader.
 
-2. Spam Free Wordpress in Action
+2. A clickable password can secures the comment form if you want a visual password.
+
+3. A click for password can secures the comment form if you want a visual password.
+
+4. Spam Free Wordpress in action.
 
 == Upgrade Notice ==
 
-= 1.7.5 =
+= 1.7.6 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.7.6 =
+
+* Added the option to secure the comment form with an invisible password, a clickable password field, or a click password button.
 
 = 1.7.5 =
 

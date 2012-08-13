@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.7.5
+Version: 1.7.6
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -18,7 +18,7 @@ License: GPLv3
 
 // Plugin version
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.7.5' );
+	define( 'SFW_VERSION', '1.7.6' );
 
 // Ready for translation
 load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
@@ -97,6 +97,10 @@ $spam_free_wordpress_options = get_option('spam_free_wordpress');
 require_once( dirname( __FILE__ ) . '/includes/functions.php' );
 
 if ( is_admin() ) {
+	require_once( dirname( __FILE__ ) . '/includes/upgradedb.php' );
+}
+
+if ( is_admin() ) {
 	require_once( dirname( __FILE__ ) . '/includes/admin.php' );
 }
 
@@ -105,58 +109,15 @@ if ( is_admin() ) {
 * http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks/#comment-11989
 * http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks-no-longer-fire-for-updates/
 */
+
 $sfw_run_once = get_option( 'sfw_run_once' );
 
 if( !$sfw_run_once && $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
 	sfw_upgrade_to_new_version();
 }
 
-function sfw_upgrade_to_new_version() {
-
-	if ( version_compare( get_bloginfo( 'version' ), SFW_WP_REQUIRED, '<' ) ) {
-		deactivate_plugins( basename( __FILE__ ) );
-		wp_die( SFW_WP_REQUIRED_MSG );
-	} else {
-		$spam_free_wordpress_options = get_option('spam_free_wordpress');
-	
-		$oldver = $spam_free_wordpress_options;
-		$newver = array(
-			'remove_author_url_field' => 'disable',
-			'remove_author_url' => 'disable',
-			'ping_status' => 'closed'
-			);
-		$mergever = array_merge( $oldver, $newver );
-	
-		update_option( 'spam_free_wordpress', $mergever );
-		
-		update_option('sfw_run_once',true);
-		
-		// Close pingback default settings
-		update_option( 'default_ping_status', 'closed' );
-		update_option( 'default_pingback_flag', '' );
-	}
-}
-
 if( !$spam_free_wordpress_options['ping_status'] ) {
 	sfw_add_default_ping_status();
-}
-
-function sfw_add_default_ping_status() {
-
-	if ( version_compare( get_bloginfo( 'version' ), SFW_WP_REQUIRED, '<' ) ) {
-		deactivate_plugins( basename( __FILE__ ) );
-		wp_die( SFW_WP_REQUIRED_MSG );
-	} else {
-		$spam_free_wordpress_options = get_option('spam_free_wordpress');
-	
-		$oldver = $spam_free_wordpress_options;
-		$newver = array(
-			'ping_status' => 'closed'
-			);
-		$mergever = array_merge( $oldver, $newver );
-	
-		update_option( 'spam_free_wordpress', $mergever );
-	}
 }
 
 // Added version 1.7
@@ -164,24 +125,9 @@ if( !$spam_free_wordpress_options['comment_form'] ) {
 	sfw_add_default_comment_form();
 }
 
-function sfw_add_default_comment_form() {
-
-	if ( version_compare( get_bloginfo( 'version' ), SFW_WP_REQUIRED, '<' ) ) {
-		deactivate_plugins( basename( __FILE__ ) );
-		wp_die( SFW_WP_REQUIRED_MSG );
-	} else {
-		$spam_free_wordpress_options = get_option('spam_free_wordpress');
-	
-		$oldver = $spam_free_wordpress_options;
-		$newver = array(
-			'comment_form' => 'on',
-			'special_msg' => ''
-			);
-		$mergever = array_merge( $oldver, $newver );
-	
-		update_option( 'spam_free_wordpress', $mergever );
-		
-	}
+// Added version 1.7.6
+if( !$spam_free_wordpress_options['pwd_style'] ) {
+	sfw_add_default_pwd_style();
 }
 
 
@@ -252,24 +198,58 @@ if ( $spam_free_wordpress_options['comment_form'] == 'on' ) {
 	add_filter( 'comments_template', 'sfw_comment_form_init' );
 }
 
-// Load AJAX for password field
-function sfw_load_pwd() {
 
-		$js_path =  SFW_URL . 'js/sfw-load-pwd.js?' . filemtime( SFW_PATH . 'js/sfw-load-pwd.js' );
+// Load JavaScript for password
+function sfw_load_pwd() {
+	global $spam_free_wordpress_options;
+
+	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
+		$js_path =  SFW_URL . 'js/sfw-ipwd.js?' . filemtime( SFW_PATH . 'js/sfw-ipwd.js' );
+		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ) );
+		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
-		wp_enqueue_script( 'sfw_pwd', $js_path, array( 'jquery' ) );
-		wp_localize_script( 'sfw_pwd', 'sfw_pwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_pwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
+		$js_path =  SFW_URL . 'js/sfw-click-pwd-field.js?' . filemtime( SFW_PATH . 'js/sfw-click-pwd-field.js' );
+		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ) );
+		wp_localize_script( 'sfw_pwd_field', 'sfw_pwd_field', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'sfw_pwd_field', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		
+	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
+		$js_path =  SFW_URL . 'js/sfw-click-pwd-button.js?' . filemtime( SFW_PATH . 'js/sfw-click-pwd-button.js' );
+		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ) );
+		wp_localize_script( 'sfw_click_pwd_button', 'sfw_click_pwd_button', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		
+	}
 }
-	
+
 //register with hook 'wp_enqueue_scripts' which can be used for front end CSS and JavaScript
 add_action('wp_enqueue_scripts', 'sfw_load_pwd');
 
-add_action( 'wp_ajax_nopriv_sfw_ajax_hook', 'sfw_get_pwd' );
-add_action( 'wp_ajax_sfw_ajax_hook', 'sfw_get_pwd' );
+// Actions for password AJAX
+if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
+		add_action( 'wp_ajax_nopriv_sfw_i_pwd', 'sfw_get_pwd' );
+		add_action( 'wp_ajax_sfw_i_pwd', 'sfw_get_pwd' );
 
-add_action( 'wp_ajax_nopriv_sfw_ajax_client_ip_hook', 'get_remote_ip_address_ajax' );
-add_action( 'wp_ajax_sfw_ajax_client_ip_hook', 'get_remote_ip_address_ajax' );
+		add_action( 'wp_ajax_nopriv_sfw_cip', 'get_remote_ip_address_ajax' );
+		add_action( 'wp_ajax_sfw_cip', 'get_remote_ip_address_ajax' );
+		
+} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
+		add_action( 'wp_ajax_nopriv_sfw_cpf', 'sfw_get_pwd' );
+		add_action( 'wp_ajax_sfw_cpf', 'sfw_get_pwd' );
+
+		add_action( 'wp_ajax_nopriv_sfw_cip', 'get_remote_ip_address_ajax' );
+		add_action( 'wp_ajax_sfw_cip', 'get_remote_ip_address_ajax' );
+		
+} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
+		add_action( 'wp_ajax_nopriv_sfw_cpb', 'sfw_get_pwd' );
+		add_action( 'wp_ajax_sfw_cpb', 'sfw_get_pwd' );
+
+		add_action( 'wp_ajax_nopriv_sfw_cip', 'get_remote_ip_address_ajax' );
+		add_action( 'wp_ajax_sfw_cip', 'get_remote_ip_address_ajax' );
+}
+
 
 /*
 // Censor comments

@@ -26,13 +26,13 @@
 		
 		//clear default value and add '.not-empty' class on click
 		$('.pwddefault').on( 'focus', function(){
-			$.post(sfw_pwd.ajaxurl, { action: 'sfw_ajax_hook', post_id : pid }, function( response ) {
+			$.post(sfw_pwd_field.ajaxurl, { action: 'sfw_cpf', post_id : pid }, function( response ) {
 				$( '.pwddefault' ).val( response );
 				$( '#comment_ready' ).html('<strong>Please leave your comment now.</strong>');
 				return false;
 			});
 			if( $(this).val() == $(this).attr('rel') ){
-				$(this).val('').addClass('pwdnotempty'); 
+				$(this).val('').addClass('pwdnotempty');
 			}
 		});   
 
@@ -59,7 +59,7 @@
 		});*/
 		
 		$( '#comment' ).on( 'keydown', function() {
-			$.post(sfw_client_ip.ajaxurl, { action: 'sfw_ajax_client_ip_hook' }, function( response ) {
+			$.post(sfw_client_ip.ajaxurl, { action: 'sfw_cip' }, function( response ) {
 				$( '#comment_ip' ).val( response );
 				return false;
 			});

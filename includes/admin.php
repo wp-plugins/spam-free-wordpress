@@ -67,7 +67,19 @@ function spam_free_wordpress_options_page() {
 				<p>On <input type="radio" name="spam_free_wordpress_options[toggle_stats_update]" <?php echo (($spam_free_wordpress_options['toggle_stats_update'] == "enable") ? 'checked="checked"' : '') ;  ?> value="enable" />&nbsp;&nbsp; Off <input type="radio" name="spam_free_wordpress_options[toggle_stats_update]" <?php echo (($spam_free_wordpress_options['toggle_stats_update'] == "disable") ? 'checked="checked"' : '') ;  ?> value="disable" /></p>
 			</fieldset>
 			
-			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Automatically Generated Comment Form', 'spam-free-wordpress' ); ?></span></h3>
+			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Password Style', 'spam-free-wordpress' ); ?></span></h3>
+			<p><?php _e( 'Turn on Comment Form Spam Stats above to make sure the invisible password is working.', 'spam-free-wordpress' ); ?></p>
+			<p><?php _e( 'If you cannot see the Spam Stats, and you cannot leave a comment, it is not working, which means you need help customizing your comment form.', 'spam-free-wordpress' ); ?></p>
+			<fieldset>
+				<select name="spam_free_wordpress_options[pwd_style]">
+					<option value="invisible_password" <?php selected( $spam_free_wordpress_options['pwd_style'], 'invisible_password' ); ?>>Invisible Password</option>
+					<option value="click_password_field" <?php selected( $spam_free_wordpress_options['pwd_style'], 'click_password_field' ); ?>>Click Password Field</option>
+					<option value="click_password_button" <?php selected( $spam_free_wordpress_options['pwd_style'], 'click_password_button' ); ?>>Click Password Button</option>
+				</select>
+			</fieldset>
+			
+			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Automatically Generate Comment Form', 'spam-free-wordpress' ); ?></span></h3>
+				<p><?php _e( 'Will automatically generate the comment form for most themes.', 'spam-free-wordpress' ); ?></p>
 				<fieldset>
 					<p>On <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "on") ? 'checked="checked"' : '') ;  ?> value="on" />&nbsp;&nbsp; Off <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "off") ? 'checked="checked"' : '') ;  ?> value="off" /></p>
 				</fieldset>

@@ -225,16 +225,30 @@ function tl_spam_free_wordpress_comments_form() {
 		_e( ' located at ', 'spam-free-wordpress' );
 		echo "http://www.toddlahman.com/spam-free-wordpress/ -->\n";
 		
-		// Commenter IP address
+
+	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
+		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
+		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
+		echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
 		
-		// Reader must enter this password manually on the comment form
+	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
 		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-
 		echo "\n<p><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
 		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-		echo '<p id="cip"></p>'."\n";
 		echo '<p id="comment_ready"></p>'."\n";
+		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+
+	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
+		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
+		echo "<input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' readonly='readonly' />";
+		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
+		echo '<button type="button" id="pwdbtn">';
+		_e( 'Click for Password', 'spam-free-wordpress' );
+		echo '</button>';
+		echo '<p id="comment_ready"></p>';
+		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+	}
 		
 		// Shows how many comment spam have been killed on the comment form
 		if ($spam_free_wordpress_options['toggle_stats_update'] == "enable") {
@@ -366,7 +380,7 @@ function sfw_unchecked( $checkoption ) {
 
 
 /*-----------------------------------------
-Generates temporary passwords
+* Generates temporary passwords
 ------------------------------------------*/
 
 function sfw_get_pwd() {

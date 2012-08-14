@@ -9,6 +9,8 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 delete_option( 'spam_free_wordpress' );
 //delete_option( 'sfw_spam_hits' );
 delete_option('sfw_version');
+delete_option( 'sfw_close_pings_once' );
+delete_option( 'sfw_run_once' );
 
 // Delete postmeta meta_key sfw_comment_form_password database entries, since we don't use them anymore
 $sfw_allposts = get_posts('numberposts=-1&post_type=post&post_status=any');

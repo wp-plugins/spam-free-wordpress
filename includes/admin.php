@@ -83,6 +83,13 @@ function spam_free_wordpress_options_page() {
 				<fieldset>
 					<p>On <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "on") ? 'checked="checked"' : '') ;  ?> value="on" />&nbsp;&nbsp; Off <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "off") ? 'checked="checked"' : '') ;  ?> value="off" /></p>
 				</fieldset>
+				
+			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Use Old jQuery Scripts', 'spam-free-wordpress' ); ?></span></h3>
+				<p><?php _e( 'Default is Off for WordPress version 3.3 or greater.', 'spam-free-wordpress' ); ?></p>
+				<p><?php _e( 'Some poorly written themes load an older version of jQuery than WordPress provides, which would require using the old jQuery scripts. If the plugin is not working try switching to the old jQuery scripts.', 'spam-free-wordpress' ); ?></p>
+				<fieldset>
+					<p>On <input type="radio" name="spam_free_wordpress_options[old_jquery]" <?php echo (($spam_free_wordpress_options['old_jquery'] == "on") ? 'checked="checked"' : '') ;  ?> value="on" />&nbsp;&nbsp; Off <input type="radio" name="spam_free_wordpress_options[old_jquery]" <?php echo (($spam_free_wordpress_options['old_jquery'] == "off") ? 'checked="checked"' : '') ;  ?> value="off" /></p>
+				</fieldset>
 			
 			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Remove HTML from Comments', 'spam-free-wordpress' ); ?></span></h3>
 			<p><?php _e( 'Strips the HTML from comments to render spam links as plain text. Also removes the allowed HTML tags message from below the comment box.', 'spam-free-wordpress' ); ?></p>			
@@ -121,10 +128,10 @@ function spam_free_wordpress_options_page() {
 			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Share Link Custom Message', 'spam-free-wordpress' ); ?></span></h3>
 			<p><?php _e( 'Customize a URL link to the ', 'spam-free-wordpress' ); ?>Spam Free Wordpress<?php _e( ' plugin page below if you want to share it with others somewhere else on your blog other than the comment form.', 'spam-free-wordpress' ); ?></p>
 				<fieldset>
-					<p><?php _e( 'Link Message ', 'spam-free-wordpress' ); ?>&nbsp;&nbsp;<input type="text" size="60" name="spam_free_wordpress_options[affiliate_msg]" value="<?php echo $spam_free_wordpress_options['affiliate_msg']; ?>" style="color: #000000; background-color: #fffbcc" /> &nbsp;&nbsp;<?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?></p>
+					<p><?php _e( 'Link Message ', 'spam-free-wordpress' ); ?>&nbsp;&nbsp;<input type="text" size="60" name="spam_free_wordpress_options[affiliate_msg]" value="<?php echo $spam_free_wordpress_options['affiliate_msg']; ?>" style="color: #000000; background-color: #fffbcc" /> &nbsp;&nbsp;<?php if(function_exists('sfw_custom_affiliate_link')) { sfw_custom_affiliate_link(); } ?></p>
 				</fieldset>
 			<p><?php _e( 'Copy and paste the line of code below into a template file to display the custom share link.', 'spam-free-wordpress' ); ?></p>
-			<code>&lt;?php if(function_exists('custom_affiliate_link')) { custom_affiliate_link(); } ?&gt;</code>
+			<code>&lt;?php if(function_exists('sfw_custom_affiliate_link')) { sfw_custom_affiliate_link(); } ?&gt;</code>
 			
 			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Pingbacks and Trackbacks', 'spam-free-wordpress' ); ?></span></h3>
 			<p><strong><?php _e( 'It is highly recommended to keep pingbacks CLOSED to eliminate that form of spam entirely.', 'spam-free-wordpress' ); ?></strong></p>

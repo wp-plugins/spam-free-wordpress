@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.7.6
+Version: 1.7.7
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -16,19 +16,12 @@ License: GPLv3
 */
 
 
-// Plugin version
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.7.6' );
-
-// Ready for translation
-load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
-
+	define( 'SFW_VERSION', '1.7.7' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
-
 if (!defined('SFW_WP_REQUIRED_MSG'))
 	define( 'SFW_WP_REQUIRED_MSG', 'Spam Free Wordpress' . __( ' requires at least WordPress 3.1. Sorry! Click back button to continue.', 'spam-free-wordpress' ) );
-
 if (!defined('SFW_URL') )
 	define( 'SFW_URL', plugin_dir_url(__FILE__) );
 if (!defined('SFW_PATH') )
@@ -37,7 +30,18 @@ if (!defined('SFW_BASENAME') )
 	define( 'SFW_BASENAME', plugin_basename( __FILE__ ) );
 if(!defined( 'SFW_IS_ADMIN' ) )
     define( 'SFW_IS_ADMIN',  is_admin() );
-	
+
+// Ready for translation
+load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
+
+require_once( SFW_PATH . '/includes/functions.php' );
+require_once( SFW_PATH . '/includes/upgradedb.php' );
+
+if ( is_admin() ) {
+	require_once( SFW_PATH . '/includes/admin.php' );
+}
+
+// Update version
 if ( !get_option('sfw_version') ) {
 	update_option( 'sfw_version', SFW_VERSION );
 }
@@ -51,88 +55,42 @@ if( !get_option( 'spam_free_wordpress' ) ) {
 	sfw_add_default_data();
 }
 
-// Add default database settings on plugin activation
-function sfw_add_default_data() {
-
-	if( !get_option( 'spam_free_wordpress' ) ) {
-		if ( version_compare( get_bloginfo( 'version' ), SFW_WP_REQUIRED, '<' ) ) {
-			deactivate_plugins( basename( __FILE__ ) );
-			wp_die( SFW_WP_REQUIRED_MSG );
-		} else {
-			$sfw_options = array(
-			'blocklist_keys' => '',
-			'lbl_enable_disable' => 'disable',
-			'remote_blocked_list' => '',
-			'rbl_enable_disable' => 'disable',
-			'pw_field_size' => '20',
-			'tab_index' => '',
-			'affiliate_msg' => '',
-			'toggle_stats_update' => 'disable',
-			'toggle_html' => 'disable',
-			'remove_author_url_field' => 'disable',
-			'remove_author_url' => 'disable',
-			'ping_status' => 'closed',
-			'comment_form' => 'on',
-			'special_msg' => ''
-			);
-			update_option( 'spam_free_wordpress', $sfw_options );
-		
-			// Close pingback default settings
-			update_option( 'default_ping_status', 'closed' );
-			update_option( 'default_pingback_flag', '' );
-		}
-		
-		if( !get_option( 'sfw_spam_hits' ) ) {
-			update_option( 'sfw_spam_hits', '1' );
-		}
-	}
-}
-
 // Runs add_default_data function above when plugin activated
 register_activation_hook( __FILE__, 'sfw_add_default_data' );
 
 // variable used as global to retrieve option array for functions
-$spam_free_wordpress_options = get_option('spam_free_wordpress');
+if( get_option('spam_free_wordpress') ) {
+	$spam_free_wordpress_options = get_option('spam_free_wordpress');
+	
+	if( get_option('sfw_run_once') ) {
+		// upgrade ping status
+		$sfw_run_once = get_option( 'sfw_run_once' );
+	}
+		
+	if( !$sfw_run_once && $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
+		sfw_upgrade_ping_status();
+	}
 
-require_once( dirname( __FILE__ ) . '/includes/functions.php' );
-require_once( dirname( __FILE__ ) . '/includes/upgradedb.php' );
+	// check for those without a ping status
+	if( !$spam_free_wordpress_options['ping_status'] ) {
+		sfw_add_default_ping_status();
+	}
 
-if ( is_admin() ) {
-	require_once( dirname( __FILE__ ) . '/includes/admin.php' );
+	// Added version 1.7
+	if( !$spam_free_wordpress_options['comment_form'] ) {
+		sfw_add_default_comment_form();
+	}
+
+	// Added version 1.7.6
+	if( !$spam_free_wordpress_options['pwd_style'] ) {
+		sfw_add_default_pwd_style();
+	}
+
+	// Added version 1.7.7
+	if( !$spam_free_wordpress_options['old_jquery'] ) {
+		sfw_add_old_jquery();
+	}
 }
-
-/**
-* Upgrade
-* http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks/#comment-11989
-* http://wpdevel.wordpress.com/2010/10/27/plugin-activation-hooks-no-longer-fire-for-updates/
-*/
-
-$sfw_run_once = get_option( 'sfw_run_once' );
-
-if( !$sfw_run_once && $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
-	sfw_upgrade_to_new_version();
-}
-
-if( !$spam_free_wordpress_options['ping_status'] ) {
-	sfw_add_default_ping_status();
-}
-
-// Added version 1.7
-if( !$spam_free_wordpress_options['comment_form'] ) {
-	sfw_add_default_comment_form();
-}
-
-// Added version 1.7.6
-if( !$spam_free_wordpress_options['pwd_style'] ) {
-	sfw_add_default_pwd_style();
-}
-
-
-// Calls the Wordpress 3.x code for admin settings page
-add_action('after_setup_theme', 'do_spam_free_wordpress_automation', 1);
-
-// Calls the wp-comments-post.php authentication
-add_action('pre_comment_on_post', 'tl_spam_free_wordpress_comments_post', 1);
 
 // settings action link
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'sfw_settings_link', 10, 1);
@@ -150,9 +108,11 @@ function sfw_donate_link($links, $file) {
 }
 
 /**
-* Pingbacks and trackbacks are closed automatically one time only
+* Pingbacks and trackbacks are closed automatically, but only this one time
 */
-$sfw_close_pings_once = get_option( 'sfw_close_pings_once' );
+if( get_option( 'sfw_close_pings_once' ) ) {
+	$sfw_close_pings_once = get_option( 'sfw_close_pings_once' );
+}
 
 if ( !$sfw_close_pings_once ) {
 	global $pagenow;
@@ -186,43 +146,18 @@ if ( class_exists( 'Jetpack' ) ) {
 	}
 }
 
-// automatically generate comment form
-function sfw_comment_form_init() {
-	return dirname( plugin_basename( __FILE__ ) ) . '/comments.php';
+/**
+* Allows WordPress 3.3 or above, with jQuery 1.7 and above, to use scripts compatible with jQuery below version 1.7, in case those old jQuery versions are being loaded by poorly written themes.
+*/
+// Make sure this is WordPress 3.3 and jQuery 1.7 or greater
+if ( version_compare( get_bloginfo( 'version' ), '3.3', '>=' ) && $spam_free_wordpress_options['old_jquery'] == 'off' ) {
+	//register with hook 'wp_enqueue_scripts' which can be used for front end CSS and JavaScript
+	add_action('wp_enqueue_scripts', 'sfw_load_pwd');
+} elseif ( version_compare( get_bloginfo( 'version' ), '3.3', '>=' ) && $spam_free_wordpress_options['old_jquery'] == 'on' ) {
+	add_action('wp_enqueue_scripts', 'sfw_load_pwd_old_wp_js');
+} elseif( version_compare( get_bloginfo( 'version' ), '3.3', '<' ) ) {
+	add_action('wp_enqueue_scripts', 'sfw_load_pwd_old_wp_js');
 }
-
-if ( $spam_free_wordpress_options['comment_form'] == 'on' ) {
-	add_filter( 'comments_template', 'sfw_comment_form_init' );
-}
-
-
-// Load JavaScript for password
-function sfw_load_pwd() {
-	global $spam_free_wordpress_options;
-
-	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
-		$js_path =  SFW_URL . 'js/sfw-ipwd.js?' . filemtime( SFW_PATH . 'js/sfw-ipwd.js' );
-		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ) );
-		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
-		$js_path =  SFW_URL . 'js/sfw-click-pwd-field.js?' . filemtime( SFW_PATH . 'js/sfw-click-pwd-field.js' );
-		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ) );
-		wp_localize_script( 'sfw_pwd_field', 'sfw_pwd_field', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_pwd_field', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
-		$js_path =  SFW_URL . 'js/sfw-click-pwd-button.js?' . filemtime( SFW_PATH . 'js/sfw-click-pwd-button.js' );
-		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ) );
-		wp_localize_script( 'sfw_click_pwd_button', 'sfw_click_pwd_button', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	}
-}
-
-//register with hook 'wp_enqueue_scripts' which can be used for front end CSS and JavaScript
-add_action('wp_enqueue_scripts', 'sfw_load_pwd');
 
 // Actions for password AJAX
 if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
@@ -247,6 +182,21 @@ if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
 		add_action( 'wp_ajax_sfw_cip', 'get_remote_ip_address_ajax' );
 }
 
+// automatically generate comment form
+// some themes prevent this from working as WordPress requires
+function sfw_comment_form_init() {
+	return dirname( plugin_basename( __FILE__ ) ) . '/comments.php';
+}
+
+if ( $spam_free_wordpress_options['comment_form'] == 'on' ) {
+	add_filter( 'comments_template', 'sfw_comment_form_init' );
+}
+
+// Calls the Wordpress 3.x code for admin settings page
+add_action('after_setup_theme', 'sfw_comment_form_additions', 1);
+
+// Calls the wp-comments-post.php authentication
+add_action('pre_comment_on_post', 'sfw_comment_post_authentication', 1);
 
 /*
 // Censor comments

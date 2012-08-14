@@ -80,14 +80,6 @@ Yes.
 
 4. Spam Free Wordpress in action.
 
-== Troubleshooting ==
-
-If the plugin isn't working, it isn't the plugin that is causing the problem, it's your theme. There are a lot of poorly written themes that don't follow WordPress recommendations for building a theme.
-
-If you want to test to confirm that your theme is the problem, try switching to Twenty Eleven. If your problem goes away then you know it's your theme that is causing the problem.
-
-If you need help customizing the style of your comment form, or to get the plugin working with your theme, please use the [Spam Free WordPress paid support](http://www.toddlahman.com/spam-free-wordpress-support/) link to setup a consult.
-
 == Upgrade Notice ==
 
 = 1.7.7 =

@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.7.7
+Version: 1.7.8
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.7.7' );
+	define( 'SFW_VERSION', '1.7.8' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -34,7 +34,9 @@ if(!defined( 'SFW_IS_ADMIN' ) )
 // Ready for translation
 load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
 
+
 require_once( SFW_PATH . '/includes/functions.php' );
+require_once( SFW_PATH . '/includes/class-comment-form.php' );
 require_once( SFW_PATH . '/includes/upgradedb.php' );
 
 if ( is_admin() ) {
@@ -67,7 +69,7 @@ if( get_option('spam_free_wordpress') ) {
 		$sfw_run_once = get_option( 'sfw_run_once' );
 	}
 		
-	if( !$sfw_run_once && $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
+	if( !isset( $sfw_run_once ) && $spam_free_wordpress_options['blocklist_keys'] && !$spam_free_wordpress_options['remove_author_url_field'] ) {
 		sfw_upgrade_ping_status();
 	}
 
@@ -90,6 +92,12 @@ if( get_option('spam_free_wordpress') ) {
 	if( !$spam_free_wordpress_options['old_jquery'] ) {
 		sfw_add_old_jquery();
 	}
+	
+	// Added version 1.7.8 to turn on using old jQuery scripts as the default option
+	if( isset( $spam_free_wordpress_options['old_jquery'] ) && $spam_free_wordpress_options['old_jquery'] == 'off' && version_compare( get_option( 'sfw_version' ), '1.7.8', '<' ) ) {
+		sfw_add_old_jquery();
+	}
+	
 }
 
 // settings action link
@@ -197,6 +205,7 @@ add_action('after_setup_theme', 'sfw_comment_form_additions', 1);
 
 // Calls the wp-comments-post.php authentication
 add_action('pre_comment_on_post', 'sfw_comment_post_authentication', 1);
+
 
 /*
 // Censor comments

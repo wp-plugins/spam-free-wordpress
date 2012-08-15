@@ -210,4 +210,6 @@ class SFWform {
 	}
 }
 
+$sfwform = new SFWform();
+
 ?>

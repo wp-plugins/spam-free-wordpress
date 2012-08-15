@@ -1,5 +1,12 @@
 <?php
 
+/*
+* Legacy function for versions prior to 1.7.8
+*/
+function tl_spam_free_wordpress_comments_form() {
+	sfw_comment_form_extra_fields();
+}
+
 // Adds password field to comment form and options to filter HTML from comments
 function sfw_comment_form_additions() {
 	global $spam_free_wordpress_options;
@@ -418,20 +425,20 @@ function sfw_load_pwd() {
 	global $spam_free_wordpress_options;
 
 	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
-		$js_path =  SFW_URL . 'js/sfw-ipwd.js?' . filemtime( SFW_PATH . 'js/sfw-ipwd.js' );
-		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ) );
+		$js_path =  SFW_URL . 'js/sfw-ipwd.js';
+		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION );
 		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
-		$js_path =  SFW_URL . 'js/sfw-click-pwd-field.js?' . filemtime( SFW_PATH . 'js/sfw-click-pwd-field.js' );
-		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ) );
+		$js_path =  SFW_URL . 'js/sfw-click-pwd-field.js';
+		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ), SFW_VERSION );
 		wp_localize_script( 'sfw_pwd_field', 'sfw_pwd_field', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_localize_script( 'sfw_pwd_field', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
-		$js_path =  SFW_URL . 'js/sfw-click-pwd-button.js?' . filemtime( SFW_PATH . 'js/sfw-click-pwd-button.js' );
-		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ) );
+		$js_path =  SFW_URL . 'js/sfw-click-pwd-button.js';
+		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ), SFW_VERSION );
 		wp_localize_script( 'sfw_click_pwd_button', 'sfw_click_pwd_button', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
@@ -446,24 +453,61 @@ function sfw_load_pwd_old_wp_js() {
 	global $spam_free_wordpress_options;
 
 	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
-		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-ipwd.js?' . filemtime( SFW_PATH . 'js/before-wp-3_3/sfw-ipwd.js' );
-		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ) );
+		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-ipwd.js';
+		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION );
 		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
-		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-click-pwd-field.js?' . filemtime( SFW_PATH . 'js/before-wp-3_3/sfw-click-pwd-field.js' );
-		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ) );
+		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-click-pwd-field.js';
+		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ), SFW_VERSION );
 		wp_localize_script( 'sfw_pwd_field', 'sfw_pwd_field', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_localize_script( 'sfw_pwd_field', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
-		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-click-pwd-button.js?' . filemtime( SFW_PATH . 'js/before-wp-3_3/sfw-click-pwd-button.js' );
-		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ) );
+		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-click-pwd-button.js';
+		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ), SFW_VERSION );
 		wp_localize_script( 'sfw_click_pwd_button', 'sfw_click_pwd_button', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
 	}
 }
+
+
+/*
+* Turn on stats reminder
+*/
+/*
+function sfw_admin_head() {
+	if ( !current_user_can( 'manage_options' ) )
+		return;
+
+	add_action( 'admin_notices', 'sfw_stat_reminder' );
+}
+
+function sfw_stat_reminder() {
+		$url = admin_url( 'options-general.php?page=spam-free-wordpress-admin-page' );
+		$message = '<div style="text-align: center;"><p style="font-size:13px">Turn on your <a href="'.$url.'">Comment Form Spam Stats</a> to help you know Spam Free Wordpress is working properly.</p><p style="text-align:right"><a href="options-general.php?page=spam-free-wordpress-admin-page?sfw_stat_notice=1">hide</a></p></div>';
+		$heading = __( 'Spam Free Wordpress needs your attention!', 'spam-free-wordpress' );
+?>
+		<div id="sep-notice" class="sfw-notice updated">
+			<div class="sep-message">
+				<h3><?php echo $heading; ?></h3>
+				<p><?php echo $message; ?></p>
+			</div>
+		</div>
+<?php
+}
+
+function sfw_disable_stat_reminder() {
+		if ( isset($_GET['sfw_stat_notice']) && $_GET['sfw_stat_notice']==1 ) {
+				update_option('sfw_stat_notice', 1);
+		}
+}
+
+if (!get_option( 'sfw_stat_reminder_notice' ))
+	add_action( 'admin_head', 'sfw_admin_head' );
+	add_action('admin_init', 'sfw_disable_stat_reminder');
+*/
 
 ?>

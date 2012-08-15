@@ -24,7 +24,7 @@ function sfw_add_default_data() {
 			'comment_form' => 'on',
 			'special_msg' => '',
 			'pwd_style' => 'invisible_password',
-			'old_jquery' => 'off'
+			'old_jquery' => 'on'
 			);
 			update_option( 'spam_free_wordpress', $sfw_options );
 		
@@ -136,7 +136,7 @@ function sfw_add_old_jquery() {
 	
 		$oldver = $spam_free_wordpress_options;
 		$newver = array(
-			'old_jquery' => 'off'
+			'old_jquery' => 'on'
 			);
 		$mergever = array_merge( $oldver, $newver );
 	

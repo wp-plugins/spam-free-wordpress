@@ -81,7 +81,7 @@ function spam_free_wordpress_options_page() {
 			</fieldset>
 			
 			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Automatically Generate Comment Form', 'spam-free-wordpress' ); ?></span></h3>
-				<p><?php _e( 'Will automatically generate the comment form for most themes.', 'spam-free-wordpress' ); ?></p>
+				<p><?php _e( 'Will automatically generate the comment form.', 'spam-free-wordpress' ); ?></p>
 				<fieldset>
 					<p>On <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "on") ? 'checked="checked"' : '') ;  ?> value="on" />&nbsp;&nbsp; Off <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "off") ? 'checked="checked"' : '') ;  ?> value="off" /></p>
 				</fieldset>

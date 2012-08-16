@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spam Free Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-16 15:03-0800\n"
-"PO-Revision-Date: 2012-08-16 15:03-0800\n"
+"POT-Creation-Date: 2012-08-16 16:24-0800\n"
+"PO-Revision-Date: 2012-08-16 16:24-0800\n"
 "Last-Translator: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language-Team: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language: en_US\n"
@@ -21,31 +21,31 @@ msgstr ""
 msgid " requires at least WordPress 3.1. Sorry! Click back button to continue."
 msgstr ""
 
-#: tl-spam-free-wordpress.php:113
+#: tl-spam-free-wordpress.php:110
 msgid "TURN ON"
 msgstr ""
 
-#: tl-spam-free-wordpress.php:115
+#: tl-spam-free-wordpress.php:112
 msgid " your "
 msgstr ""
 
-#: tl-spam-free-wordpress.php:117 includes/admin.php:66
+#: tl-spam-free-wordpress.php:114 includes/admin.php:66
 msgid "Comment Form Spam Stats"
 msgstr ""
 
-#: tl-spam-free-wordpress.php:119
+#: tl-spam-free-wordpress.php:116
 msgid " to be sure Spam Free Wordpress is working properly."
 msgstr ""
 
-#: tl-spam-free-wordpress.php:133 includes/admin.php:30
+#: tl-spam-free-wordpress.php:130 includes/admin.php:30
 msgid "Settings"
 msgstr ""
 
-#: tl-spam-free-wordpress.php:134
+#: tl-spam-free-wordpress.php:131
 msgid "Donate"
 msgstr ""
 
-#: tl-spam-free-wordpress.php:152
+#: tl-spam-free-wordpress.php:149
 msgid ""
 "Pingbacks were closed this one time to stop pingback and trackback spam. To "
 "reopen go to Settings >> Spam Free Wordpress"
@@ -100,7 +100,7 @@ msgid "Automatically Generate Comment Form"
 msgstr ""
 
 #: includes/admin.php:84
-msgid "Will automatically generate the comment form for most themes."
+msgid "Will automatically generate the comment form."
 msgstr ""
 
 #: includes/admin.php:89

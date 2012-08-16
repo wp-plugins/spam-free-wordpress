@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.7.8
+Version: 1.7.8.1
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.7.8' );
+	define( 'SFW_VERSION', '1.7.8.1' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -100,6 +100,24 @@ if( get_option('spam_free_wordpress') ) {
 	
 }
 
+// Reminder to turn on Comment Form Spam Stats - added 1.7.8.1
+if( get_option( 'sfw_stats_reminder' ) ) {
+	$sfw_stats_reminder = get_option( 'sfw_stats_reminder' );
+}
+
+if ( !isset( $sfw_stats_reminder ) ) {
+		$sfw_stats_reminder_msg = '<a href="options-general.php?page=spam-free-wordpress-admin-page">';
+		$sfw_stats_reminder_msg .= __( 'TURN ON' , 'spam-free-wordpress' );
+		$sfw_stats_reminder_msg .= '</a>';
+		$sfw_stats_reminder_msg .= __( ' your ' , 'spam-free-wordpress' );
+		$sfw_stats_reminder_msg .= '<a href="options-general.php?page=spam-free-wordpress-admin-page">';
+		$sfw_stats_reminder_msg .= __( 'Comment Form Spam Stats' , 'spam-free-wordpress' );
+		$sfw_stats_reminder_msg .= '</a>';
+		$sfw_stats_reminder_msg .= __( ' to be sure Spam Free Wordpress is working properly.' , 'spam-free-wordpress' );
+		echo '<div id="message" class="updated"><p><strong>'. $sfw_stats_reminder_msg .'</strong></p></div>';
+		update_option( 'sfw_stats_reminder', true );
+}
+
 // settings action link
 add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'sfw_settings_link', 10, 1);
 // "network_admin_plugin_action_links_{$plugin_file}"
@@ -122,13 +140,13 @@ if( get_option( 'sfw_close_pings_once' ) ) {
 	$sfw_close_pings_once = get_option( 'sfw_close_pings_once' );
 }
 
-if ( !$sfw_close_pings_once ) {
+if ( !isset( $sfw_close_pings_once ) ) {
 	global $pagenow;
 	
 	if ( $pagenow == 'options-discussion.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) {
 		sfw_close_pingbacks();
 		update_option( 'sfw_close_pings_once', true );
-		$sfw_pingback_msg = __( 'Pingbacks were closed this one time to stop pingback and trackback spam. To reopen go to Settings -> ' , 'wspam-free-wordpress' ) . 'Spam Free Wordpress.';
+		$sfw_pingback_msg = __( 'Pingbacks were closed this one time to stop pingback and trackback spam. To reopen go to Settings >> Spam Free Wordpress' , 'spam-free-wordpress' );
 		echo '<div id="message" class="error"><p><strong>'. $sfw_pingback_msg .'</strong></p></div>';
 	}
 }
@@ -190,17 +208,16 @@ if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
 		add_action( 'wp_ajax_sfw_cip', 'get_remote_ip_address_ajax' );
 }
 
-// automatically generate comment form
-// some themes prevent this from working as WordPress requires
+// automatically generate comment form - fixed in 1.7.8.1
 function sfw_comment_form_init() {
-	return dirname( plugin_basename( __FILE__ ) ) . '/comments.php';
+	return dirname(__FILE__) . '/comments.php';
 }
 
 if ( $spam_free_wordpress_options['comment_form'] == 'on' ) {
 	add_filter( 'comments_template', 'sfw_comment_form_init' );
 }
 
-// Calls the Wordpress 3.x code for admin settings page
+// Calls the comment security, messages, and features
 add_action('after_setup_theme', 'sfw_comment_form_additions', 1);
 
 // Calls the wp-comments-post.php authentication

@@ -45,10 +45,12 @@ function spam_free_wordpress_options_page() {
 
 			if ( function_exists( 'w3tc_pgcache_flush' ) ) {
 				w3tc_pgcache_flush();
-				$sfw_update_msg .= __( ' &amp; W3 Total Cache Page Cache flushed', 'spam-free-wordpress' );
+				$sfw_update_msg .= ' &amp; ';
+				$sfw_update_msg .= __( 'W3 Total Cache Page Cache flushed', 'spam-free-wordpress' );
 			} elseif( function_exists( 'wp_cache_clear_cache' ) ) {
 				wp_cache_clear_cache();
-				$sfw_update_msg .= __( ' &amp; WP Super Cache flushed', 'spam-free-wordpress' );
+				$sfw_update_msg .= ' &amp; ';
+				$sfw_update_msg .= __( 'WP Super Cache flushed', 'spam-free-wordpress' );
 			}
 			
 			echo '<div id="message" class="updated"><p>'. $sfw_update_msg .'.</p></div>';

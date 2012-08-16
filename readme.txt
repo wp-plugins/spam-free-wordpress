@@ -28,7 +28,7 @@ It is my goal for Spam Free WordPress to help WordPress become the world's first
  6. Option to strip HTML from comments
  7. No CAPTCHA
  8. Saves time and money by eliminating the need to empty the comment spam folder
- 9. Over 172,000 Spam Free Blogs and Counting!
+ 9. Over 183,000 Spam Free Blogs and Counting!
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
 

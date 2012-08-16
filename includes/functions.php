@@ -241,18 +241,18 @@ function sfw_comment_form_extra_fields() {
 		
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
 		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo "\n<p><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
+		echo "\n<p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
 		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
 		echo '<p id="comment_ready"></p>'."\n";
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
 
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
 		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo "<input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' readonly='readonly' />";
+		echo "\n<p><input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' readonly='readonly' /></p>";
 		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-		echo '<button type="button" id="pwdbtn">';
+		echo "\n".'<p><button type="button" id="pwdbtn">';
 		_e( 'Click for Password', 'spam-free-wordpress' );
-		echo '</button>';
+		echo '</button></p>';
 		echo '<p id="comment_ready"></p>';
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
 	}
@@ -472,42 +472,5 @@ function sfw_load_pwd_old_wp_js() {
 		
 	}
 }
-
-
-/*
-* Turn on stats reminder
-*/
-/*
-function sfw_admin_head() {
-	if ( !current_user_can( 'manage_options' ) )
-		return;
-
-	add_action( 'admin_notices', 'sfw_stat_reminder' );
-}
-
-function sfw_stat_reminder() {
-		$url = admin_url( 'options-general.php?page=spam-free-wordpress-admin-page' );
-		$message = '<div style="text-align: center;"><p style="font-size:13px">Turn on your <a href="'.$url.'">Comment Form Spam Stats</a> to help you know Spam Free Wordpress is working properly.</p><p style="text-align:right"><a href="options-general.php?page=spam-free-wordpress-admin-page?sfw_stat_notice=1">hide</a></p></div>';
-		$heading = __( 'Spam Free Wordpress needs your attention!', 'spam-free-wordpress' );
-?>
-		<div id="sep-notice" class="sfw-notice updated">
-			<div class="sep-message">
-				<h3><?php echo $heading; ?></h3>
-				<p><?php echo $message; ?></p>
-			</div>
-		</div>
-<?php
-}
-
-function sfw_disable_stat_reminder() {
-		if ( isset($_GET['sfw_stat_notice']) && $_GET['sfw_stat_notice']==1 ) {
-				update_option('sfw_stat_notice', 1);
-		}
-}
-
-if (!get_option( 'sfw_stat_reminder_notice' ))
-	add_action( 'admin_head', 'sfw_admin_head' );
-	add_action('admin_init', 'sfw_disable_stat_reminder');
-*/
 
 ?>

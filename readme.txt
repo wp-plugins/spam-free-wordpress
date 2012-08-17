@@ -60,8 +60,8 @@ Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-
 * Minify plugins can prevent JavaScript files from loading, or from loading properly
 
 ** Comment form looks messed up, isn't styled properly, or comments aren't styled properly
-* Try turning off Automatically Generate Comment Form. If there is an error that the password was empty, or you don't see a password when clicking a visible password option, you'll need to use the Automatically Generate Comment Form option for now, or [purchase support](http://www.toddlahman.com/spam-free-wordpress-support/) for help with your comment form for a custom theme.
-* Do a view source on the page to see the comment form CSS id and class tags to style your comment for while using Automatically Generate Comment Form.
+* Try turning off Automatically Generate Comment Form. If there is an error that the password was empty, or you don't see a password when clicking a visible password option, you'll need to use the Automatically Generate Comment Form option for now, or [purchase support](http://www.toddlahman.com/spam-free-wordpress-support/) for help with your comment form.
+* Do a view source on the page to see the comment form CSS id and class tags to style your comment form while using Automatically Generate Comment Form.
 
 == Frequently Asked Questions ==
 

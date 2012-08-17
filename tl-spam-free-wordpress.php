@@ -103,9 +103,13 @@ if( get_option('spam_free_wordpress') ) {
 // Reminder to turn on Comment Form Spam Stats - added 1.7.8.1
 if( get_option( 'sfw_stats_reminder' ) ) {
 	$sfw_stats_reminder = get_option( 'sfw_stats_reminder' );
+	
 }
 
-if ( !isset( $sfw_stats_reminder ) ) {
+if( !isset( $sfw_stats_reminder ) ) {
+	global $pagenow;
+	
+	if ( $pagenow != 'plugins.php' ) {
 		$sfw_stats_reminder_msg = '<a href="options-general.php?page=spam-free-wordpress-admin-page">';
 		$sfw_stats_reminder_msg .= __( 'TURN ON' , 'spam-free-wordpress' );
 		$sfw_stats_reminder_msg .= '</a>';
@@ -116,6 +120,21 @@ if ( !isset( $sfw_stats_reminder ) ) {
 		$sfw_stats_reminder_msg .= __( ' to be sure Spam Free Wordpress is working properly.' , 'spam-free-wordpress' );
 		echo '<div id="message" class="updated"><p><strong>'. $sfw_stats_reminder_msg .'</strong></p></div>';
 		update_option( 'sfw_stats_reminder', true );
+	}
+}
+
+//Pingbacks and trackbacks are closed automatically, but only this one time
+if( get_option( 'sfw_close_pings_once' ) ) {
+	$sfw_close_pings_once = get_option( 'sfw_close_pings_once' );
+}
+
+if ( !isset( $sfw_close_pings_once ) ) {	
+	if ( $pagenow == 'options-discussion.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) {
+		sfw_close_pingbacks();
+		update_option( 'sfw_close_pings_once', true );
+		$sfw_pingback_msg = __( 'Pingbacks were closed this one time to stop pingback and trackback spam. To reopen go to Settings >> Spam Free Wordpress' , 'spam-free-wordpress' );
+		echo '<div id="message" class="error"><p><strong>'. $sfw_pingback_msg .'</strong></p></div>';
+	}
 }
 
 // settings action link
@@ -131,24 +150,6 @@ function sfw_donate_link($links, $file) {
 		$links[] = '<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG">'.__('Donate', 'spam-free-wordpress').'</a>';
 	}
 	return $links;
-}
-
-/**
-* Pingbacks and trackbacks are closed automatically, but only this one time
-*/
-if( get_option( 'sfw_close_pings_once' ) ) {
-	$sfw_close_pings_once = get_option( 'sfw_close_pings_once' );
-}
-
-if ( !isset( $sfw_close_pings_once ) ) {
-	global $pagenow;
-	
-	if ( $pagenow == 'options-discussion.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) {
-		sfw_close_pingbacks();
-		update_option( 'sfw_close_pings_once', true );
-		$sfw_pingback_msg = __( 'Pingbacks were closed this one time to stop pingback and trackback spam. To reopen go to Settings >> Spam Free Wordpress' , 'spam-free-wordpress' );
-		echo '<div id="message" class="error"><p><strong>'. $sfw_pingback_msg .'</strong></p></div>';
-	}
 }
 
 // For testing only

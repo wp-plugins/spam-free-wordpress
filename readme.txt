@@ -42,6 +42,17 @@ Read about how Spam Free WordPress works in detail on the [Spam Free WordPress](
 
 Todd Lahman is a [WordPress Consultant](http://www.toddlahman.com/hire-todd-lahman/), and a [Search Engine Optimization expert](http://www.toddlahman.com/hire-todd-lahman/).
 
+= Languages Supported =
+
+* English
+* German - (de_DE)
+* French - fr_FR)
+* Hebrew - (he_IL)
+* Japanese - (ja)
+* Chinese - (zh_CN)
+* Hong Kong - (zh_HK)
+* Hong Kong - (zh_HK)
+
 == Installation ==
 
 Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.

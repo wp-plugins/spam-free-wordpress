@@ -51,7 +51,7 @@ Todd Lahman is a [WordPress Consultant](http://www.toddlahman.com/hire-todd-lahm
 * Japanese - (ja)
 * Chinese - (zh_CN)
 * Hong Kong - (zh_HK)
-* Hong Kong - (zh_HK)
+* Taiwan - (zh_TW)
 
 == Installation ==
 

@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.6
-Stable tag: 1.7.8.2
+Stable tag: 1.7.8.3
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -28,7 +28,7 @@ It is my goal for Spam Free WordPress to help WordPress become the world's first
  6. Option to strip HTML from comments
  7. No CAPTCHA
  8. Saves time and money by eliminating the need to empty the comment spam folder
- 9. Over 183,000 Spam Free Blogs and Counting!
+ 9. Over 192,000 Spam Free Blogs and Counting!
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
 
@@ -96,11 +96,16 @@ Yes.
 
 == Upgrade Notice ==
 
-= 1.7.8.2 =
+= 1.7.8.3 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.7.8.3 =
+
+* Fixed very old versions of JetPack causing a fatal error when Spam Free Wordpress activated, or vice versa.
+* Added HTML5 "required" form field web browser validation check for name, email, and comment textarea.
 
 = 1.7.8.2 =
 

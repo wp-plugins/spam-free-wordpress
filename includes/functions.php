@@ -241,7 +241,7 @@ function sfw_comment_form_extra_fields() {
 		
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
 		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo "\n<p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
+		echo "\n<p><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
 		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
 		echo '<p id="comment_ready"></p>'."\n";
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";

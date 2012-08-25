@@ -411,7 +411,7 @@ add_filter('comment_form_default_fields','sfw_add_x_autocompletetype');
 
 /*
 * Load JavaScript for comment form
-* This is for WordPress 3.3 and jQuery 1.7 and Above
+* Requires jQuery 1.7 or Above
 */
 function sfw_load_pwd() {
 	global $spam_free_wordpress_options;
@@ -430,34 +430,6 @@ function sfw_load_pwd() {
 		
 	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
 		$js_path =  SFW_URL . 'js/sfw-click-pwd-button.js';
-		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ), SFW_VERSION );
-		wp_localize_script( 'sfw_click_pwd_button', 'sfw_click_pwd_button', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	}
-}
-
-/*
-* Load JavaScript for comment form
-* This is for WordPress 3.3 and jQuery 1.7 and Below
-*/
-function sfw_load_pwd_old_wp_js() {
-	global $spam_free_wordpress_options;
-
-	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
-		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-ipwd.js';
-		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION );
-		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
-		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-click-pwd-field.js';
-		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ), SFW_VERSION );
-		wp_localize_script( 'sfw_pwd_field', 'sfw_pwd_field', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_pwd_field', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
-		$js_path =  SFW_URL . 'js/before-wp-3_3/sfw-click-pwd-button.js';
 		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ), SFW_VERSION );
 		wp_localize_script( 'sfw_click_pwd_button', 'sfw_click_pwd_button', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
@@ -502,13 +474,13 @@ function sfw_array_remove_keys($array, $keys) {
 		return $array;
 	}
  
-    // array_diff_key() expected an associative array.
-    $assocKeys = array();
-    foreach($keys as $key) {
-        $assocKeys[$key] = true;
-    }
+	// array_diff_key() expected an associative array.
+	$assocKeys = array();
+	foreach($keys as $key) {
+		$assocKeys[$key] = true;
+	}
  
-    return array_diff_key($array, $assocKeys);
+	return array_diff_key($array, $assocKeys);
 }
 
 ?>

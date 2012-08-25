@@ -125,25 +125,20 @@ function sfw_add_default_pwd_style() {
 	}
 }
 
-// Added version 1.7.7
-function sfw_add_old_jquery() {
 
+// added version 1.7.8.6
+function sfw_del_old_jquery() {
 	if ( version_compare( get_bloginfo( 'version' ), SFW_WP_REQUIRED, '<' ) ) {
 		deactivate_plugins( basename( __FILE__ ) );
 		wp_die( SFW_WP_REQUIRED_MSG );
 	} else {
-		$spam_free_wordpress_options = get_option('spam_free_wordpress');
-	
-		$oldver = $spam_free_wordpress_options;
-		$newver = array(
-			'old_jquery' => 'on'
-			);
-		$mergever = array_merge( $oldver, $newver );
-	
-		update_option( 'spam_free_wordpress', $mergever );
+		$sfw_options = get_option('spam_free_wordpress');
+
+		$new_options = sfw_array_remove_keys( $sfw_options, array( 'old_jquery' ) );
+		
+		update_option( 'spam_free_wordpress', $new_options );	
 		
 	}
 }
-
 
 ?>

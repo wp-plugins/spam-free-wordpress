@@ -13,11 +13,7 @@ function sfw_comment_form_additions() {
 
 	// Calls the password form for comments.php if the comment_form function is outputting comment form fields
 	add_action('comment_form_after_fields', 'sfw_comment_form_extra_fields', 1);
-	
-	if ($spam_free_wordpress_options['comment_form'] == "on") {
-		add_action('comment_form_after_fields', 'sfw_special_message');
-	}
-	
+		
 	// Strips out html from comment form when enabled
 	if ( $spam_free_wordpress_options['toggle_html'] == "enable" ) {
 		// Removes all HTML from comments and leaves it only as text
@@ -232,30 +228,32 @@ function sfw_comment_form_extra_fields() {
 		_e( ' located at ', 'spam-free-wordpress' );
 		echo "http://www.toddlahman.com/spam-free-wordpress/ -->\n";
 		
-
-	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
-		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-		echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
-		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+		echo stripslashes( $spam_free_wordpress_options['special_msg'] );
 		
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
-		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo "\n<p><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
-		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-		echo '<p id="comment_ready"></p>'."\n";
-		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
 
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
-		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo "\n<p><input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' readonly='readonly' /></p>";
-		echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-		echo "\n".'<p><button type="button" id="pwdbtn">';
-		_e( 'Click for Password', 'spam-free-wordpress' );
-		echo '</button></p>';
-		echo '<p id="comment_ready"></p>';
-		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
-	}
+		if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
+			wp_nonce_field('sfw_nonce','sfw_comment_nonce');
+			echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
+			echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
+			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+		
+		} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
+			wp_nonce_field('sfw_nonce','sfw_comment_nonce');
+			echo "\n<p><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
+			echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
+			echo '<p id="comment_ready"></p>'."\n";
+			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+
+		} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
+			wp_nonce_field('sfw_nonce','sfw_comment_nonce');
+			echo "\n<p><input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' readonly='readonly' /></p>";
+			echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
+			echo "\n".'<p><button type="button" id="pwdbtn">';
+			_e( 'Click for Password', 'spam-free-wordpress' );
+			echo '</button></p>';
+			echo '<p id="comment_ready"></p>';
+			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+		}
 		
 		// Shows how many comment spam have been killed on the comment form
 		if ($spam_free_wordpress_options['toggle_stats_update'] == "enable") {
@@ -270,12 +268,6 @@ function sfw_comment_form_extra_fields() {
 		delete_post_meta( $post->ID, 'sfw_comment_form_password' );
 		
 	}
-}
-
-function sfw_special_message() {
-	global $spam_free_wordpress_options;
-	
-	echo stripslashes( $spam_free_wordpress_options['special_msg'] );
 }
 
 // Function for wp-comments-post.php file located in the root Wordpress directory. The same directory as the wp-config.php file.
@@ -471,6 +463,52 @@ function sfw_load_pwd_old_wp_js() {
 		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		
 	}
+}
+
+/**
+* added 1.7.8.6
+ * SFW requires jQuery 1.7 since it uses functions like .on() for events.
+ * If, by the time wp_print_scrips is called, jQuery is outdated (i.e not
+ * using the version in core) we need to deregister it and register the 
+ * core version of the file.
+ */
+function sfw_check_jquery() {
+	global $wp_scripts;
+	
+	// Enforce minimum version of jQuery
+	if ( isset( $wp_scripts->registered['jquery']->ver ) && $wp_scripts->registered['jquery']->ver < '1.7' ) {
+		wp_deregister_script( 'jquery' );
+		wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
+		wp_enqueue_script( 'jquery' );
+	}
+}
+
+// added 1.7.8.6
+// removes key from array to remove options from database when options array saved for upgrades where option is removed
+function sfw_array_remove_keys($array, $keys) {
+
+	// If array is empty or not an array then return
+	if(empty($array) || (! is_array($array))) {
+		return $array;
+	}
+ 
+	// If $keys is a comma-separated list, convert to an array.
+	if(is_string($keys)) {
+		$keys = explode(',', $keys);
+	}
+ 
+	// At this point if $keys is not an array return
+	if(! is_array($keys)) {
+		return $array;
+	}
+ 
+    // array_diff_key() expected an associative array.
+    $assocKeys = array();
+    foreach($keys as $key) {
+        $assocKeys[$key] = true;
+    }
+ 
+    return array_diff_key($array, $assocKeys);
 }
 
 ?>

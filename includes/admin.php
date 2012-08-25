@@ -86,12 +86,6 @@ function spam_free_wordpress_options_page() {
 					<p>On <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "on") ? 'checked="checked"' : '') ;  ?> value="on" />&nbsp;&nbsp; Off <input type="radio" name="spam_free_wordpress_options[comment_form]" <?php echo (($spam_free_wordpress_options['comment_form'] == "off") ? 'checked="checked"' : '') ;  ?> value="off" /></p>
 				</fieldset>
 			
-			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Use Old jQuery Scripts', 'spam-free-wordpress' ); ?></span></h3>
-				<p><?php _e( 'If you use WordPress 3.3 or greater you can turn this to off. If comments get blocked after turning off it means your theme is loading an old version of jQuery.', 'spam-free-wordpress' ); ?></p>
-				<fieldset>
-					<p>On <input type="radio" name="spam_free_wordpress_options[old_jquery]" <?php echo (($spam_free_wordpress_options['old_jquery'] == "on") ? 'checked="checked"' : '') ;  ?> value="on" />&nbsp;&nbsp; Off <input type="radio" name="spam_free_wordpress_options[old_jquery]" <?php echo (($spam_free_wordpress_options['old_jquery'] == "off") ? 'checked="checked"' : '') ;  ?> value="off" /></p>
-				</fieldset>
-			
 			<h3><span style="border-bottom: 2px solid #99ccff; padding: 3px;"><?php _e( 'Remove HTML from Comments', 'spam-free-wordpress' ); ?></span></h3>
 			<p><?php _e( 'Strips the HTML from comments to render spam links as plain text. Also removes the allowed HTML tags message from below the comment box.', 'spam-free-wordpress' ); ?></p>			
 				<fieldset>

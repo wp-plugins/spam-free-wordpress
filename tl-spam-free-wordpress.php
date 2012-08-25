@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.7.8.5
+Version: 1.7.8.6
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.7.8.5' );
+	define( 'SFW_VERSION', '1.7.8.6' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -88,14 +88,9 @@ if( get_option('spam_free_wordpress') ) {
 		sfw_add_default_pwd_style();
 	}
 
-	// Added version 1.7.7
-	if( !$spam_free_wordpress_options['old_jquery'] ) {
-		sfw_add_old_jquery();
-	}
-	
-	// Added version 1.7.8 to turn on using old jQuery scripts as the default option
-	if( isset( $spam_free_wordpress_options['old_jquery'] ) && $spam_free_wordpress_options['old_jquery'] == 'off' && version_compare( get_option( 'sfw_version' ), '1.7.8', '<' ) ) {
-		sfw_add_old_jquery();
+	// Added version 1.7.8.6
+	if( isset( $spam_free_wordpress_options['old_jquery'] ) ) {
+		sfw_del_old_jquery();
 	}
 	
 }
@@ -171,17 +166,19 @@ if ( class_exists( 'Jetpack' ) ) {
 }
 
 /**
-* Allows WordPress 3.3 or above, with jQuery 1.7 and above, to use scripts compatible with jQuery below version 1.7, in case those old jQuery versions are being loaded by poorly written themes.
+* added 1.7.8.6
+ * SFW requires jQuery 1.7 since it uses functions like .on() for events.
+ * If, by the time wp_print_scrips is called, jQuery is outdated (i.e not
+ * using the version in core) we need to deregister it and register the 
+ * core version of the file.
+ */
+add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
+
+/**
+* Load SFW authentication AJAX JavaScript. Requires jQuery 1.7 or above since it uses .on()
 */
-// Make sure this is WordPress 3.3 and jQuery 1.7 or greater
-if ( version_compare( get_bloginfo( 'version' ), '3.3', '>=' ) && $spam_free_wordpress_options['old_jquery'] == 'off' ) {
-	//register with hook 'wp_enqueue_scripts' which can be used for front end CSS and JavaScript
-	add_action('wp_enqueue_scripts', 'sfw_load_pwd');
-} elseif ( version_compare( get_bloginfo( 'version' ), '3.3', '>=' ) && $spam_free_wordpress_options['old_jquery'] == 'on' ) {
-	add_action('wp_enqueue_scripts', 'sfw_load_pwd_old_wp_js');
-} elseif( version_compare( get_bloginfo( 'version' ), '3.3', '<' ) ) {
-	add_action('wp_enqueue_scripts', 'sfw_load_pwd_old_wp_js');
-}
+add_action('wp_enqueue_scripts', 'sfw_load_pwd');
+
 
 // Actions for password AJAX
 if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {

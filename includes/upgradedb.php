@@ -23,8 +23,7 @@ function sfw_add_default_data() {
 			'ping_status' => 'closed',
 			'comment_form' => 'on',
 			'special_msg' => '',
-			'pwd_style' => 'invisible_password',
-			'old_jquery' => 'on'
+			'pwd_style' => 'invisible_password'
 			);
 			update_option( 'spam_free_wordpress', $sfw_options );
 		

@@ -213,7 +213,7 @@ function sfw_delete() {
 	delete_option( 'sfw_close_pings_once' );
 }
 
-register_deactivation_hook( __FILE__, 'sfw_delete' );
+//register_deactivation_hook( __FILE__, 'sfw_delete' );
 
 /*
 * For troubleshooting Unexpect Output errors

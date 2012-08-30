@@ -4,7 +4,6 @@
 function sfw_comment_form_additions() {
 	global $sfw_options;
 
-	if( SFW_KEY::get_key() != '' ) {
 		// Calls the password form for comments.php if the comment_form function is outputting comment form fields
 		add_action('comment_form_after_fields', 'sfw_comment_form_extra_fields', 1);
 		
@@ -63,8 +62,6 @@ function sfw_comment_form_additions() {
 		if ( $sfw_options['author_link'] == "on" ) {
 			add_filter('get_comment_author_url', 'strip_author_url');
 		}
-	
-	}
 }
 
 /*--------------------------------
@@ -191,7 +188,6 @@ function sfw_comment_post_authentication() {
 	$cip = $_POST['comment_ip'];
 	
 	// If the reader is logged in don't require password for wp-comments-post.php
-	if( SFW_KEY::get_key() != '' ) {
 		if ( !is_user_logged_in() ) {
 			// Nonce check
 			if ( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
@@ -206,7 +202,6 @@ function sfw_comment_post_authentication() {
 				wp_die( __( 'Comment blocked by Spam Free Wordpress because your IP address is in the local blocklist, or you forgot to type a comment.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Blocked by Spam Free Wordpress local blocklist', array( 'response' => 200, 'back_link' => true ) );
 
 		}
-	}
 }
 
 // Counts number of comment spam hits and stores in options database table

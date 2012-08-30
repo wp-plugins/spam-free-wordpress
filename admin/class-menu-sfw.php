@@ -109,21 +109,33 @@ if( !class_exists('SFW_MENU' ) ) {
 		function api_key_section_text() {
 			if( SFW_KEY::get_key() == '' ) {
 				echo '<p class="alert">';
-				_e( 'THIS PLUGIN WILL NOT WORK WITHOUT A VALID LICENSE KEY.', 'spam-free-wordpress' );
+				_e( 'PLUGIN SUPPORT, AND ADVANCED PLUGIN FEATURES, REQUIRE A FREE LICENSE KEY.', 'spam-free-wordpress' );
 				echo '</p>';
 			}
 		}
 		
 		
 		function cf_msg_text() {
-			_e( 'Text and HTML are acceptable.', 'spam-free-wordpress' );
-			SFW_TOOL_TIPS::tips( 'comment_msg' );
+			if( SFW_KEY::get_key() == '' ) {
+				echo '<p class="alert">';
+				_e( 'THIS SECTION REQUIRES A FREE LICENSE KEY.', 'spam-free-wordpress' );
+				echo '</p>';
+			} else {
+				_e( 'Text and HTML are acceptable.', 'spam-free-wordpress' );
+				SFW_TOOL_TIPS::tips( 'comment_msg' );
+			}
 		}
 		
 		
 		function bl_keys_text() {
-			_e( 'IP addresses only. One IP address per line.', 'spam-free-wordpress' );
-			SFW_TOOL_TIPS::tips( 'blocklist' );
+			if( SFW_KEY::get_key() == '' ) {
+				echo '<p class="alert">';
+				_e( 'THIS SECTION REQUIRES A FREE LICENSE KEY.', 'spam-free-wordpress' );
+				echo '</p>';
+			} else {
+				_e( 'IP addresses only. One IP address per line.', 'spam-free-wordpress' );
+				SFW_TOOL_TIPS::tips( 'blocklist' );
+			}
 		}
 	
 				
@@ -135,7 +147,7 @@ if( !class_exists('SFW_MENU' ) ) {
 			if ( !empty( $options['api_key'] ) ) {
 				echo "<span class='icon-pos'><img src='".SFW_URL."images/complete.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span>";
 			} else {
-				echo "<span class='icon-pos'><img src='".SFW_URL."images/warn.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span><strong>License key required. <a href='".SFW_API_KEY_URL."' target='_blank'>Need a license key?</a></strong>";
+				echo "<span class='icon-pos'><img src='".SFW_URL."images/warn.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;' /></span><strong><a href='".SFW_API_KEY_URL."' target='_blank'>Get a free license key.</a></strong>";
 			}
 		}
 		
@@ -220,9 +232,6 @@ if( !class_exists('SFW_MENU' ) ) {
 		function checkboxes( $checkboxes ) {
 			$options = get_option( 'spam_free_wordpress' );
 
-			if( SFW_KEY::get_key() == '' ) {
-				?><div class="hidden"><?php
-			}
 			switch ( $checkboxes ) {
 				case 'Spam Stats':
 					?>
@@ -258,10 +267,6 @@ if( !class_exists('SFW_MENU' ) ) {
 					?>
 					<input type="checkbox" id="ping_status" name="spam_free_wordpress[ping_status]" value="on" <?php checked( $options['ping_status'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'pingbacks' ) ?>
 					<?php
-			}
-			if( SFW_KEY::get_key() == '' ) {
-				?></div><?php
-
 			}
 		}
 		

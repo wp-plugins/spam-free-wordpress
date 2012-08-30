@@ -1,73 +1,69 @@
 <?php
 
-/*
-* Legacy function for versions prior to 1.7.8
-*/
-function tl_spam_free_wordpress_comments_form() {
-	sfw_comment_form_extra_fields();
-}
-
 // Adds password field to comment form and options to filter HTML from comments
 function sfw_comment_form_additions() {
-	global $spam_free_wordpress_options;
+	global $sfw_options;
 
-	// Calls the password form for comments.php if the comment_form function is outputting comment form fields
-	add_action('comment_form_after_fields', 'sfw_comment_form_extra_fields', 1);
+	if( SFW_KEY::get_key() != '' ) {
+		// Calls the password form for comments.php if the comment_form function is outputting comment form fields
+		add_action('comment_form_after_fields', 'sfw_comment_form_extra_fields', 1);
 		
-	// Strips out html from comment form when enabled
-	if ( $spam_free_wordpress_options['toggle_html'] == "enable" ) {
-		// Removes all HTML from comments and leaves it only as text
-		remove_filter('comment_text', 'make_clickable', 9);
-		// line above doesn't make everything unclickable
-		add_filter('comment_text', 'wp_filter_nohtml_kses');
-		add_filter('comment_text_rss', 'wp_filter_nohtml_kses');
-		add_filter('comment_excerpt', 'wp_filter_nohtml_kses');
-		// remove tags from below comment form
-		//add_filter('comment_form_defaults','sfw_remove_allowed_tags_field');
-		// replaced line above to add no html notice
-		add_filter('comment_form_defaults','sfw_no_html_notice');
+		// Strips out html from comment form when ond
+		if ( $sfw_options['cf_html'] == "on" ) {
+			// Removes all HTML from comments and leaves it only as text
+			remove_filter('comment_text', 'make_clickable', 9);
+			// line above doesn't make everything unclickable
+			add_filter('comment_text', 'wp_filter_nohtml_kses');
+			add_filter('comment_text_rss', 'wp_filter_nohtml_kses');
+			add_filter('comment_excerpt', 'wp_filter_nohtml_kses');
+			// remove tags from below comment form
+			//add_filter('comment_form_defaults','sfw_remove_allowed_tags_field');
+			// replaced line above to add no html notice
+			add_filter('comment_form_defaults','sfw_no_html_notice');
 		
-		/*-----------------------
-		Custom Theme Support
-		------------------------*/
+			/*-----------------------
+			Custom Theme Support
+			------------------------*/
 		
-		$sfw_get_current_theme = get_current_theme();
+			$sfw_get_current_theme = get_current_theme();
 		
-		// Suffusion
-		if ( $sfw_get_current_theme == 'Suffusion' ) {
-			add_filter('suffusion_comment_form_fields','sfw_no_html_notice');
-		}
+			// Suffusion
+			if ( $sfw_get_current_theme == 'Suffusion' ) {
+				add_filter('suffusion_comment_form_fields','sfw_no_html_notice');
+			}
 			
-		// Genesis
-		if ( $sfw_get_current_theme == 'Genesis/genesis' ) {
-			add_action('genesis_after_comment_form','sfw_no_html_notice_action');
-		}
+			// Genesis
+			if ( $sfw_get_current_theme == 'Genesis/genesis' ) {
+				add_action('genesis_after_comment_form','sfw_no_html_notice_action');
+			}
 			
-		// Graphene
-		if ( $sfw_get_current_theme == 'Graphene' ) {
-			add_filter('graphene_comment_form_args','sfw_no_html_notice');
-		}
+			// Graphene
+			if ( $sfw_get_current_theme == 'Graphene' ) {
+				add_filter('graphene_comment_form_args','sfw_no_html_notice');
+			}
 			
-		// Thesis
-		if ( $sfw_get_current_theme == 'Thesis' ) {
-			add_action('thesis_hook_comment_field', 'sfw_comment_form_extra_fields');
-			add_action('thesis_hook_after_comment_box','sfw_no_html_notice_action');
-		}
+			// Thesis
+			if ( $sfw_get_current_theme == 'Thesis' ) {
+				add_action('thesis_hook_comment_field', 'sfw_comment_form_extra_fields');
+				add_action('thesis_hook_after_comment_box','sfw_no_html_notice_action');
+			}
 			
-		// Thematic
-		if ( $sfw_get_current_theme == 'Thematic' ) {
-			define('THEMATIC_COMPATIBLE_COMMENT_FORM', true);
-			add_filter('thematic_comment_form_args','sfw_no_html_notice');
+			// Thematic
+			if ( $sfw_get_current_theme == 'Thematic' ) {
+				define('THEMATIC_COMPATIBLE_COMMENT_FORM', true);
+				add_filter('thematic_comment_form_args','sfw_no_html_notice');
+			}
+	
+		}
+
+		if ( $sfw_options['website_url'] == "on" ) {
+			add_filter('comment_form_field_url', 'sfw_remove_url_field_off');
+		}
+
+		if ( $sfw_options['author_link'] == "on" ) {
+			add_filter('get_comment_author_url', 'strip_author_url');
 		}
 	
-	}
-
-	if ( $spam_free_wordpress_options['remove_author_url_field'] == "enable" ) {
-		add_filter('comment_form_field_url', 'sfw_remove_url_field_off');
-	}
-
-	if ( $spam_free_wordpress_options['remove_author_url'] == "enable" ) {
-		add_filter('get_comment_author_url', 'strip_author_url');
 	}
 }
 
@@ -105,20 +101,6 @@ function strip_author_url($content = "") {
   return "";
 }
 
-// Gets the remote IP address even if behind a proxy
-function get_remote_ip_address() {
-	if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
-		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
-	} else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	} else if(!empty($_SERVER['REMOTE_ADDR'])) {
-		$ip_address = $_SERVER['REMOTE_ADDR'];
-	} else {
-		$ip_address = '';
-	}
-	return $ip_address;
-}
-
 // AJAX function to obtain client IP address
 function get_remote_ip_address_ajax() {
 	if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -132,14 +114,15 @@ function get_remote_ip_address_ajax() {
 	}
 	echo $ip_address;
 	
+	// die() for AJAX
 	die();
 }
 
 // Returns Local Blocklist
 function sfw_local_blocklist_check( $cip ) {
-	global $spam_free_wordpress_options;
+	global $sfw_options;
 
-	$local_blocklist_keys = trim( $spam_free_wordpress_options['blocklist_keys'] );
+	$local_blocklist_keys = trim( $sfw_options['bl_keys'] );
 	if ( '' == $local_blocklist_keys )
 		return false; // If blocklist keys are empty
 	$local_key = explode("\n", $local_blocklist_keys );
@@ -162,64 +145,13 @@ function sfw_local_blocklist_check( $cip ) {
 	return false;
 }
 
-// Returns Remote Blocklist
-function sfw_remote_blocklist_check( $cip ) {
-	global $spam_free_wordpress_options;
-	
-	// Retrieves remote blocklist url from database
-	$rbl_url = $spam_free_wordpress_options['remote_blocked_list'];
-	// Uses a URL to retrieve a list of IP address in an array
-	$get_remote_blocklist = wp_remote_get($rbl_url);
-	
-	if ( '' == $rbl_url )
-		return false; // If blocklist keys are empty or url is not in the database
-	$remote_key = explode("\n", $get_remote_blocklist['body'] ); // Turns blocklist array into string and lists each IP address on new line
-
-	foreach ( (array) $remote_key as $rkey ) {
-		$rkey = trim($rkey);
-
-		// Skip empty lines
-		if ( empty($rkey) ) { continue; }
-
-		// Can use '#' to comment out line in blocklist
-		$rkey = preg_quote($rkey, '#');
-
-		$pattern = "#$rkey#i";
-		if (
-			   preg_match($pattern, $cip)
-		 )
-			return true;
-	}
-	return false;
-}
-
-// Customizable Affiliate link
-function sfw_custom_affiliate_link() {
-	$spam_free_wordpress_options = get_option('spam_free_wordpress');
-
-	$default_aff_msg = __( 'Make Your Blog Spam Free', 'spam-free-wordpress' );
-	$aff_msg = $spam_free_wordpress_options['affiliate_msg'];
-	
-	if ($spam_free_wordpress_options['affiliate_msg'] =='') {
-		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/'>". $default_aff_msg ."</a>";
-	} else {
-		echo "<a href='http://www.toddlahman.com/spam-free-wordpress/'>".$aff_msg."</a>";
-	}
-}
-
 // Function for comments.php file
 function sfw_comment_form_extra_fields() {
-	global $post, $spam_free_wordpress_options;
-	
-	$sfw_comment_form_password_var = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
-	
-	$sfw_pw_field_size = $spam_free_wordpress_options['pw_field_size'];
-	$sfw_tab_index = $spam_free_wordpress_options['tab_index'];
+	global $post, $sfw_options;
 
 	// If the reader is logged in don't require password for comments.php
 	if ( !is_user_logged_in() ) {
 		
-		// Spam Count
 		echo '<!-- ' . number_format_i18n( get_option( 'sfw_spam_hits' ) );
 		_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
 		echo 'Spam Free Wordpress';
@@ -227,36 +159,15 @@ function sfw_comment_form_extra_fields() {
 		echo SFW_VERSION;
 		_e( ' located at ', 'spam-free-wordpress' );
 		echo "http://www.toddlahman.com/spam-free-wordpress/ -->\n";
+			
+		echo stripslashes( $sfw_options['cf_msg'] );
 		
-		echo stripslashes( $spam_free_wordpress_options['special_msg'] );
+		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
+		echo '<p><noscript>JavaScript must be ond to leave a comment.</noscript></p>';
+		echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
+		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
 		
-
-		if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
-			wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-			echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-			echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
-			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
-		
-		} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
-			wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-			echo "\n<p><input type='text' class='pwddefault' name='pwdfield' rel='".__( 'Click for Password', 'spam-free-wordpress' )."' value='' readonly='readonly' size='".$sfw_pw_field_size."' /></p>\n";
-			echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-			echo '<p id="comment_ready"></p>'."\n";
-			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
-
-		} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
-			wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-			echo "\n<p><input type='text' id='pwdfield' name='pwdfield' value='' size='".$sfw_pw_field_size."' readonly='readonly' /></p>";
-			echo '<p><noscript>JavaScript must be enabled to leave a comment.</noscript></p>';
-			echo "\n".'<p><button type="button" id="pwdbtn">';
-			_e( 'Click for Password', 'spam-free-wordpress' );
-			echo '</button></p>';
-			echo '<p id="comment_ready"></p>';
-			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
-		}
-		
-		// Shows how many comment spam have been killed on the comment form
-		if ($spam_free_wordpress_options['toggle_stats_update'] == "enable") {
+		if ($sfw_options['cf_spam_stats'] == "on") {
 				echo '<p>' . number_format_i18n( get_option('sfw_spam_hits' ) );
 				_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
 				echo '<a href="http://www.toddlahman.com/spam-free-wordpress/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>'."\n";
@@ -272,7 +183,7 @@ function sfw_comment_form_extra_fields() {
 
 // Function for wp-comments-post.php file located in the root Wordpress directory. The same directory as the wp-config.php file.
 function sfw_comment_post_authentication() {
-	global $post, $spam_free_wordpress_options;
+	global $post, $sfw_options;
 	
 	//$sfw_comment_script = get_post_meta( $post->ID, 'sfw_comment_form_password', true );
 	$sfw_comment_script = get_transient( $post->ID. '-' .$_POST['pwdfield'] );
@@ -280,25 +191,20 @@ function sfw_comment_post_authentication() {
 	$cip = $_POST['comment_ip'];
 	
 	// If the reader is logged in don't require password for wp-comments-post.php
-	if ( !is_user_logged_in() ) {
-		// Nonce check
-		if ( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
-			wp_die( __( 'Spam Free Wordpress rejected your comment because you failed a critical security check.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+	if( SFW_KEY::get_key() != '' ) {
+		if ( !is_user_logged_in() ) {
+			// Nonce check
+			if ( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
+				wp_die( __( 'Spam Free Wordpress rejected your comment because you failed a critical security check.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
-		// Compares current comment form password with current password for post
-		if ( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
-			wp_die( __( 'Spam Free Wordpress rejected your comment because you did not enter the correct password or it was empty.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+			// Compares current comment form password with current password for post
+			if ( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
+				wp_die( __( 'Spam Free Wordpress rejected your comment because you did not enter the correct password or it was empty.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
-		// Compares commenter IP address to local blocklist
-		if ( $spam_free_wordpress_options['lbl_enable_disable'] == 'enable' ) {
+			// Compares commenter IP address to local blocklist
 			if ( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check( $cip ) )
 				wp_die( __( 'Comment blocked by Spam Free Wordpress because your IP address is in the local blocklist, or you forgot to type a comment.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Blocked by Spam Free Wordpress local blocklist', array( 'response' => 200, 'back_link' => true ) );
-		}
-		
-		// Compares commenter IP address to remote blocklist
-		if ( $spam_free_wordpress_options['rbl_enable_disable'] == 'enable' ) {
-			if ( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_remote_blocklist_check( $cip ) )
-				wp_die( __( 'Comment blocked by Spam Free Wordpress because your IP address is in the remote blocklist, or you forgot to type a comment.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Blocked by Spam Free Wordpress remote blocklist', array( 'response' => 200, 'back_link' => true ) );
+
 		}
 	}
 }
@@ -347,34 +253,11 @@ function sfw_open_pingbacks() {
 
 }
 
-/*-----------------------------------------
-Closes user registration security hole
-------------------------------------------*/
-
-function sfw_close_auto_user_registration() {
-	update_option( 'users_can_register', '0' );
-}
 
 // Adds settings link to plugin menu
 function sfw_settings_link($links) {
-	$links[] = '<a href="'.admin_url('options-general.php?page=spam-free-wordpress-admin-page').'">Settings</a>';
+	$links[] = '<a href="'.admin_url('options-general.php?page=sfw_dashboard').'">Settings</a>';
 	return $links;
-}
-
-/**
-* Corrects the Notice: Undefined index: checkbox error when the check box is not checked, and thus sends an empty value. This function gives it a value when using the WordPress checked function.
-* Unfortunately a value is not stored in the database when unchecked. This problem can be corrected when using the Settings API which stores a value if checked or unchecked using a Ternary Operator
-* http://wordpress.org/support/topic/problem-with-checked-function?replies=6
-* Box starts out unchecked
-* http://wordpress.stackexchange.com/questions/43752/settings-api-easiest-way-of-validating-checkboxes
-* $valid_input[$setting] = ( isset( $input[$setting] ) && true == $input[$setting] ? true : false );
-*/
-function sfw_unchecked( $checkoption ) {
-	$spam_free_wordpress_options = get_option('spam_free_wordpress');
-	if ( ! isset( $spam_free_wordpress_options[$checkoption] ) ) {
-		$spam_free_wordpress_options[$checkoption] = 'enable';
-	}
-	echo '<input type="checkbox" name="spam_free_wordpress_options['. $checkoption .']" value="disable"'. checked( $spam_free_wordpress_options[$checkoption], 'disable', false ) .' />';
 }
 
 
@@ -391,6 +274,7 @@ function sfw_get_pwd() {
 	
 	echo $pwd_key;
 	
+	// die() for AJAX
 	die();
 }
 
@@ -414,27 +298,11 @@ add_filter('comment_form_default_fields','sfw_add_x_autocompletetype');
 * Requires jQuery 1.7 or Above
 */
 function sfw_load_pwd() {
-	global $spam_free_wordpress_options;
-
-	if ( $spam_free_wordpress_options['pwd_style'] == 'invisible_password' ) {
-		$js_path =  SFW_URL . 'js/sfw-ipwd.js';
-		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION );
-		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_field' ) {
-		$js_path =  SFW_URL . 'js/sfw-click-pwd-field.js';
-		wp_enqueue_script( 'sfw_pwd_field', $js_path, array( 'jquery' ), SFW_VERSION );
-		wp_localize_script( 'sfw_pwd_field', 'sfw_pwd_field', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_pwd_field', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	} elseif ( $spam_free_wordpress_options['pwd_style'] == 'click_password_button' ) {
-		$js_path =  SFW_URL . 'js/sfw-click-pwd-button.js';
-		wp_enqueue_script( 'sfw_click_pwd_button', $js_path, array( 'jquery' ), SFW_VERSION );
-		wp_localize_script( 'sfw_click_pwd_button', 'sfw_click_pwd_button', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_click_pwd_button', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		
-	}
+	$js_path =  SFW_URL . 'js/sfw-ipwd.js';
+	
+	wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
+	wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 }
 
 /**
@@ -453,34 +321,6 @@ function sfw_check_jquery() {
 		wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
 		wp_enqueue_script( 'jquery' );
 	}
-}
-
-// added 1.7.8.6
-// removes key from array to remove options from database when options array saved for upgrades where option is removed
-function sfw_array_remove_keys($array, $keys) {
-
-	// If array is empty or not an array then return
-	if(empty($array) || (! is_array($array))) {
-		return $array;
-	}
- 
-	// If $keys is a comma-separated list, convert to an array.
-	if(is_string($keys)) {
-		$keys = explode(',', $keys);
-	}
- 
-	// At this point if $keys is not an array return
-	if(! is_array($keys)) {
-		return $array;
-	}
- 
-	// array_diff_key() expected an associative array.
-	$assocKeys = array();
-	foreach($keys as $key) {
-		$assocKeys[$key] = true;
-	}
- 
-	return array_diff_key($array, $assocKeys);
 }
 
 ?>

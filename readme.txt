@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.6
-Stable tag: 1.7.8.6
+Stable tag: 1.8
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
@@ -14,27 +14,24 @@ Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-
 
 Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. 
 
-This plugin was born out of necessity in September of 2007. A comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of traffic or spam.
-
-It is my goal for Spam Free WordPress to help WordPress become the world's first and only comment spam free blogging platform. This goal can only be met if you activate the link on the plugin settings page back to the plugin homepage, and tell others about the plugin.
+This plugin was born out of necessity in September of 2007. A comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of comment spam on the highest traffic blogs.
 
 = Spam Free WordPress Features =
 
+This is the easiest comment spam plugin you'll ever use. Works right out of the box.
+
  1. Automatically blocks 100% of automated comment spam
- 2. Local manual spam and ban policy set with local IP address blocklist
- 3. Global manual spam and ban policy set with remote IP address blocklist
- 4. Virtually zero database load under the heaviest spam conditions.
- 5. Zero false positives
- 6. Option to strip HTML from comments
- 7. No CAPTCHA
- 8. Saves time and money by eliminating the need to empty the comment spam folder
- 9. Over 192,000 Spam Free Blogs and Counting!
+ 2. Local IP address blocklist for manual spam
+ 3. Almost zero database load under the heaviest spam conditions.
+ 4. Zero false positives
+ 5. Option to strip HTML from comments
+ 6. No CAPTCHA
+ 7. Saves time and money by eliminating the need to empty the comment spam folder
+ 8. Over 210,000 Spam Free Blogs and Counting!
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
 
-The comment form can be secured with an invisible password, a clickable password field, or a click password button. There is other security also built-in that works automatically.
-
-With the invisible password turned on, the reader doesn't even know there are security checks being performed. The reader just leaves a comment, and spam bots are blocked.
+The comment form is secured in the background, so your readers just see your comment form.
 
 Read about how Spam Free WordPress works in detail on the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
@@ -52,6 +49,10 @@ Todd Lahman is a [WordPress Consultant](http://www.toddlahman.com/hire-todd-lahm
 * Chinese - (zh_CN)
 * Hong Kong - (zh_HK)
 * Taiwan - (zh_TW)
+
+= Free License Key Required =
+
+P.S. [Free License Key](http://www.toddlahman.com/shop/spam-free-wordpress/) required to use it.
 
 == Installation ==
 
@@ -86,21 +87,32 @@ Yes.
 
 == Screenshots ==
 
-1. The invisible password secures the comment form without bothering the reader.
+1. Spam protection is invisible to the reader.
 
-2. A clickable field can secure the comment form if you want a visual password.
-
-3. A password button can secure the comment form if you want a visual password.
-
-4. Spam Free Wordpress in action.
+2. Spam Free Wordpress in action.
 
 == Upgrade Notice ==
 
-= 1.7.8.6 =
+= 1.8 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.8 =
+
+* Free License Key now required.
+* JavaScript now loads in the footer.
+* Removed ping closed notice.
+* Removed remote blocklist option.
+* Removed share link option that was used to promote plugin.
+* Removed password form options since they are no longer needed.
+* Upgraded all database options.
+* Settings page rewritten completely to use the Settings API.
+* Simplified the settings page.
+* All spam security now works in the background.
+* CSS + jQuery Tooltips added to free the settings page from clutter.
+* Settings page is now CSS responsive.
 
 = 1.7.8.6 =
 

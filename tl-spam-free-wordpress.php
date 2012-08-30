@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.8
+Version: 1.8.1
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.8' );
+	define( 'SFW_VERSION', '1.8.1' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -40,9 +40,9 @@ load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( 
 
 
 if ( SFW_IS_ADMIN ) {
-	require_once( SFW_PATH . '/admin/class-db-sfw.php' );
-	require_once( SFW_PATH . '/admin/class-menu-sfw.php' );
-	require_once( SFW_PATH . '/admin/class-tool-tips-sfw.php' );
+	require_once( SFW_PATH . 'admin/class-db-sfw.php' );
+	require_once( SFW_PATH . 'admin/class-menu-sfw.php' );
+	require_once( SFW_PATH . 'admin/class-tool-tips-sfw.php' );
 }
 
 // Update version
@@ -74,10 +74,10 @@ if( get_option('spam_free_wordpress') ) {
 	}
 }
 
-require_once( SFW_PATH . '/includes/class-key-sfw.php' );
-require_once( SFW_PATH . '/includes/functions.php' );
-require_once( SFW_PATH . '/includes/class-comment-form.php' );
-require_once( SFW_PATH . '/includes/legacy.php' );
+require_once( SFW_PATH . 'includes/class-key-sfw.php' );
+require_once( SFW_PATH . 'includes/functions.php' );
+require_once( SFW_PATH . 'includes/class-comment-form.php' );
+require_once( SFW_PATH . 'includes/legacy.php' );
 
 //Pingbacks and trackbacks are closed automatically one time only
 if( get_option( 'sfw_close_pings_once' ) ) {
@@ -183,7 +183,7 @@ function sfw_license_nag() {
 		return;
 
 		$message = sprintf(
-			__( '<strong><a href="%1$s">Enter&nbsp;your&nbsp;License&nbsp;Key</a></strong> to activate the plugin, or <strong><a href="'.SFW_API_KEY_URL.'" target="_blank">get one from Todd Lahman LLC</a></strong>.', 'spam-free-wordpress' ),
+			__( '<strong><a href="%1$s">Enter your Free License Key</a></strong> to activate the free plugin support and advanced features, or <strong><a href="'.SFW_API_KEY_URL.'" target="_blank">get one from Todd Lahman LLC</a></strong>.', 'spam-free-wordpress' ),
 				admin_url( 'options-general.php?page=sfw_dashboard' )
 			);
 		$heading = __( 'Spam Free Wordpress needs your attention!', 'spam-free-wordpress' );
@@ -197,7 +197,14 @@ function sfw_license_nag() {
 <?php
 }
 
-add_action( 'admin_head', 'sfw_admin_head' );
+if( get_option( 'sfw_lic_nag' ) ) {
+	$sfw_lic_nag = get_option( 'sfw_lic_nag' );
+}
+
+if( !isset( $sfw_lic_nag ) || get_option( 'sfw_lic_nag' ) < '2' ) {
+	update_option( 'sfw_lic_nag', $sfw_lic_nag +1 );
+	add_action( 'admin_head', 'sfw_admin_head' );
+}
 
 
 // For testing only

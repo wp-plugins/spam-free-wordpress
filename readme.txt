@@ -27,7 +27,8 @@ This is the easiest comment spam plugin you'll ever use. Works right out of the 
  5. Option to strip HTML from comments
  6. No CAPTCHA
  7. Saves time and money by eliminating the need to empty the comment spam folder
- 8. Over 210,000 Spam Free Blogs and Counting!
+ 8. Option to automatically delete comments marked as spam, trackbacks/pingbacks, and unapproved.
+ 9. Over 221,000 Spam Free Blogs and Counting!
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
 

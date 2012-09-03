@@ -20,4 +20,12 @@ foreach( $sfw_allposts as $sfw_postinfo) {
 	delete_post_meta($sfw_postinfo->ID, 'sfw_comment_form_password');
 }
 
+// Remove Cron Jobs
+$sfw_remove_spam_cron = wp_next_scheduled( 'sfw_clean_spam' );
+wp_unschedule_event( $sfw_remove_spam_cron, 'sfw_clean_spam' );
+$sfw_remove_trackback_cron = wp_next_scheduled( 'sfw_clean_trackbacks' );
+wp_unschedule_event( $sfw_remove_trackback_cron, 'sfw_clean_trackbacks' );
+$sfw_remove_unapproved_cron = wp_next_scheduled( 'sfw_clean_unapproved' );
+wp_unschedule_event( $sfw_remove_unapproved_cron, 'sfw_clean_unapproved' );
+
 ?>

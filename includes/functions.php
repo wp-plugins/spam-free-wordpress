@@ -8,7 +8,7 @@ function sfw_comment_form_additions() {
 		add_action('comment_form_after_fields', 'sfw_comment_form_extra_fields', 1);
 		
 		// Strips out html from comment form when ond
-		if ( $sfw_options['cf_html'] == "on" ) {
+		if( $sfw_options['cf_html'] == "on" ) {
 			// Removes all HTML from comments and leaves it only as text
 			remove_filter('comment_text', 'make_clickable', 9);
 			// line above doesn't make everything unclickable
@@ -23,43 +23,46 @@ function sfw_comment_form_additions() {
 			/*-----------------------
 			Custom Theme Support
 			------------------------*/
-		
-			$sfw_get_current_theme = get_current_theme();
+			if( function_exists( 'wp_get_theme' ) ) {
+				$sfw_wp_get_theme = wp_get_theme();
+			} else {
+				$sfw_wp_get_theme = get_current_theme();
+			}
 		
 			// Suffusion
-			if ( $sfw_get_current_theme == 'Suffusion' ) {
+			if( $sfw_wp_get_theme == 'Suffusion' ) {
 				add_filter('suffusion_comment_form_fields','sfw_no_html_notice');
 			}
 			
 			// Genesis
-			if ( $sfw_get_current_theme == 'Genesis/genesis' ) {
+			if( $sfw_wp_get_theme == 'Genesis/genesis' ) {
 				add_action('genesis_after_comment_form','sfw_no_html_notice_action');
 			}
 			
 			// Graphene
-			if ( $sfw_get_current_theme == 'Graphene' ) {
+			if( $sfw_wp_get_theme == 'Graphene' ) {
 				add_filter('graphene_comment_form_args','sfw_no_html_notice');
 			}
 			
 			// Thesis
-			if ( $sfw_get_current_theme == 'Thesis' ) {
+			if( $sfw_wp_get_theme == 'Thesis' ) {
 				add_action('thesis_hook_comment_field', 'sfw_comment_form_extra_fields');
 				add_action('thesis_hook_after_comment_box','sfw_no_html_notice_action');
 			}
 			
 			// Thematic
-			if ( $sfw_get_current_theme == 'Thematic' ) {
+			if( $sfw_wp_get_theme == 'Thematic' ) {
 				define('THEMATIC_COMPATIBLE_COMMENT_FORM', true);
 				add_filter('thematic_comment_form_args','sfw_no_html_notice');
 			}
 	
 		}
 
-		if ( $sfw_options['website_url'] == "on" ) {
+		if( $sfw_options['website_url'] == "on" ) {
 			add_filter('comment_form_field_url', 'sfw_remove_url_field_off');
 		}
 
-		if ( $sfw_options['author_link'] == "on" ) {
+		if( $sfw_options['author_link'] == "on" ) {
 			add_filter('get_comment_author_url', 'strip_author_url');
 		}
 }
@@ -100,11 +103,11 @@ function strip_author_url($content = "") {
 
 // AJAX function to obtain client IP address
 function get_remote_ip_address_ajax() {
-	if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+	if(!empty( $_SERVER['HTTP_CLIENT_IP']) ) {
 		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
-	} else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+	} elseif( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
 		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	} else if(!empty($_SERVER['REMOTE_ADDR'])) {
+	} elseif( !empty($_SERVER['REMOTE_ADDR']) ) {
 		$ip_address = $_SERVER['REMOTE_ADDR'];
 	} else {
 		$ip_address = '';
@@ -120,7 +123,7 @@ function sfw_local_blocklist_check( $cip ) {
 	global $sfw_options;
 
 	$local_blocklist_keys = trim( $sfw_options['bl_keys'] );
-	if ( '' == $local_blocklist_keys )
+	if( '' == $local_blocklist_keys )
 		return false; // If blocklist keys are empty
 	$local_key = explode("\n", $local_blocklist_keys );
 
@@ -147,7 +150,7 @@ function sfw_comment_form_extra_fields() {
 	global $post, $sfw_options;
 
 	// If the reader is logged in don't require password for comments.php
-	if ( !is_user_logged_in() ) {
+	if( !is_user_logged_in() ) {
 		
 		echo '<!-- ' . number_format_i18n( get_option( 'sfw_spam_hits' ) );
 		_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
@@ -164,7 +167,7 @@ function sfw_comment_form_extra_fields() {
 		echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
 		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
 		
-		if ($sfw_options['cf_spam_stats'] == "on") {
+		if($sfw_options['cf_spam_stats'] == "on") {
 				echo '<p>' . number_format_i18n( get_option('sfw_spam_hits' ) );
 				_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
 				echo '<a href="http://www.toddlahman.com/spam-free-wordpress/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>'."\n";
@@ -188,17 +191,17 @@ function sfw_comment_post_authentication() {
 	$cip = $_POST['comment_ip'];
 	
 	// If the reader is logged in don't require password for wp-comments-post.php
-		if ( !is_user_logged_in() ) {
+		if( !is_user_logged_in() ) {
 			// Nonce check
-			if ( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
+			if( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
 				wp_die( __( 'Spam Free Wordpress rejected your comment because you failed a critical security check.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
 			// Compares current comment form password with current password for post
-			if ( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
+			if( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
 				wp_die( __( 'Spam Free Wordpress rejected your comment because you did not enter the correct password or it was empty.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
 			// Compares commenter IP address to local blocklist
-			if ( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check( $cip ) )
+			if( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check( $cip ) )
 				wp_die( __( 'Comment blocked by Spam Free Wordpress because your IP address is in the local blocklist, or you forgot to type a comment.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Blocked by Spam Free Wordpress local blocklist', array( 'response' => 200, 'back_link' => true ) );
 
 		}
@@ -293,11 +296,25 @@ add_filter('comment_form_default_fields','sfw_add_x_autocompletetype');
 * Requires jQuery 1.7 or Above
 */
 function sfw_load_pwd() {
+	$sfw_options = get_option('spam_free_wordpress');
 	$js_path =  SFW_URL . 'js/sfw-ipwd.js';
+	$js_path_old =  SFW_URL . 'js/before-wp-3_3/sfw-ipwd.js';
 	
-	wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
-	wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-	wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	// Make sure this is WordPress 3.3 and jQuery 1.7 or greater
+	if( version_compare( get_bloginfo( 'version' ), '3.3', '>=' ) && $sfw_options['jquery_compat'] == 'on'  ) {
+		wp_enqueue_script( 'sfw_ipwd', $js_path_old, array( 'jquery' ), SFW_VERSION, true );
+		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	} elseif ( version_compare( get_bloginfo( 'version' ), '3.3', '>=' )  && $sfw_options['jquery_compat'] == 'off'  ) {
+		add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
+		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
+		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	} elseif( version_compare( get_bloginfo( 'version' ), '3.3', '<' ) ) {
+		wp_enqueue_script( 'sfw_ipwd', $js_path_old, array( 'jquery' ), SFW_VERSION, true );
+		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+	}
 }
 
 /**
@@ -311,7 +328,7 @@ function sfw_check_jquery() {
 	global $wp_scripts;
 	
 	// Enforce minimum version of jQuery
-	if ( isset( $wp_scripts->registered['jquery']->ver ) && $wp_scripts->registered['jquery']->ver < '1.7' ) {
+	if( isset( $wp_scripts->registered['jquery']->ver ) && $wp_scripts->registered['jquery']->ver < '1.7' ) {
 		wp_deregister_script( 'jquery' );
 		wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
 		wp_enqueue_script( 'jquery' );

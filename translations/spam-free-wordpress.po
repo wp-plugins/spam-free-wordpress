@@ -1,0 +1,360 @@
+# LANGUAGE (LOCALE) translation for WordPress.
+# Copyright (C) 2012
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Spam Free Wordpress\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-03 14:44-0800\n"
+"PO-Revision-Date: 2012-09-03 14:44-0800\n"
+"Last-Translator: Todd Lahman <domainerjunk@gmail.com>\n"
+"Language-Team: Todd Lahman <domainerjunk@gmail.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: tl-spam-free-wordpress.php:24
+msgid " requires at least WordPress 3.1. Sorry! Click back button to continue."
+msgstr ""
+
+#: tl-spam-free-wordpress.php:122
+msgid "Settings"
+msgstr ""
+
+#: tl-spam-free-wordpress.php:123
+msgid "Donate"
+msgstr ""
+
+#: tl-spam-free-wordpress.php:192
+#, php-format
+msgid ""
+"<strong><a href=\"%1$s\">Enter your Free License Key</a></strong> to "
+"activate the free plugin support and advanced features, or <strong><a href=\""
+msgstr ""
+
+#: tl-spam-free-wordpress.php:195
+msgid "Spam Free Wordpress needs your attention!"
+msgstr ""
+
+#: admin/class-menu.php:29
+msgid "Spam Free Wordpress"
+msgstr ""
+
+#: admin/class-menu.php:49
+msgid "Save Changes"
+msgstr ""
+
+#: admin/class-menu.php:123
+msgid ""
+"PLUGIN SUPPORT, AND ADVANCED PLUGIN FEATURES, REQUIRE A FREE LICENSE KEY."
+msgstr ""
+
+#: admin/class-menu.php:132 admin/class-menu.php:144 admin/class-menu.php:317
+#: admin/class-menu.php:333 admin/class-menu.php:349
+msgid "THIS SECTION REQUIRES A FREE LICENSE KEY."
+msgstr ""
+
+#: admin/class-menu.php:135
+msgid "Text and HTML are acceptable."
+msgstr ""
+
+#: admin/class-menu.php:147
+msgid "IP addresses only. One IP address per line."
+msgstr ""
+
+#: admin/class-menu.php:197
+msgid ""
+"These options clean the unwanted oomment types listed below from your blog "
+"automatically every hour."
+msgstr ""
+
+#: admin/class-menu.php:220
+msgid "is not a valid license key."
+msgstr ""
+
+#: admin/class-menu.php:297
+msgid ""
+"This feature is activated automatically for installations before WordPress "
+"3.3."
+msgstr ""
+
+#: admin/class-menu.php:324
+msgid " Spam comments found."
+msgstr ""
+
+#: admin/class-menu.php:340
+msgid " Trackbacks/Pingbacks found."
+msgstr ""
+
+#: admin/class-menu.php:356
+msgid " Unapproved comments found."
+msgstr ""
+
+#: admin/class-menu.php:410 admin/class-menu.php:412
+msgid "Hire Todd Lahman"
+msgstr ""
+
+#: admin/class-menu.php:413
+msgid "Todd's services include:"
+msgstr ""
+
+#: admin/class-menu.php:414
+msgid "WordPress Search Engine Optimization."
+msgstr ""
+
+#: admin/class-menu.php:415
+msgid ""
+"Incredibly fast website tuning to handle high loads of traffic for less "
+"money."
+msgstr ""
+
+#: admin/class-menu.php:416
+msgid "Theme and plugin development."
+msgstr ""
+
+#: admin/class-menu.php:417
+msgid ""
+"Custom programming in PHP, jQuery, HTML 4 or 5, MySQL, CSS 2 and 3, and "
+"other languages."
+msgstr ""
+
+#: admin/class-menu.php:418
+msgid "Linux server administration."
+msgstr ""
+
+#: admin/class-menu.php:419
+msgid "Nginx, Apache, MySQL, and Percona server administration."
+msgstr ""
+
+#: admin/class-menu.php:420
+msgid "Comment Form CSS Styling"
+msgstr ""
+
+#: admin/class-menu.php:421
+msgid "Advanced SFW Support"
+msgstr ""
+
+#: admin/class-menu.php:423
+msgid "Best Selling Plugins"
+msgstr ""
+
+#: admin/class-menu.php:425
+msgid "Search Engine Ping"
+msgstr ""
+
+#: admin/class-menu.php:426
+msgid "CacheNgin"
+msgstr ""
+
+#: admin/class-menu.php:427
+msgid "Translation Cache"
+msgstr ""
+
+#: admin/class-menu.php:429 admin/class-menu.php:432
+msgid "Buy Todd a Coffee"
+msgstr ""
+
+#: admin/class-menu.php:431
+msgid "Given enough coffee I could rule the world."
+msgstr ""
+
+#: admin/class-menu.php:434 admin/class-menu.php:437
+msgid "Support Forum"
+msgstr ""
+
+#: admin/class-menu.php:436
+msgid "Be sure to login to use the support forum."
+msgstr ""
+
+#: admin/class-tool-tips.php:11
+msgid ""
+"The number of blocked comment spam will display on your comment form, along "
+"with a link to the plugin homepage."
+msgstr ""
+
+#: admin/class-tool-tips.php:16
+msgid ""
+"If the plugin is not working properly, your theme may not be using the "
+"comment_form function, so you will need to turn this on. The plugin can "
+"generate the comment form, and display the comments, automatically. "
+"Depending on your theme, the comments and comment form may require CSS "
+"styling that you will need to provide, or you can hire me."
+msgstr ""
+
+#: admin/class-tool-tips.php:21
+msgid ""
+"Spammers use HTML in comments to leave spam links on your blog. This options "
+"strips out all the HTML tags, so the links are just plain text, and not "
+"links. Spam links are bad for SEO, even when they are nofollow links."
+msgstr ""
+
+#: admin/class-tool-tips.php:26
+msgid ""
+"The default comment form has a Website Address form field that spammers use "
+"to leave a spam link on your blog. Spam links are bad for SEO, even when "
+"they are nofollow links"
+msgstr ""
+
+#: admin/class-tool-tips.php:31
+msgid ""
+"Spammers use the link embedded in the comment author name to leave a spam "
+"link on your blog. Spam links are bad for SEO, even when they are nofollow "
+"links"
+msgstr ""
+
+#: admin/class-tool-tips.php:36
+#, php-format
+msgid ""
+"Pingbacks, or trackbacks, can be placed on your blog without your knowledge "
+"or permission from another blog that may not provide a reciprocal link. "
+"99% of pingbacks are spam links. Having a page with more than 100 links on "
+"it, or more links going out than coming in, will hurt the SEO for that page, "
+"and for the entire domain name."
+msgstr ""
+
+#: admin/class-tool-tips.php:41
+msgid ""
+"If you have WordPress 3.3 or greater, and you see a Spam Free Wordpress "
+"error when leaving a test comment, it could mean you have a theme that is "
+"loading a version of jQuery older than 1.7. Check this box to use the older "
+"jQuery script to try to fix the problem. If the problem is not fixed, ask "
+"for help on the Support Forum on toddlahman.com, and consider getting your "
+"theme fixed, or hiring me to fix it. If your theme is more than one year "
+"old, it probably needs to be updated."
+msgstr ""
+
+#: admin/class-tool-tips.php:46
+msgid ""
+"This option displays a message above the comment text area on the comment "
+"form. Plane text, or HTML tags, can be used."
+msgstr ""
+
+#: admin/class-tool-tips.php:51
+msgid ""
+"This option is to block manually submitted spam. The blocklist allows "
+"spammer IP addresses to be blocked, so the spammer can no longer leave a "
+"comment. Comments that are blocked are not saved to the database, so you "
+"will not see anything in your spam folder. This option can also be used to "
+"ban a reader from leaving comments. Enter one IP address per line. Wildcards "
+"like 192.168.1.* will not work."
+msgstr ""
+
+#: admin/class-tool-tips.php:56
+msgid ""
+"Automatically deletes comment spam from the spam folder. Note: Spam Free "
+"Wordpress does not save blocked comments in the spam folder, or anywhere "
+"else. Any comments in the Spam folder were put there by another plugin, or "
+"by the Comment Blacklist built into WordPress under Settings > Discussion."
+msgstr ""
+
+#: admin/class-tool-tips.php:61
+msgid "Automatically deletes trackbacks/pingbacks."
+msgstr ""
+
+#: admin/class-tool-tips.php:66
+msgid ""
+"Comments that are marked as unapproved, because the discussion settings are "
+"set to hold a comment for moderation (aka the Comment Moderation queue), "
+"will be deleted automatically, so there will be no opportunity to review and "
+"approve the comment."
+msgstr ""
+
+#: includes/class-comment-form.php:96
+#, php-format
+msgid "%1$s on %2$s <span class=\"says\">said:</span>"
+msgstr ""
+
+#: includes/class-comment-form.php:146
+msgid "Name"
+msgstr ""
+
+#: includes/class-comment-form.php:148
+msgid "Email"
+msgstr ""
+
+#: includes/class-comment-form.php:150
+msgid "Website"
+msgstr ""
+
+#: includes/class-comment-form.php:154
+#, php-format
+msgid "Required fields are marked %s"
+msgstr ""
+
+#: includes/class-comment-form.php:158
+#, php-format
+msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+msgstr ""
+
+#: includes/class-comment-form.php:159
+#, php-format
+msgid ""
+"Logged in as <a href=\"%1$s\">%2$s</a>. <a href=\"%3$s\" title=\"Log out of "
+"this account\">Log out?</a>"
+msgstr ""
+
+#: includes/class-comment-form.php:160
+msgid "Your email address will not be published."
+msgstr ""
+
+#: includes/class-comment-form.php:161
+#, php-format
+msgid ""
+"You may use these <abbr title=\"HyperText Markup Language\">HTML</abbr> tags "
+"and attributes: %s"
+msgstr ""
+
+#: includes/class-comment-form.php:164
+msgid "Leave a Reply"
+msgstr ""
+
+#: includes/class-comment-form.php:165
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr ""
+
+#: includes/class-comment-form.php:166
+msgid "Cancel reply"
+msgstr ""
+
+#: includes/class-comment-form.php:167
+msgid "Post Comment"
+msgstr ""
+
+#: includes/functions.php:84 includes/functions.php:90
+msgid "HTML tags are not allowed."
+msgstr ""
+
+#: includes/functions.php:156 includes/functions.php:172
+msgid " Spam Comments Blocked so far by "
+msgstr ""
+
+#: includes/functions.php:158
+msgid " version "
+msgstr ""
+
+#: includes/functions.php:160
+msgid " located at "
+msgstr ""
+
+#: includes/functions.php:197
+msgid ""
+"Spam Free Wordpress rejected your comment because you failed a critical "
+"security check."
+msgstr ""
+
+#: includes/functions.php:201
+msgid ""
+"Spam Free Wordpress rejected your comment because you did not enter the "
+"correct password or it was empty."
+msgstr ""
+
+#: includes/functions.php:205
+msgid ""
+"Comment blocked by Spam Free Wordpress because your IP address is in the "
+"local blocklist, or you forgot to type a comment."
+msgstr ""

@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.8.4
+Version: 1.8.5
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.8.4' );
+	define( 'SFW_VERSION', '1.8.5' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -152,10 +152,8 @@ add_action('wp_enqueue_scripts', 'sfw_load_pwd');
 
 
 // Actions for password AJAX
-add_action( 'wp_ajax_nopriv_sfw_i_pwd', 'sfw_get_pwd' );
-add_action( 'wp_ajax_sfw_i_pwd', 'sfw_get_pwd' );
-add_action( 'wp_ajax_nopriv_sfw_cip', 'get_remote_ip_address_ajax' );
-add_action( 'wp_ajax_sfw_cip', 'get_remote_ip_address_ajax' );
+add_action( 'wp_ajax_nopriv_sfw_i_pwd', 'sfw_pwd_ip' );
+add_action( 'wp_ajax_sfw_i_pwd', 'sfw_pwd_ip' );
 
 // automatically generate comment form - fixed in 1.7.8.1
 function sfw_comment_form_init() {

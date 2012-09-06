@@ -101,23 +101,6 @@ function strip_author_url($content = "") {
   return "";
 }
 
-// AJAX function to obtain client IP address
-function get_remote_ip_address_ajax() {
-	if(!empty( $_SERVER['HTTP_CLIENT_IP']) ) {
-		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
-	} elseif( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
-		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	} elseif( !empty($_SERVER['REMOTE_ADDR']) ) {
-		$ip_address = $_SERVER['REMOTE_ADDR'];
-	} else {
-		$ip_address = '';
-	}
-	echo $ip_address;
-	
-	// die() for AJAX
-	die();
-}
-
 // Returns Local Blocklist
 function sfw_local_blocklist_check( $cip ) {
 	global $sfw_options;
@@ -258,24 +241,6 @@ function sfw_settings_link($links) {
 	return $links;
 }
 
-
-/*-----------------------------------------
-* Generates temporary passwords
-------------------------------------------*/
-
-function sfw_get_pwd() {
-	$postid = $_POST['post_id'];
-	
-	$pwd = wp_generate_password(12, false);
-	set_transient( $postid. '-' .$pwd, $pwd, 60 * 20 ); // expire password after 20 minutes
-	$pwd_key = get_transient( $postid. '-' .$pwd );
-	
-	echo $pwd_key;
-	
-	// die() for AJAX
-	die();
-}
-
 /*--------------------------------------------------------------------
 * X-Autocomplete Comment Form Fields for Chrome 15 and above
 * http://wiki.whatwg.org/wiki/Autocompletetype
@@ -304,16 +269,13 @@ function sfw_load_pwd() {
 	if( version_compare( get_bloginfo( 'version' ), '3.3', '>=' ) && $sfw_options['jquery_compat'] == 'on'  ) {
 		wp_enqueue_script( 'sfw_ipwd', $js_path_old, array( 'jquery' ), SFW_VERSION, true );
 		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	} elseif ( version_compare( get_bloginfo( 'version' ), '3.3', '>=' )  && $sfw_options['jquery_compat'] == 'off'  ) {
-		add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
+		//add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
 		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
 		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	} elseif( version_compare( get_bloginfo( 'version' ), '3.3', '<' ) ) {
 		wp_enqueue_script( 'sfw_ipwd', $js_path_old, array( 'jquery' ), SFW_VERSION, true );
 		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-		wp_localize_script( 'sfw_ipwd', 'sfw_client_ip', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 	}
 }
 
@@ -333,6 +295,37 @@ function sfw_check_jquery() {
 		wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
 		wp_enqueue_script( 'jquery' );
 	}
+}
+
+/****************************************************
+* Combined password and IP address retrieval for AJAX
+* Temporary passwords stored in transient
+****************************************************/
+function sfw_pwd_ip() {
+	// Get post_id from AJAX
+	$postid = $_POST['post_id'];
+	
+	// Get password
+	$pwd = wp_generate_password(12, false);
+	set_transient( $postid. '-' .$pwd, $pwd, 60 * 20 ); // expire password after 20 minutes
+	$pwd_key = get_transient( $postid. '-' .$pwd );
+
+	// Get IP address
+	if(!empty( $_SERVER['HTTP_CLIENT_IP']) ) {
+		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+	} elseif( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} elseif( !empty($_SERVER['REMOTE_ADDR']) ) {
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+	} else {
+		$ip_address = '';
+	}
+
+	// Send info back to AJAX
+	echo json_encode( array( 'pwd'=>$pwd_key, 'ip'=>$ip_address ) );
+	
+	// die() for AJAX
+	die();
 }
 
 ?>

@@ -163,7 +163,7 @@ function sfw_comment_form_extra_fields() {
 			echo "<p>* ";
 			_e( 'Paste password here:', 'spam-free-wordpress' );
 			echo "</p>";
-			echo "<input type='text' name='pwdfield' class='sfw_pwd' value='' size='20' /></p>";
+			echo "<input type='text' name='pwdfield' class='sfw_pwd' value='' size='20' required /></p>";
 		}
 		
 		if( $sfw_options['cf_spam_stats'] == 'on' ) {

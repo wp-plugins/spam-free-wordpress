@@ -146,11 +146,27 @@ function sfw_comment_form_extra_fields() {
 		echo stripslashes( $sfw_options['cf_msg'] );
 		
 		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		echo '<p><noscript>JavaScript must be ond to leave a comment.</noscript></p>';
-		echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
-		echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
 		
-		if($sfw_options['cf_spam_stats'] == "on") {
+		if( $sfw_options['legacy_pwd'] == 'off' ) {
+			echo '<p><noscript>JavaScript must be ond to leave a comment.</noscript></p>';
+			echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
+			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+		} else {
+			// Legacy two password fields. Added 1.8.6
+			$pwd_ip = sfw_pwd_ip_legacy();
+			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".$pwd_ip['ip']."' />";
+			// Reader must enter this password manually on the comment form
+			echo "<p>* ";
+			_e( 'Copy anti-spam password:', 'spam-free-wordpress' );
+			echo "</p>";
+			echo "<input type='text' value='".$pwd_ip['pwd']."' class='sfw_pwd' onclick='this.select()' size='20' /></p>";
+			echo "<p>* ";
+			_e( 'Paste password here:', 'spam-free-wordpress' );
+			echo "</p>";
+			echo "<input type='text' name='pwdfield' class='sfw_pwd' value='' size='20' /></p>";
+		}
+		
+		if( $sfw_options['cf_spam_stats'] == 'on' ) {
 				echo '<p>' . number_format_i18n( get_option('sfw_spam_hits' ) );
 				_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
 				echo '<a href="http://www.toddlahman.com/spam-free-wordpress/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>'."\n";
@@ -326,6 +342,32 @@ function sfw_pwd_ip() {
 	
 	// die() for AJAX
 	die();
+}
+
+// Added 1.8.6 to process legacy dual password fields
+function sfw_pwd_ip_legacy() {
+	global $post;
+	$postid = $post->ID;
+	
+	// Get password
+	$pwd = wp_generate_password(12, false);
+	set_transient( $postid. '-' .$pwd, $pwd, 60 * 20 ); // expire password after 20 minutes
+	$pwd_key = get_transient( $postid. '-' .$pwd );
+
+	// Get IP address
+	if(!empty( $_SERVER['HTTP_CLIENT_IP']) ) {
+		$ip_address = $_SERVER['HTTP_CLIENT_IP'];
+	} elseif( !empty($_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+		$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} elseif( !empty($_SERVER['REMOTE_ADDR']) ) {
+		$ip_address = $_SERVER['REMOTE_ADDR'];
+	} else {
+		$ip_address = '';
+	}
+
+	$results = array( 'pwd'=>$pwd_key, 'ip'=>$ip_address );
+
+	return $results;
 }
 
 ?>

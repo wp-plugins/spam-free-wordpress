@@ -76,7 +76,8 @@ if( !class_exists('SFW_MENU' ) ) {
 									'Remove URL Field',
 									'Remove Author Link',
 									'Close Pingbacks',
-									'jQuery Compatibility'
+									'jQuery Compatibility',
+									'Old Password Fields'
 								);
 			foreach( $checkboxes as $box ) {
 				add_settings_field( $box, $box, array( $this, 'checkboxes' ), 'sfw_dashboard', 'comment_form', $box );
@@ -112,7 +113,6 @@ if( !class_exists('SFW_MENU' ) ) {
 			foreach( $tech_support as $ts ) {
 				add_settings_field( $ts, $ts, array( $this, 'tech_support' ), 'sfw_dashboard', 'tech_support_info', $ts );
 			}
-
 		}
 		
 		
@@ -235,6 +235,7 @@ if( !class_exists('SFW_MENU' ) ) {
 			$options['clean_spam'] = ( $input['clean_spam'] == 'on' ? 'on' : 'off' );
 			$options['clean_trackbacks'] = ( $input['clean_trackbacks'] == 'on' ? 'on' : 'off' );
 			$options['clean_unapproved'] = ( $input['clean_unapproved'] == 'on' ? 'on' : 'off' );
+			$options['legacy_pwd'] = ( $input['legacy_pwd'] == 'on' ? 'on' : 'off' );
 			
 			if( $input['cf_msg'] == '' ) {
 				$options['cf_msg'] = ' ';
@@ -301,6 +302,13 @@ if( !class_exists('SFW_MENU' ) ) {
 					<input type="checkbox" id="jquery_compat" name="spam_free_wordpress[jquery_compat]" value="on" <?php checked( $options['jquery_compat'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'jquery_compat' ); ?>
 					<?php
 						echo '</div>';
+					break;
+				case 'Old Password Fields':
+					?>
+					<input type="checkbox" id="legacy_pwd" name="spam_free_wordpress[legacy_pwd]" value="on" <?php checked( $options['legacy_pwd'], 'on' ); ?> />
+					<?php SFW_TOOL_TIPS::tips( 'legacy_pwd' ); ?>
+					<?php _e( 'CAUTION: USE ONLY AS A LAST RESORT!', 'spam-free-wordpress' ); ?>
+					<?php
 					break;
 			}
 		}
@@ -433,8 +441,9 @@ if( !class_exists('SFW_MENU' ) ) {
 			</ul>
 			<h3><?php _e( 'Support Forum', 'spam-free-wordpress' ); ?></h3>
 			<ul class="celist">
-				<p><?php _e( "Be sure to login to use the support forum. NOTE: Support is not provided on Wordpress.org.", 'spam-free-wordpress' ); ?></p>
+				<p><?php _e( "Be sure to login to use the support forum after getting a free license key. NOTE: Support is not provided on Wordpress.org.", 'spam-free-wordpress' ); ?></p>
 				<li><a href="http://www.toddlahman.com/forums/forum/spam-free-wordpress/" target="_blank"><?php _e( 'Support Forum', 'spam-free-wordpress' ); ?></a></li>
+				<li><a href="http://www.toddlahman.com/shop/spam-free-wordpress/" target="_blank"><?php _e( 'Free License Key', 'spam-free-wordpress' ); ?></a></li>
 			</ul>
 			<?php
 		}

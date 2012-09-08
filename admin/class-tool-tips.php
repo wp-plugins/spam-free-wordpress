@@ -66,6 +66,11 @@ if( !class_exists('SFW_TOOL_TIPS' ) ) {
 					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'Comments that are marked as unapproved, because the discussion settings are set to hold a comment for moderation (aka the Comment Moderation queue), will be deleted automatically, so there will be no opportunity to review and approve the comment.', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
 					<?php
 					break;
+				case 'legacy_pwd':
+					?>
+					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'This option is only for situations where the plugin returns an error when comments are submitted, and troubleshooting the plugin has not corrected the situation. Spam bots can bypass the security for this option if they target your blog, so correcting other issues to avoid using this option is preferred. This option requires the Generate Comment Form option to also be selected. ', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
+					<?php
+					break;
 			}
 		}
 	

@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.8.5
+Version: 1.8.6
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.8.5' );
+	define( 'SFW_VERSION', '1.8.6' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -83,6 +83,10 @@ if( get_option('spam_free_wordpress') ) {
 	if ( !$sfw_options['jquery_compat'] ) {
 		sfw_upgrade_db_jquery_compat();
 	}
+	
+	if ( !$sfw_options['legacy_pwd'] ) {
+		sfw_upgrade_db_legacy_pwd();
+	}
 }
 
 //Pingbacks and trackbacks are closed automatically one time only
@@ -136,24 +140,27 @@ if ( class_exists( 'Jetpack' ) ) {
 	}
 }
 
-/**
-* added 1.7.8.6
- * SFW requires jQuery 1.7 since it uses functions like .on() for events.
- * If, by the time wp_print_scrips is called, jQuery is outdated (i.e not
- * using the version in core) we need to deregister it and register the 
- * core version of the file.
- */
-//add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
+// Added 1.8.6. Disable JavaScript security if legacy dual password field option is on.
+if( $sfw_options['legacy_pwd'] == 'off' ) {
+	/**
+	* added 1.7.8.6
+	* SFW requires jQuery 1.7 since it uses functions like .on() for events.
+	* If, by the time wp_print_scrips is called, jQuery is outdated (i.e not
+	* using the version in core) we need to deregister it and register the 
+	* core version of the file.
+	*/
+	//add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
 
-/**
-* Load SFW authentication AJAX JavaScript. Requires jQuery 1.7 or above since it uses .on()
-*/
-add_action('wp_enqueue_scripts', 'sfw_load_pwd');
+	/**
+	* Load SFW authentication AJAX JavaScript. Requires jQuery 1.7 or above since it uses .on()
+	*/
+	add_action('wp_enqueue_scripts', 'sfw_load_pwd');
 
 
-// Actions for password AJAX
-add_action( 'wp_ajax_nopriv_sfw_i_pwd', 'sfw_pwd_ip' );
-add_action( 'wp_ajax_sfw_i_pwd', 'sfw_pwd_ip' );
+	// Actions for password AJAX
+	add_action( 'wp_ajax_nopriv_sfw_i_pwd', 'sfw_pwd_ip' );
+	add_action( 'wp_ajax_sfw_i_pwd', 'sfw_pwd_ip' );
+}
 
 // automatically generate comment form - fixed in 1.7.8.1
 function sfw_comment_form_init() {

@@ -23,7 +23,8 @@ function sfw_default() {
 			'jquery_compat' => 'off',
 			'clean_spam' => 'off',
 			'clean_trackbacks' => 'off',
-			'clean_unapproved' => 'off'
+			'clean_unapproved' => 'off',
+			'legacy_pwd' => 'off'
 			);
 			update_option( 'spam_free_wordpress', $sfw_options );
 
@@ -150,6 +151,26 @@ function sfw_upgrade_db_jquery_compat() {
 			'clean_spam' => 'off',
 			'clean_trackbacks' => 'off',
 			'clean_unapproved' => 'off'
+			);
+		$mergever = array_merge( $oldver, $newver );
+	
+		update_option( 'spam_free_wordpress', $mergever );
+		
+	}
+}
+
+// Added 1.8.6
+function sfw_upgrade_db_legacy_pwd() {
+
+	if ( version_compare( get_bloginfo( 'version' ), SFW_WP_REQUIRED, '<' ) ) {
+		deactivate_plugins( basename( __FILE__ ) );
+		wp_die( SFW_WP_REQUIRED_MSG );
+	} else {
+		$sfw_options = get_option('spam_free_wordpress');
+	
+		$oldver = $sfw_options;
+		$newver = array(
+			'legacy_pwd' => 'off'
 			);
 		$mergever = array_merge( $oldver, $newver );
 	

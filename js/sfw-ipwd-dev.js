@@ -27,10 +27,16 @@
 		});
 		// get password and remote IP address
 		$( '#comment' ).on( 'keydown', function() {
+			// Fetch AJAX data
 			$.post(sfw_ipwd.ajaxurl, { action: 'sfw_i_pwd', post_id : pid }, function( response ) {
-				$( '.pwddefault' ).val( response.pwd );
-				$( '#comment_ip' ).val( response.ip );
+				pwd = $( '.pwddefault' ).val( response.pwd );
+				ip = $( '#comment_ip' ).val( response.ip );
+				if( pwd && ip ) {
+					return false;
+				}
 			}, 'json');
+			// Time to turn off AJAX
+			$( '#comment' ).off( 'keydown' );
 		});
 	});
 })(jQuery);

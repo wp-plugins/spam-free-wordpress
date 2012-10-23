@@ -31,11 +31,9 @@ if( !class_exists('SFW_MENU' ) ) {
 				<?php settings_fields( 'spam_free_wordpress' ); ?>
 			
 				<script type="text/javascript">
-					(function($) {
-						$(document).ready(function() {
-							$(".tool-tip").tipTip({maxWidth: "310px", edgeOffset: 15});
-						});
-					})(jQuery);
+					jQuery(function($) {
+						$(".tool-tip").tipTip({maxWidth: "310px", edgeOffset: 15});
+					});
 				</script>
 			
 				<div class="main">
@@ -76,7 +74,6 @@ if( !class_exists('SFW_MENU' ) ) {
 									'Remove URL Field',
 									'Remove Author Link',
 									'Close Pingbacks',
-									'jQuery Compatibility',
 									'Old Password Fields'
 								);
 			foreach( $checkboxes as $box ) {
@@ -231,7 +228,6 @@ if( !class_exists('SFW_MENU' ) ) {
 			$options['website_url'] = ( $input['website_url'] == 'on' ? 'on' : 'off' );
 			$options['author_link'] = ( $input['author_link'] == 'on' ? 'on' : 'off' );
 			$options['ping_status'] = ( $input['ping_status'] == 'on' ? 'on' : 'off' );
-			$options['jquery_compat'] = ( $input['jquery_compat'] == 'on' ? 'on' : 'off' );
 			$options['clean_spam'] = ( $input['clean_spam'] == 'on' ? 'on' : 'off' );
 			$options['clean_trackbacks'] = ( $input['clean_trackbacks'] == 'on' ? 'on' : 'off' );
 			$options['clean_unapproved'] = ( $input['clean_unapproved'] == 'on' ? 'on' : 'off' );
@@ -271,6 +267,7 @@ if( !class_exists('SFW_MENU' ) ) {
 				case 'Generate Comment Form':
 					?>
 					<input type="checkbox" id="comment_form" name="spam_free_wordpress[comment_form]" value="on" <?php checked( $options['comment_form'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'comment_form' ); ?>
+					<?php _e( 'Generates a comment form if theme is not compatible with SFW.', 'spam-free-wordpress' ); ?>
 					<?php
 					break;
 				case 'Remove Comment HTML':
@@ -293,21 +290,11 @@ if( !class_exists('SFW_MENU' ) ) {
 					<input type="checkbox" id="ping_status" name="spam_free_wordpress[ping_status]" value="on" <?php checked( $options['ping_status'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'pingbacks' ); ?>
 					<?php
 					break;
-				case 'jQuery Compatibility':
-					if( version_compare( get_bloginfo( 'version' ), '3.3', '<' ) ) {
-						_e( 'This feature is activated automatically for installations before WordPress 3.3.', 'spam-free-wordpress' );
-						echo '<div class="hidden">';
-					}
-					?>
-					<input type="checkbox" id="jquery_compat" name="spam_free_wordpress[jquery_compat]" value="on" <?php checked( $options['jquery_compat'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'jquery_compat' ); ?>
-					<?php
-						echo '</div>';
-					break;
 				case 'Old Password Fields':
 					?>
 					<input type="checkbox" id="legacy_pwd" name="spam_free_wordpress[legacy_pwd]" value="on" <?php checked( $options['legacy_pwd'], 'on' ); ?> />
 					<?php SFW_TOOL_TIPS::tips( 'legacy_pwd' ); ?>
-					<?php _e( 'CAUTION: USE ONLY AS A LAST RESORT!', 'spam-free-wordpress' ); ?>
+					<?php _e( "Use only if plugin won't work any other way. (Fields are invisible)", 'spam-free-wordpress' ); ?>
 					<?php
 					break;
 			}
@@ -415,24 +402,26 @@ if( !class_exists('SFW_MENU' ) ) {
 		// displays sidebar
 		function sfw_sidebar() {
 			?>
+						<h3><?php _e( 'Best Selling Plugins', 'spam-free-wordpress' ); ?></h3>
+			<ul class="celist">
+				<li><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Simple Comments', 'spam-free-wordpress' ); ?></a><?php echo ' $30'; ?></li>
+				<li><?php _e( 'Simple Comments is coming soon.', 'spam-free-wordpress' ); ?></li>
+				<li><a href="http://www.toddlahman.com/shop/search-engine-ping/" target="_blank"><?php _e( 'Search Engine Ping', 'spam-free-wordpress' ); ?></a><?php echo ' $15'; ?></li>
+				<li><a href="http://www.toddlahman.com/shop/cachengin-wordpress-cache-plugin-for-nginx/" target="_blank"><?php _e( 'CacheNgin', 'spam-free-wordpress' ); ?></a><?php echo ' $75'; ?></li>
+				<li><a href="http://www.toddlahman.com/shop/translation-cache/" target="_blank"><?php _e( 'Translation Cache', 'spam-free-wordpress' ); ?></a><?php echo ' $15'; ?></li>
+			</ul>
 			<h3><?php _e( 'Hire Todd Lahman', 'spam-free-wordpress' ); ?></h3>
 			<ul class="celist">
 				<p><a href="http://www.toddlahman.com/hire-todd-lahman-search-engine-optimization/" target="_blank"><?php _e( 'Hire Todd Lahman', 'spam-free-wordpress' ); ?></a></p>
 				<p><strong><?php _e( "Todd's services include:", 'spam-free-wordpress' ); ?></strong></p>
-				<li><?php _e( "WordPress Search Engine Optimization.", 'spam-free-wordpress' ); ?></li>
-				<li><?php _e( "Incredibly fast website tuning to handle high loads of traffic for less money.", 'spam-free-wordpress' ); ?></li>
+				<li><?php _e( "Search Engine Optimization Expert.", 'spam-free-wordpress' ); ?></li>
+				<li><?php _e( "Make your web site FASTER!.", 'spam-free-wordpress' ); ?></li>
 				<li><?php _e( "Theme and plugin development.", 'spam-free-wordpress' ); ?></li>
-				<li><?php _e( "Custom programming in PHP, jQuery, HTML 4 or 5, MySQL, CSS 2 and 3, and other languages.", 'spam-free-wordpress' ); ?></li>
+				<li><?php _e( "Custom PHP, JavaScript, jQuery, HTML, MySQL, and CSS.", 'spam-free-wordpress' ); ?></li>
 				<li><?php _e( "Linux server administration.", 'spam-free-wordpress' ); ?></li>
 				<li><?php _e( "Nginx, Apache, MySQL, and Percona server administration.", 'spam-free-wordpress' ); ?></li>
 				<li><a href="http://www.toddlahman.com/spam-free-wordpress-support/" target="_blank"><?php _e( 'Comment Form CSS Styling', 'spam-free-wordpress' ); ?></a></li>
 				<li><a href="http://www.toddlahman.com/spam-free-wordpress-support/" target="_blank"><?php _e( 'Advanced SFW Support', 'spam-free-wordpress' ); ?></a></li>
-			</ul>
-			<h3><?php _e( 'Best Selling Plugins', 'spam-free-wordpress' ); ?></h3>
-			<ul class="celist">
-				<li><a href="http://www.toddlahman.com/shop/search-engine-ping/" target="_blank"><?php _e( 'Search Engine Ping', 'spam-free-wordpress' ); ?></a><?php echo ' $15'; ?></li>
-				<li><a href="http://www.toddlahman.com/shop/cachengin-wordpress-cache-plugin-for-nginx/" target="_blank"><?php _e( 'CacheNgin', 'spam-free-wordpress' ); ?></a><?php echo ' $75'; ?></li>
-				<li><a href="http://www.toddlahman.com/shop/translation-cache/" target="_blank"><?php _e( 'Translation Cache', 'spam-free-wordpress' ); ?></a><?php echo ' $15'; ?></li>
 			</ul>
 			<h3><?php _e( 'Buy Todd a Coffee', 'spam-free-wordpress' ); ?></h3>
 			<ul class="celist">

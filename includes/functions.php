@@ -1,5 +1,4 @@
 <?php
-
 // Adds password field to comment form and options to filter HTML from comments
 function sfw_comment_form_additions() {
 	global $sfw_options;
@@ -145,25 +144,18 @@ function sfw_comment_form_extra_fields() {
 			
 		echo stripslashes( $sfw_options['cf_msg'] );
 		
-		wp_nonce_field('sfw_nonce','sfw_comment_nonce');
-		
+		// Set referrer check to FALSE since it fails too often
+		wp_nonce_field('sfw_nonce','sfw_comment_nonce', FALSE, TRUE);
+				
 		if( $sfw_options['legacy_pwd'] == 'off' ) {
-			echo '<p><noscript>JavaScript must be ond to leave a comment.</noscript></p>';
-			echo "<input type='hidden' name='pwdfield' class='pwddefault' value='' />\n";
-			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='' />\n";
+			echo "\n<p><noscript>JavaScript must be ond to leave a comment.</noscript></p>";
+			echo "\n<input type='hidden' name='pwdfield' class='pwddefault' value='' />";
+			echo "\n<input type='hidden' name='comment_ip' id='comment_ip' value='' />";
 		} else {
-			// Legacy two password fields. Added 1.8.6
+			// Added 1.9 Invisible legacy password fields.
 			$pwd_ip = sfw_pwd_ip_legacy();
-			echo "<input type='hidden' name='comment_ip' id='comment_ip' value='".$pwd_ip['ip']."' />";
-			// Reader must enter this password manually on the comment form
-			echo "<p>* ";
-			_e( 'Copy anti-spam password:', 'spam-free-wordpress' );
-			echo "</p>";
-			echo "<input type='text' value='".$pwd_ip['pwd']."' class='sfw_pwd' onclick='this.select()' size='20' /></p>";
-			echo "<p>* ";
-			_e( 'Paste password here:', 'spam-free-wordpress' );
-			echo "</p>";
-			echo "<input type='text' name='pwdfield' class='sfw_pwd' value='' size='20' required /></p>";
+			echo "\n<input type='hidden' name='comment_ip' id='comment_ip' value='".$pwd_ip['ip']."' />";
+			echo "\n<input type='hidden' name='pwdfield' id='pwdfield' value='".$pwd_ip['pwd']."' />\n";
 		}
 		
 		if( $sfw_options['cf_spam_stats'] == 'on' ) {
@@ -193,11 +185,11 @@ function sfw_comment_post_authentication() {
 		if( !is_user_logged_in() ) {
 			// Nonce check
 			if( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
-				wp_die( __( 'Spam Free Wordpress rejected your comment because you failed a critical security check.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
-		
+				wp_die( __( 'Spam Free Wordpress nonce security check failed.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+					
 			// Compares current comment form password with current password for post
 			if( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
-				wp_die( __( 'Spam Free Wordpress rejected your comment because you did not enter the correct password or it was empty.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+				wp_die( __( 'Spam Free Wordpress could not retrieve the password from the server. Contact support.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
 			// Compares commenter IP address to local blocklist
 			if( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check( $cip ) )
@@ -274,42 +266,25 @@ add_filter('comment_form_default_fields','sfw_add_x_autocompletetype');
 
 /*
 * Load JavaScript for comment form
-* Requires jQuery 1.7 or Above
 */
 function sfw_load_pwd() {
-	$sfw_options = get_option('spam_free_wordpress');
-	$js_path =  SFW_URL . 'js/sfw-ipwd.js';
-	$js_path_old =  SFW_URL . 'js/before-wp-3_3/sfw-ipwd.js';
-	
-	// Make sure this is WordPress 3.3 and jQuery 1.7 or greater
-	if( version_compare( get_bloginfo( 'version' ), '3.3', '>=' ) && $sfw_options['jquery_compat'] == 'on'  ) {
-		wp_enqueue_script( 'sfw_ipwd', $js_path_old, array( 'jquery' ), SFW_VERSION, true );
-		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-	} elseif ( version_compare( get_bloginfo( 'version' ), '3.3', '>=' )  && $sfw_options['jquery_compat'] == 'off'  ) {
-		//add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
-		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
-		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-	} elseif( version_compare( get_bloginfo( 'version' ), '3.3', '<' ) ) {
-		wp_enqueue_script( 'sfw_ipwd', $js_path_old, array( 'jquery' ), SFW_VERSION, true );
-		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
-	}
-}
+	// for testing multiple versions of jQuery
+	/*
+	 * 	wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', SFW_VERSION, true );
+	 *	wp_enqueue_script( 'jquery' );
+	 */
+	if( is_singular() ) {
+		$js_path =  SFW_URL . 'js/sfw-ipwd.js';
 
-/**
-* added 1.7.8.6
- * SFW requires jQuery 1.7 since it uses functions like .on() for events.
- * If, by the time wp_print_scrips is called, jQuery is outdated (i.e not
- * using the version in core) we need to deregister it and register the 
- * core version of the file.
- */
-function sfw_check_jquery() {
-	global $wp_scripts;
-	
-	// Enforce minimum version of jQuery
-	if( isset( $wp_scripts->registered['jquery']->ver ) && $wp_scripts->registered['jquery']->ver < '1.7' ) {
-		wp_deregister_script( 'jquery' );
-		wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js', array(), '1.7.2' );
-		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
+		// Added 1.9 check_ajax_referer nonce data
+		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd_script', array( 'sfw_ajaxurl' => admin_url( 'admin-ajax.php' ), 'sfw_ajax_nonce_sec' => wp_create_nonce( 'sfw-ajax-nonce' ) ) );
+		
+		//wp_register_script( 'CryptoJS', 'http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js', null, SFW_VERSION, true );
+		//wp_enqueue_script( 'CryptoJS' );
+		// wp_check_password( $password, $hash, $user_id );
+		// wp_hash_password( $password );
+		// wp_salt( $scheme );
 	}
 }
 
@@ -318,6 +293,9 @@ function sfw_check_jquery() {
 * Temporary passwords stored in transient
 ****************************************************/
 function sfw_pwd_ip() {
+	// Added 1.9 to secure AJAX
+	check_ajax_referer( 'sfw-ajax-nonce', 'sfw_nonce_for_ajax' );
+	
 	// Get post_id from AJAX
 	$postid = $_POST['post_id'];
 	
@@ -368,6 +346,16 @@ function sfw_pwd_ip_legacy() {
 	$results = array( 'pwd'=>$pwd_key, 'ip'=>$ip_address );
 
 	return $results;
+}
+
+// Added 1.9 Enqueue style file
+function sfw_load_styles() {
+	$css = SFW_URL . 'css/sfw-comment-style.css?' . filemtime( SFW_PATH . 'css/sfw-comment-style.css' );
+
+	if ( !is_admin() ) {
+		wp_register_style( 'sfw-comment-style', $css, array(), NULL, 'all' );
+		wp_enqueue_style( 'sfw-comment-style' );
+	}
 }
 
 ?>

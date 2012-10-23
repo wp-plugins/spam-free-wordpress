@@ -20,7 +20,6 @@ function sfw_default() {
 			'comment_form' => 'on',
 			'cf_msg' => '',
 			'api_key' => '',
-			'jquery_compat' => 'off',
 			'clean_spam' => 'off',
 			'clean_trackbacks' => 'off',
 			'clean_unapproved' => 'off',
@@ -137,7 +136,7 @@ function sfw_upgrade_db() {
 	}
 }
 
-function sfw_upgrade_db_jquery_compat() {
+function sfw_upgrade_db_clean_spam() {
 
 	if ( version_compare( get_bloginfo( 'version' ), SFW_WP_REQUIRED, '<' ) ) {
 		deactivate_plugins( basename( __FILE__ ) );
@@ -147,7 +146,6 @@ function sfw_upgrade_db_jquery_compat() {
 	
 		$oldver = $sfw_options;
 		$newver = array(
-			'jquery_compat' => 'off',
 			'clean_spam' => 'off',
 			'clean_trackbacks' => 'off',
 			'clean_unapproved' => 'off'
@@ -182,5 +180,7 @@ function sfw_upgrade_db_legacy_pwd() {
 /*******************************************
 * Database default and upgrade END
 ********************************************/
+
+// http://xmouse.ithium.net/2004/removing-values-from-a-php-array
 
 ?>

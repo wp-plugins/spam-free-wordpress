@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.8.7
+Version: 1.9
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.8.7' );
+	define( 'SFW_VERSION', '1.9' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -80,8 +80,8 @@ if( get_option('spam_free_wordpress') ) {
 		sfw_upgrade_db();
 	}
 	
-	if ( !$sfw_options['jquery_compat'] ) {
-		sfw_upgrade_db_jquery_compat();
+	if ( !$sfw_options['clean_spam'] ) {
+		sfw_upgrade_db_clean_spam();
 	}
 	
 	if ( !$sfw_options['legacy_pwd'] ) {
@@ -142,20 +142,10 @@ if ( class_exists( 'Jetpack' ) ) {
 
 // Added 1.8.6. Disable JavaScript security if legacy dual password field option is on.
 if( $sfw_options['legacy_pwd'] == 'off' ) {
-	/**
-	* added 1.7.8.6
-	* SFW requires jQuery 1.7 since it uses functions like .on() for events.
-	* If, by the time wp_print_scrips is called, jQuery is outdated (i.e not
-	* using the version in core) we need to deregister it and register the 
-	* core version of the file.
-	*/
-	//add_action( 'wp_print_scripts', 'sfw_check_jquery', 25 );
-
-	/**
-	* Load SFW authentication AJAX JavaScript. Requires jQuery 1.7 or above since it uses .on()
+	/*
+	* Load SFW authentication AJAX JavaScript.
 	*/
 	add_action('wp_enqueue_scripts', 'sfw_load_pwd');
-
 
 	// Actions for password AJAX
 	add_action( 'wp_ajax_nopriv_sfw_i_pwd', 'sfw_pwd_ip' );
@@ -167,7 +157,13 @@ function sfw_comment_form_init() {
 	return dirname(__FILE__) . '/comments.php';
 }
 
+/*
+ * Added 1.9
+* Loads default comment list and comment form style for themes that do not use
+* the comment_form function. Works with themes that do as well.
+*/
 if ( $sfw_options['comment_form'] == 'on' ) {
+	add_action('wp_enqueue_scripts', 'sfw_load_styles');
 	add_filter( 'comments_template', 'sfw_comment_form_init' );
 }
 
@@ -179,7 +175,7 @@ add_action('pre_comment_on_post', 'sfw_comment_post_authentication', 1);
 
 
 /*
-* Reminder that API Key is required for activation
+* Reminder that API Key is required for activation of advanced features and support
 */
 function sfw_admin_head() {
 	if ( !current_user_can( 'manage_options' ) )

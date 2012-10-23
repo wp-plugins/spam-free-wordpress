@@ -1,1 +1,0 @@
-(function($){$(document).ready(function(){$('#comment_post_ID').each(function(){$this=$(this);pid=$this.val()});$('#comment').bind('keydown',function(){$.post(sfw_ipwd.ajaxurl,{action:'sfw_i_pwd',post_id:pid},function(response){$('.pwddefault').val(response.pwd);$('#comment_ip').val(response.ip)},'json');$('#comment').unbind('keydown')})})})(jQuery);

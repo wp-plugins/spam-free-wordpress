@@ -36,11 +36,6 @@ if( !class_exists('SFW_TOOL_TIPS' ) ) {
 					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'Pingbacks, or trackbacks, can be placed on your blog without your knowledge or permission from another blog that may not provide a reciprocal link. 99% of pingbacks are spam links. Having a page with more than 100 links on it, or more links going out than coming in, will hurt the SEO for that page, and for the entire domain name.', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
 					<?php
 					break;
-				case 'jquery_compat':
-					?>
-					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'If you have WordPress 3.3 or greater, and you see a Spam Free Wordpress error when leaving a test comment, it could mean you have a theme that is loading a version of jQuery older than 1.7. Check this box to use the older jQuery script to try to fix the problem. If the problem is not fixed, ask for help on the Support Forum on toddlahman.com, and consider getting your theme fixed, or hiring me to fix it. If your theme is more than one year old, it probably needs to be updated.', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
-					<?php
-					break;
 				case 'comment_msg':
 					?>
 					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'This option displays a message above the comment text area on the comment form. Plane text, or HTML tags, can be used.', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
@@ -68,7 +63,7 @@ if( !class_exists('SFW_TOOL_TIPS' ) ) {
 					break;
 				case 'legacy_pwd':
 					?>
-					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'This option is only for situations where the plugin returns an error when comments are submitted, and troubleshooting the plugin has not corrected the situation. Spam bots can bypass the security for this option if they target your blog, so correcting other issues to avoid using this option is preferred. This option requires the Generate Comment Form option to also be selected. ', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
+					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'If you try to leave a test comment and you see this message, "Spam Free Wordpress disabled the comment form because it could not retrieve the password from the server. Contact support.," then check the box to turn this option on, and ask for support on the toddlahman.com support forum. ', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
 					<?php
 					break;
 			}

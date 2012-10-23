@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spam Free Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-22 07:12-0800\n"
-"PO-Revision-Date: 2012-10-22 07:12-0800\n"
+"POT-Creation-Date: 2012-10-22 17:44-0800\n"
+"PO-Revision-Date: 2012-10-22 17:45-0800\n"
 "Last-Translator: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language-Team: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language: en_US\n"
@@ -30,14 +30,14 @@ msgstr ""
 msgid "Donate"
 msgstr ""
 
-#: tl-spam-free-wordpress.php:203
+#: tl-spam-free-wordpress.php:193
 #, php-format
 msgid ""
 "<strong><a href=\"%1$s\">Enter your Free License Key</a></strong> to "
 "activate the free plugin support and advanced features, or <strong><a href=\""
 msgstr ""
 
-#: tl-spam-free-wordpress.php:206
+#: tl-spam-free-wordpress.php:196
 msgid "Spam Free Wordpress needs your attention!"
 msgstr ""
 
@@ -102,76 +102,84 @@ msgid "Best Selling Plugins"
 msgstr ""
 
 #: admin/class-menu.php:407
-msgid "Search Engine Ping"
+msgid "Simple Comments"
 msgstr ""
 
 #: admin/class-menu.php:408
-msgid "CacheNgin"
+msgid "Simple Comments is coming soon."
 msgstr ""
 
 #: admin/class-menu.php:409
+msgid "Search Engine Ping"
+msgstr ""
+
+#: admin/class-menu.php:410
+msgid "CacheNgin"
+msgstr ""
+
+#: admin/class-menu.php:411
 msgid "Translation Cache"
 msgstr ""
 
-#: admin/class-menu.php:411 admin/class-menu.php:413
+#: admin/class-menu.php:413 admin/class-menu.php:415
 msgid "Hire Todd Lahman"
 msgstr ""
 
-#: admin/class-menu.php:414
+#: admin/class-menu.php:416
 msgid "Todd's services include:"
 msgstr ""
 
-#: admin/class-menu.php:415
+#: admin/class-menu.php:417
 msgid "Search Engine Optimization Expert."
 msgstr ""
 
-#: admin/class-menu.php:416
+#: admin/class-menu.php:418
 msgid "Make your web site FASTER!."
 msgstr ""
 
-#: admin/class-menu.php:417
+#: admin/class-menu.php:419
 msgid "Theme and plugin development."
 msgstr ""
 
-#: admin/class-menu.php:418
+#: admin/class-menu.php:420
 msgid "Custom PHP, JavaScript, jQuery, HTML, MySQL, and CSS."
 msgstr ""
 
-#: admin/class-menu.php:419
+#: admin/class-menu.php:421
 msgid "Linux server administration."
 msgstr ""
 
-#: admin/class-menu.php:420
+#: admin/class-menu.php:422
 msgid "Nginx, Apache, MySQL, and Percona server administration."
 msgstr ""
 
-#: admin/class-menu.php:421
+#: admin/class-menu.php:423
 msgid "Comment Form CSS Styling"
 msgstr ""
 
-#: admin/class-menu.php:422
+#: admin/class-menu.php:424
 msgid "Advanced SFW Support"
 msgstr ""
 
-#: admin/class-menu.php:424 admin/class-menu.php:427
+#: admin/class-menu.php:426 admin/class-menu.php:429
 msgid "Buy Todd a Coffee"
 msgstr ""
 
-#: admin/class-menu.php:426
+#: admin/class-menu.php:428
 msgid "Given enough coffee I could rule the world."
 msgstr ""
 
-#: admin/class-menu.php:429 admin/class-menu.php:432
+#: admin/class-menu.php:431 admin/class-menu.php:434
 msgid "Support Forum"
 msgstr ""
 
-#: admin/class-menu.php:431
+#: admin/class-menu.php:433
 msgid ""
 "Be sure to login to use the support forum after getting a free license key. "
 "NOTE: Support is not provided on Wordpress.org."
 msgstr ""
 
-#: admin/class-menu.php:433
+#: admin/class-menu.php:435
 msgid "Free License Key"
 msgstr ""
 

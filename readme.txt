@@ -30,7 +30,7 @@ This is the easiest comment spam plugin you'll ever use. Works right out of the 
  8. Option to automatically delete comments marked as spam, trackbacks/pingbacks, and unapproved.
  9. Over 286,000 Spam Free Blogs and Counting!
  
- The plugin has the option to generate a custom comment list and comment form for themes that do not work automatically with the plugin.
+The plugin has the option to generate a custom comment list and comment form for themes that do not work automatically with the plugin.
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
 
@@ -46,6 +46,7 @@ Todd Lahman is a [WordPress Consultant](http://www.toddlahman.com/hire-todd-lahm
 
 * English
 * German - (de_DE)
+* Italian (it_IT)
 * French - fr_FR)
 * Hebrew - (he_IL)
 * Japanese - (ja)

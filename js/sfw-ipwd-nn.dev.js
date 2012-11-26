@@ -20,8 +20,7 @@ jQuery(function() {
 		// Fetch AJAX data, and send nonce for authentication
 		var sfw_ajax_data = {
 			action : 'sfw_i_pwd',
-			post_id : sfw_pid,
-			sfw_nonce_for_ajax : sfw_ipwd_script.sfw_ajax_nonce_sec
+			post_id : sfw_pid
 		};
 		jQuery.post( sfw_ipwd_script.sfw_ajaxurl, sfw_ajax_data, function( response ) {
 			jQuery( '.pwddefault' ).val( response.pwd );

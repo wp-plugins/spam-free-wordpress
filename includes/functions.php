@@ -145,7 +145,9 @@ function sfw_comment_form_extra_fields() {
 		echo stripslashes( $sfw_options['cf_msg'] );
 		
 		// Set referrer check to FALSE since it fails too often
-		wp_nonce_field('sfw_nonce','sfw_comment_nonce', FALSE, TRUE);
+		if( $sfw_options['nonce'] == 'on' ) {
+			wp_nonce_field('sfw_nonce','sfw_comment_nonce', FALSE, TRUE);
+		}
 				
 		if( $sfw_options['legacy_pwd'] == 'off' ) {
 			echo "\n<p><noscript>JavaScript must be ond to leave a comment.</noscript></p>";
@@ -184,12 +186,15 @@ function sfw_comment_post_authentication() {
 	// If the reader is logged in don't require password for wp-comments-post.php
 		if( !is_user_logged_in() ) {
 			// Nonce check
-			if( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) )
-				wp_die( __( 'Spam Free Wordpress nonce security check failed.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+			if( $sfw_options['nonce'] == 'on' ) {
+				if( empty( $_POST['sfw_comment_nonce'] ) || !wp_verify_nonce( $_POST['sfw_comment_nonce'],'sfw_nonce' ) ) {
+					wp_die( __( 'Spam Free Wordpress nonce security check failed. <a href="http://www.toddlahman.com/spam-free-wordpress/#troubleshooting" target="_blank">Troubleshooting</a>', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+				}
+			}
 					
 			// Compares current comment form password with current password for post
 			if( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
-				wp_die( __( 'Spam Free Wordpress could not retrieve the password from the server. Contact support.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+				wp_die( __( 'Spam Free Wordpress could not retrieve the password from the server. <a href="http://www.toddlahman.com/spam-free-wordpress/#troubleshooting" target="_blank">Troubleshooting</a>.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
 			// Compares commenter IP address to local blocklist
 			if( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check( $cip ) )
@@ -268,6 +273,7 @@ add_filter('comment_form_default_fields','sfw_add_x_autocompletetype');
 * Load JavaScript for comment form
 */
 function sfw_load_pwd() {
+	global $sfw_options;
 	// for testing multiple versions of jQuery
 	/*
 	 * 	wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', SFW_VERSION, true );
@@ -275,10 +281,18 @@ function sfw_load_pwd() {
 	 */
 	if( is_singular() ) {
 		$js_path =  SFW_URL . 'js/sfw-ipwd.js';
+		$js_nn_path =  SFW_URL . 'js/sfw-ipwd-nn.js';
 
-		wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
-		// Added 1.9 check_ajax_referer nonce data
-		wp_localize_script( 'sfw_ipwd', 'sfw_ipwd_script', array( 'sfw_ajaxurl' => admin_url( 'admin-ajax.php' ), 'sfw_ajax_nonce_sec' => wp_create_nonce( 'sfw-ajax-nonce' ) ) );
+		
+		// Added nonce off by default since it breaks on some WordPress installations 1.9.1
+		if( $sfw_options['nonce'] == 'on' ) {
+			wp_enqueue_script( 'sfw_ipwd', $js_path, array( 'jquery' ), SFW_VERSION, true );
+			// Added 1.9 check_ajax_referer nonce data
+			wp_localize_script( 'sfw_ipwd', 'sfw_ipwd_script', array( 'sfw_ajaxurl' => admin_url( 'admin-ajax.php' ), 'sfw_ajax_nonce_sec' => wp_create_nonce( 'sfw-ajax-nonce' ) ) );
+		} else {
+			wp_enqueue_script( 'sfw_ipwd', $js_nn_path, array( 'jquery' ), SFW_VERSION, true );
+			wp_localize_script( 'sfw_ipwd', 'sfw_ipwd_script', array( 'sfw_ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		}
 		
 		//wp_register_script( 'CryptoJS', 'http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js', null, SFW_VERSION, true );
 		//wp_enqueue_script( 'CryptoJS' );
@@ -293,8 +307,12 @@ function sfw_load_pwd() {
 * Temporary passwords stored in transient
 ****************************************************/
 function sfw_pwd_ip() {
+	global $sfw_options;
+	
 	// Added 1.9 to secure AJAX
-	check_ajax_referer( 'sfw-ajax-nonce', 'sfw_nonce_for_ajax' );
+	if( $sfw_options['nonce'] == 'on' ) {
+		check_ajax_referer( 'sfw-ajax-nonce', 'sfw_nonce_for_ajax' );
+	}
 	
 	// Get post_id from AJAX
 	$postid = $_POST['post_id'];

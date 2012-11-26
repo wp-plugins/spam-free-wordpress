@@ -66,6 +66,11 @@ if( !class_exists('SFW_TOOL_TIPS' ) ) {
 					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'If you try to leave a test comment and you see this message, "Spam Free Wordpress disabled the comment form because it could not retrieve the password from the server. Contact support.," then check the box to turn this option on, and ask for support on the toddlahman.com support forum. ', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
 					<?php
 					break;
+				case 'nonce':
+					?>
+					<span class='icon-pos'><a href='' class='tool-tip' title='<?php _e( 'WordPress Nonce security can add more security to your comment form and AJAX communication with the server, but it breaks on some WordPress installations. Be sure to logout of WordPress, and try to leave a comment to be sure everything is working if Nonce security is turned on.', 'spam-free-wordpress' ); ?>'><img src='<?php echo SFW_URL; ?>images/icon-question.png' title=''' /></a></span>
+					<?php
+					break;
 			}
 		}
 	

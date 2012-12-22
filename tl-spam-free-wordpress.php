@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.9.1
+Version: 1.9.2
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.9.1' );
+	define( 'SFW_VERSION', '1.9.2' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -41,15 +41,15 @@ if(!defined( 'SFW_API_KEY_CHECK' ) )
 load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
 
 require_once( SFW_PATH . 'includes/db.php' );
+require_once( SFW_PATH . 'includes/class-cleanup.php' );
 require_once( SFW_PATH . 'includes/class-key.php' );
 require_once( SFW_PATH . 'includes/functions.php' );
 require_once( SFW_PATH . 'includes/class-comment-form.php' );
 require_once( SFW_PATH . 'includes/legacy.php' );
-require_once( SFW_PATH . 'includes/class-cleanup.php' );
 
 if ( SFW_IS_ADMIN ) {
-	require_once( SFW_PATH . 'admin/class-menu.php' );
 	require_once( SFW_PATH . 'admin/class-tool-tips.php' );
+	require_once( SFW_PATH . 'admin/class-menu.php' );
 }
 
 // Update version
@@ -182,9 +182,11 @@ add_action('pre_comment_on_post', 'sfw_comment_post_authentication', 1);
 * Reminder that API Key is required for activation of advanced features and support
 */
 function sfw_admin_head() {
+	global $sfw_key;
+
 	if ( !current_user_can( 'manage_options' ) )
 		return;
-	if( SFW_KEY::get_key() == '' ) {
+	if( $sfw_key->get_key() == '' ) {
 		add_action( 'admin_notices', 'sfw_license_nag' );
 	}
 }
@@ -234,7 +236,9 @@ if( !isset( $sfw_lic_nag ) || get_option( 'sfw_lic_nag' ) < '2' ) {
 		add_action ( 'sfw_clean_spam', 'sfw_clean_spam_func' );
 
 		function sfw_clean_spam_func() {
-			SFW_CLEANUP::delete_spam();
+			global $sfw_cleanup;
+
+			$sfw_cleanup->delete_spam();
 		}
 	} elseif( $sfw_options['clean_spam'] == "off" ) {
 		$sfw_remove_spam_cron = wp_next_scheduled( 'sfw_clean_spam' );
@@ -254,7 +258,9 @@ if( !isset( $sfw_lic_nag ) || get_option( 'sfw_lic_nag' ) < '2' ) {
 		add_action ( 'sfw_clean_trackbacks', 'sfw_clean_trackbacks_func' );
 
 		function sfw_clean_trackbacks_func() {
-			SFW_CLEANUP::delete_trackbacks();
+			global $sfw_cleanup;
+
+			$sfw_cleanup->delete_trackbacks();
 		}
 	} elseif( $sfw_options['clean_trackbacks'] == "off" ) {
 		$sfw_remove_trackback_cron = wp_next_scheduled( 'sfw_clean_trackbacks' );
@@ -274,7 +280,9 @@ if( !isset( $sfw_lic_nag ) || get_option( 'sfw_lic_nag' ) < '2' ) {
 		add_action ( 'sfw_clean_unapproved', 'sfw_clean_unapproved_func' );
 
 		function sfw_clean_unapproved_func() {
-			SFW_CLEANUP::delete_unapproved();
+			global $sfw_cleanup;
+
+			$sfw_cleanup->delete_unapproved();
 		}
 	} elseif( $sfw_options['clean_unapproved'] == "off" ) {
 		$sfw_remove_unapproved_cron = wp_next_scheduled( 'sfw_clean_unapproved' );

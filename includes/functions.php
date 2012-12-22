@@ -150,7 +150,7 @@ function sfw_comment_form_extra_fields() {
 		}
 				
 		if( $sfw_options['legacy_pwd'] == 'off' ) {
-			echo "\n<p><noscript>JavaScript must be ond to leave a comment.</noscript></p>";
+			echo "\n<p><noscript>JavaScript must be on to leave a comment.</noscript></p>";
 			echo "\n<input type='hidden' name='pwdfield' class='pwddefault' value='' />";
 			echo "\n<input type='hidden' name='comment_ip' id='comment_ip' value='' />";
 		} else {
@@ -194,7 +194,7 @@ function sfw_comment_post_authentication() {
 					
 			// Compares current comment form password with current password for post
 			if( empty( $_POST['pwdfield'] ) || $_POST['pwdfield'] != $sfw_comment_script )
-				wp_die( __( 'Spam Free Wordpress could not retrieve the password from the server. <a href="http://www.toddlahman.com/spam-free-wordpress/#troubleshooting" target="_blank">Troubleshooting</a>.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
+				wp_die( __( 'Spam Free Wordpress could not retrieve the password from the server. It may be necessary to do one, or all, of the following. Turn on the Old Password Fields option, turn off Nonce Security, or to turn on Generate Comment Form. <a href="http://www.toddlahman.com/spam-free-wordpress/#troubleshooting" target="_blank">Troubleshooting</a>.', 'spam-free-wordpress' ) . sfw_spam_counter(), 'Spam Free Wordpress rejected your comment', array( 'response' => 200, 'back_link' => true ) );
 		
 			// Compares commenter IP address to local blocklist
 			if( empty( $_POST['comment_ip'] ) || $_POST['comment_ip'] == sfw_local_blocklist_check( $cip ) )
@@ -219,11 +219,11 @@ function sfw_close_pingbacks() {
 	$sql =
 		"
 		UPDATE $wpdb->posts
-		SET ping_status = 'closed'
-		WHERE ping_status = 'open'
+		SET ping_status = %s
+		WHERE ping_status = %s
 		";
 	
-	$sfw_close_ping = $wpdb->query( $wpdb->prepare( $sql ) );
+	$sfw_close_ping = $wpdb->query( $wpdb->prepare( $sql, 'closed', 'open' ) );
 
 	update_option( 'default_ping_status', 'closed' );
 	update_option( 'default_pingback_flag', '' );
@@ -236,11 +236,11 @@ function sfw_open_pingbacks() {
 	$sql =
 		"
 		UPDATE $wpdb->posts
-		SET ping_status = 'open'
-		WHERE ping_status = 'closed'
+		SET ping_status = %s
+		WHERE ping_status = %s
 		";
 	
-	$sfw_open_ping = $wpdb->query( $wpdb->prepare( $sql ) );
+	$sfw_open_ping = $wpdb->query( $wpdb->prepare( $sql, 'open', 'closed' ) );
 
 	update_option( 'default_ping_status', 'open' );
 	update_option( 'default_pingback_flag', '1' );

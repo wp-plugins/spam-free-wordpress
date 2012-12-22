@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spam Free Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-25 23:09-0800\n"
-"PO-Revision-Date: 2012-11-25 23:09-0800\n"
+"POT-Creation-Date: 2012-12-22 14:40-0800\n"
+"PO-Revision-Date: 2012-12-22 14:40-0800\n"
 "Last-Translator: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language-Team: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language: en_US\n"
@@ -30,14 +30,14 @@ msgstr ""
 msgid "Donate"
 msgstr ""
 
-#: tl-spam-free-wordpress.php:197
+#: tl-spam-free-wordpress.php:199
 #, php-format
 msgid ""
 "<strong><a href=\"%1$s\">Enter your Free License Key</a></strong> to "
 "activate the free plugin support and advanced features, or <strong><a href=\""
 msgstr ""
 
-#: tl-spam-free-wordpress.php:200
+#: tl-spam-free-wordpress.php:202
 msgid "Spam Free Wordpress needs your attention!"
 msgstr ""
 
@@ -49,145 +49,149 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: admin/class-menu.php:121
+#: admin/class-menu.php:123
 msgid ""
 "PLUGIN SUPPORT, AND ADVANCED PLUGIN FEATURES, REQUIRE A FREE LICENSE KEY."
 msgstr ""
 
-#: admin/class-menu.php:130 admin/class-menu.php:142 admin/class-menu.php:321
-#: admin/class-menu.php:337 admin/class-menu.php:353
+#: admin/class-menu.php:134 admin/class-menu.php:149 admin/class-menu.php:336
+#: admin/class-menu.php:352 admin/class-menu.php:368
 msgid "THIS SECTION REQUIRES A FREE LICENSE KEY."
 msgstr ""
 
-#: admin/class-menu.php:133
+#: admin/class-menu.php:137
 msgid "Text and HTML are acceptable."
 msgstr ""
 
-#: admin/class-menu.php:145
+#: admin/class-menu.php:139
+msgid "The Generate Comment Form option above is required for most themes."
+msgstr ""
+
+#: admin/class-menu.php:152
 msgid "IP addresses only. One IP address per line."
 msgstr ""
 
-#: admin/class-menu.php:195
+#: admin/class-menu.php:206
 msgid ""
 "These options clean the unwanted oomment types listed below from your blog "
 "automatically every hour."
 msgstr ""
 
-#: admin/class-menu.php:218
+#: admin/class-menu.php:231
 msgid "is not a valid license key."
 msgstr ""
 
-#: admin/class-menu.php:272
+#: admin/class-menu.php:306
 msgid "Generates a comment form if theme is not compatible with SFW."
 msgstr ""
 
-#: admin/class-menu.php:299
+#: admin/class-menu.php:313
 msgid "Use only if plugin won't work any other way. (Fields are invisible)"
 msgstr ""
 
-#: admin/class-menu.php:306
+#: admin/class-menu.php:320
 msgid "WordPress Nonce security breaks some installations."
 msgstr ""
 
-#: admin/class-menu.php:328
+#: admin/class-menu.php:343
 msgid " Spam comments found."
 msgstr ""
 
-#: admin/class-menu.php:344
+#: admin/class-menu.php:359
 msgid " Trackbacks/Pingbacks found."
 msgstr ""
 
-#: admin/class-menu.php:360
+#: admin/class-menu.php:375
 msgid " Unapproved comments found."
 msgstr ""
 
-#: admin/class-menu.php:414
+#: admin/class-menu.php:429
 msgid "Best Selling Plugins"
 msgstr ""
 
-#: admin/class-menu.php:416
+#: admin/class-menu.php:431
 msgid "Simple Comments"
 msgstr ""
 
-#: admin/class-menu.php:417
+#: admin/class-menu.php:432
 msgid "Simple Comments is coming soon."
 msgstr ""
 
-#: admin/class-menu.php:418
+#: admin/class-menu.php:433
 msgid "Search Engine Ping"
 msgstr ""
 
-#: admin/class-menu.php:419
+#: admin/class-menu.php:434
 msgid "CacheNgin"
 msgstr ""
 
-#: admin/class-menu.php:420
+#: admin/class-menu.php:435
 msgid "Translation Cache"
 msgstr ""
 
-#: admin/class-menu.php:422 admin/class-menu.php:424
+#: admin/class-menu.php:437 admin/class-menu.php:439
 msgid "Hire Todd Lahman"
 msgstr ""
 
-#: admin/class-menu.php:425
+#: admin/class-menu.php:440
 msgid "Todd's services include:"
 msgstr ""
 
-#: admin/class-menu.php:426
+#: admin/class-menu.php:441
 msgid "Search Engine Optimization Expert."
 msgstr ""
 
-#: admin/class-menu.php:427
+#: admin/class-menu.php:442
 msgid "Make your web site FASTER!."
 msgstr ""
 
-#: admin/class-menu.php:428
+#: admin/class-menu.php:443
 msgid "Theme and plugin development."
 msgstr ""
 
-#: admin/class-menu.php:429
+#: admin/class-menu.php:444
 msgid "Custom PHP, JavaScript, jQuery, HTML, MySQL, and CSS."
 msgstr ""
 
-#: admin/class-menu.php:430
+#: admin/class-menu.php:445
 msgid "Linux server administration."
 msgstr ""
 
-#: admin/class-menu.php:431
+#: admin/class-menu.php:446
 msgid "Nginx, Apache, MySQL, and Percona server administration."
 msgstr ""
 
-#: admin/class-menu.php:432
+#: admin/class-menu.php:447
 msgid "Comment Form CSS Styling"
 msgstr ""
 
-#: admin/class-menu.php:433
+#: admin/class-menu.php:448
 msgid "Advanced SFW Support"
 msgstr ""
 
-#: admin/class-menu.php:435 admin/class-menu.php:438
+#: admin/class-menu.php:450 admin/class-menu.php:453
 msgid "Buy Todd a Coffee"
 msgstr ""
 
-#: admin/class-menu.php:437
+#: admin/class-menu.php:452
 msgid "Given enough coffee I could rule the world."
 msgstr ""
 
-#: admin/class-menu.php:440 admin/class-menu.php:444
+#: admin/class-menu.php:455 admin/class-menu.php:459
 msgid "Support Forum"
 msgstr ""
 
-#: admin/class-menu.php:442
+#: admin/class-menu.php:457
 msgid ""
 "Be sure to login to use the support forum after getting a free license key. "
 "NOTE: Support is not provided on Wordpress.org."
 msgstr ""
 
-#: admin/class-menu.php:443
+#: admin/class-menu.php:458
 msgid "Troubleshooting"
 msgstr ""
 
-#: admin/class-menu.php:445
+#: admin/class-menu.php:460
 msgid "Free License Key"
 msgstr ""
 
@@ -376,9 +380,11 @@ msgstr ""
 
 #: includes/functions.php:197
 msgid ""
-"Spam Free Wordpress could not retrieve the password from the server. <a href="
-"\"http://www.toddlahman.com/spam-free-wordpress/#troubleshooting\" target="
-"\"_blank\">Troubleshooting</a>."
+"Spam Free Wordpress could not retrieve the password from the server. It may "
+"be necessary to do one, or all, of the following. Turn on the Old Password "
+"Fields option, turn off Nonce Security, or to turn on Generate Comment Form. "
+"<a href=\"http://www.toddlahman.com/spam-free-wordpress/#troubleshooting\" "
+"target=\"_blank\">Troubleshooting</a>."
 msgstr ""
 
 #: includes/functions.php:201

@@ -4,16 +4,16 @@ if( !class_exists('SFW_CLEANUP' ) ) {
 	
 	class SFW_CLEANUP {
 	
-		function count_spam() {
+		public function count_spam() {
 			global $wpdb;
 
 			$sql =
 				"
 				SELECT COUNT(*) FROM $wpdb->comments
-				WHERE comment_approved = 'spam'
+				WHERE comment_approved = %s
 				";
 	
-			$count_spam = $wpdb->get_var( $wpdb->prepare( $sql ) );
+			$count_spam = $wpdb->query( $wpdb->prepare( $sql, 'spam' ) );
 			
 			if( $count_spam == 0 || is_null( $count_spam || empty( $count_spam ) ) ) {
 				$count_spam = '0';
@@ -24,16 +24,16 @@ if( !class_exists('SFW_CLEANUP' ) ) {
 			return $count_spam;
 		}
 		
-		function count_trackbacks() {
+		public function count_trackbacks() {
 			global $wpdb;
 
 			$sql =
 				"
 				SELECT COUNT(*) FROM $wpdb->comments
-				WHERE comment_type = 'trackback' OR comment_type = 'pingback'
+				WHERE comment_type = %s OR comment_type = %s
 				";
 	
-			$count_trackbacks = $wpdb->get_var( $wpdb->prepare( $sql ) );
+			$count_trackbacks = $wpdb->get_var( $wpdb->prepare( $sql, 'trackback', 'pingback' ) );
 			
 			if( $count_trackbacks == 0 || is_null( $count_trackbacks || empty( $count_trackbacks ) ) ) {
 				$count_trackbacks = '0';
@@ -44,16 +44,16 @@ if( !class_exists('SFW_CLEANUP' ) ) {
 			return $count_trackbacks;
 		}
 		
-		function count_unapproved() {
+		public function count_unapproved() {
 			global $wpdb;
 
 			$sql =
 				"
 				SELECT COUNT(*) FROM $wpdb->comments
-				WHERE comment_approved = '0'
+				WHERE comment_approved = %d
 				";
 	
-			$count_unapproved = $wpdb->get_var( $wpdb->prepare( $sql ) );
+			$count_unapproved = $wpdb->get_var( $wpdb->prepare( $sql, '0' ) );
 			
 			if( $count_unapproved == 0 || is_null( $count_unapproved || empty( $count_unapproved ) ) ) {
 				$count_unapproved = '0';
@@ -64,46 +64,46 @@ if( !class_exists('SFW_CLEANUP' ) ) {
 			return $count_unapproved;
 		}
 		
-		function delete_spam() {
+		public function delete_spam() {
 			global $wpdb;
 
 			$sql =
 				"
 				DELETE FROM $wpdb->comments
-				WHERE comment_approved = 'spam'
+				WHERE comment_approved = %s
 				";
 
-			$delete_spam = $wpdb->query( $wpdb->prepare( $sql ) );
+			$delete_spam = $wpdb->query( $wpdb->prepare( $sql, 'spam' ) );
 		}
 		
-		function delete_trackbacks() {
+		public function delete_trackbacks() {
 			global $wpdb;
 
 			$sql =
 				"
 				DELETE FROM $wpdb->comments
-				WHERE comment_type = 'trackback' OR comment_type = 'pingback'
+				WHERE comment_type = %s OR comment_type = %s
 				";
 	
-			$delete_trackbacks = $wpdb->query( $wpdb->prepare( $sql ) );
+			$delete_trackbacks = $wpdb->query( $wpdb->prepare( $sql, 'trackback', 'pingback' ) );
 		}
 		
-		function delete_unapproved() {
+		public function delete_unapproved() {
 			global $wpdb;
 
 			$sql =
 				"
 				DELETE FROM $wpdb->comments
-				WHERE comment_approved = '0'
+				WHERE comment_approved = %d
 				";
 			
-			$delete_unapproved = $wpdb->query( $wpdb->prepare( $sql ) );
+			$delete_unapproved = $wpdb->query( $wpdb->prepare( $sql, '0' ) );
 		}
 		
 	}
 
-	$sfw_cleanup = new SFW_CLEANUP();
-
 }
+
+$sfw_cleanup = new SFW_CLEANUP();
 
 ?>

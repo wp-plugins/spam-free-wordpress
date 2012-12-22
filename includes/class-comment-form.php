@@ -5,7 +5,7 @@
 
 class SFWform {
 
-    function sfw_comment_form_header() {
+    public function sfw_comment_form_header() {
 		global $comment;
 
 		// Comment form header start
@@ -31,7 +31,7 @@ class SFWform {
 			?>
 			<ol class="sfw-commentlist">
 			<?php
-				wp_list_comments( array( 'callback' => array( 'SFWform', 'SFWlist_comments' ) ) );
+				wp_list_comments( array( 'callback' => array( $this, 'SFWlist_comments' ) ) );
 			?>
 			</ol>
 			<?php
@@ -61,11 +61,11 @@ class SFWform {
 		} // Comment form header end
 		
 		// Call the comment form template
-		self::sfw_comment_form();
+		$this->sfw_comment_form();
 	}
 	
 	// callback function for wp_list_comments
-	function SFWlist_comments( $comment, $args, $depth ) {
+	public function SFWlist_comments( $comment, $args, $depth ) {
 
 		$GLOBALS['comment'] = $comment;
 		
@@ -126,7 +126,7 @@ class SFWform {
 	}
 	
 	// Comment form template
-	function sfw_comment_form( $args = array(), $post_id = null ) {
+	public function sfw_comment_form( $args = array(), $post_id = null ) {
 		global $id;
 
 		if ( null === $post_id )

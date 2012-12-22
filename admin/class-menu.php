@@ -69,11 +69,11 @@ if( !class_exists('SFW_MENU' ) ) {
 			add_settings_section( 'comment_form', 'Comment Form', array( $this, 'checkbox_text' ), 'sfw_dashboard' );
 			$checkboxes = array(
 									'Spam Stats',
-									'Generate Comment Form',
 									'Remove Comment HTML',
 									'Remove URL Field',
 									'Remove Author Link',
 									'Close Pingbacks',
+									'Generate Comment Form',
 									'Old Password Fields',
 									'Nonce Security'
 								);
@@ -116,7 +116,9 @@ if( !class_exists('SFW_MENU' ) ) {
 		
 		// Provides text for api key section
 		function api_key_section_text() {
-			if( SFW_KEY::get_key() == '' ) {
+			global $sfw_key;
+
+			if( $sfw_key->get_key() == '' ) {
 				echo '<p class="alert">';
 				_e( 'PLUGIN SUPPORT, AND ADVANCED PLUGIN FEATURES, REQUIRE A FREE LICENSE KEY.', 'spam-free-wordpress' );
 				echo '</p>';
@@ -125,25 +127,30 @@ if( !class_exists('SFW_MENU' ) ) {
 		
 		
 		function cf_msg_text() {
-			if( SFW_KEY::get_key() == '' ) {
+			global $sfw_key, $sfw_tool_tips;
+
+			if( $sfw_key->get_key() == '' ) {
 				echo '<p class="alert">';
 				_e( 'THIS SECTION REQUIRES A FREE LICENSE KEY.', 'spam-free-wordpress' );
 				echo '</p>';
 			} else {
 				_e( 'Text and HTML are acceptable.', 'spam-free-wordpress' );
-				SFW_TOOL_TIPS::tips( 'comment_msg' );
+				$sfw_tool_tips->tips( 'comment_msg' );
+				_e( 'The Generate Comment Form option above is required for most themes.', 'spam-free-wordpress' );
 			}
 		}
 		
 		
 		function bl_keys_text() {
-			if( SFW_KEY::get_key() == '' ) {
+			global $sfw_key, $sfw_tool_tips;
+
+			if( $sfw_key->get_key() == '' ) {
 				echo '<p class="alert">';
 				_e( 'THIS SECTION REQUIRES A FREE LICENSE KEY.', 'spam-free-wordpress' );
 				echo '</p>';
 			} else {
 				_e( 'IP addresses only. One IP address per line.', 'spam-free-wordpress' );
-				SFW_TOOL_TIPS::tips( 'blocklist' );
+				$sfw_tool_tips->tips( 'blocklist' );
 			}
 		}
 	
@@ -163,24 +170,28 @@ if( !class_exists('SFW_MENU' ) ) {
 		
 
 		function cf_msg_textarea() {
+			global $sfw_key;
 			$options = get_option( 'spam_free_wordpress' );
-			if( SFW_KEY::get_key() == '' ) {
+
+			if( $sfw_key->get_key() == '' ) {
 				echo '<div class="hidden">';
 			}
 			echo '<textarea id="cf_msg" rows="10" name="spam_free_wordpress[cf_msg]">' . $options[ 'cf_msg' ] . '</textarea>';
-			if( SFW_KEY::get_key() == '' ) {
+			if( $sfw_key->get_key() == '' ) {
 				echo '</div>';
 			}
 		}
 		
 		
 		function bl_keys_textarea() {
+			global $sfw_key;
 			$options = get_option( 'spam_free_wordpress' );
-			if( SFW_KEY::get_key() == '' ) {
+
+			if( $sfw_key->get_key() == '' ) {
 				echo '<div class="hidden">';
 			}
 			echo '<textarea id="bl_keys" rows="8" name="spam_free_wordpress[bl_keys]">' . $options[ 'bl_keys' ] . '</textarea>';
-			if( SFW_KEY::get_key() == '' ) {
+			if( $sfw_key->get_key() == '' ) {
 				echo '</div>';
 			}
 		}
@@ -203,6 +214,8 @@ if( !class_exists('SFW_MENU' ) ) {
 		
 		// Sanitizes and validates all input and output
 		function validate_options( $input ) {
+			global $sfw_key;
+
 			// Load existing options, validate, and update with changes from input before returning
 			$options = get_option( 'spam_free_wordpress' );
 			/**
@@ -213,7 +226,7 @@ if( !class_exists('SFW_MENU' ) ) {
 					'action' => 'key-check',
 					'key' => $api_key_input
 					);
-			$key_check = SFW_KEY::validate_key( $key_args );
+			$key_check = $sfw_key->validate_key( $key_args );
 			
 			$api_key_msg = __( 'is not a valid license key.', 'spam-free-wordpress' );
 			$options['api_key'] = trim( $input['api_key'] );
@@ -253,12 +266,13 @@ if( !class_exists('SFW_MENU' ) ) {
 		
 		// Outputs Comment Form checkboxes
 		function checkboxes( $checkboxes ) {
+			global $sfw_tool_tips;
 			$options = get_option( 'spam_free_wordpress' );
 
 			switch ( $checkboxes ) {
 				case 'Spam Stats':
 					?>
-					<input type="checkbox" id="cf_spam_stats" name="spam_free_wordpress[cf_spam_stats]" value="on" <?php checked( $options['cf_spam_stats'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'stats' ) ?>
+					<input type="checkbox" id="cf_spam_stats" name="spam_free_wordpress[cf_spam_stats]" value="on" <?php checked( $options['cf_spam_stats'], 'on' ); ?> /><?php $sfw_tool_tips->tips( 'stats' ) ?>
 					<?php
 					if ( $options['cf_spam_stats'] != 'on' ) {
 						echo "<span class='icon-pos'><img src='".SFW_URL."images/warn.png' title='' /></span><strong>Needs attention!</strong>";
@@ -266,43 +280,43 @@ if( !class_exists('SFW_MENU' ) ) {
 					?>
 					<?php
 					break;
-				case 'Generate Comment Form':
-					?>
-					<input type="checkbox" id="comment_form" name="spam_free_wordpress[comment_form]" value="on" <?php checked( $options['comment_form'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'comment_form' ); ?>
-					<?php _e( 'Generates a comment form if theme is not compatible with SFW.', 'spam-free-wordpress' ); ?>
-					<?php
-					break;
 				case 'Remove Comment HTML':
 					?>
-					<input type="checkbox" id="cf_html" name="spam_free_wordpress[cf_html]" value="on" <?php checked( $options['cf_html'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'html' ); ?>
+					<input type="checkbox" id="cf_html" name="spam_free_wordpress[cf_html]" value="on" <?php checked( $options['cf_html'], 'on' ); ?> /><?php $sfw_tool_tips->tips( 'html' ); ?>
 					<?php
 					break;
 				case 'Remove URL Field':
 					?>
-					<input type="checkbox" id="website_url" name="spam_free_wordpress[website_url]" value="on" <?php checked( $options['website_url'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'url' ); ?>
+					<input type="checkbox" id="website_url" name="spam_free_wordpress[website_url]" value="on" <?php checked( $options['website_url'], 'on' ); ?> /><?php $sfw_tool_tips->tips( 'url' ); ?>
 					<?php
 					break;
 				case 'Remove Author Link':
 					?>
-					<input type="checkbox" id="author_link" name="spam_free_wordpress[author_link]" value="on" <?php checked( $options['author_link'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'link' ); ?>
+					<input type="checkbox" id="author_link" name="spam_free_wordpress[author_link]" value="on" <?php checked( $options['author_link'], 'on' ); ?> /><?php $sfw_tool_tips->tips( 'link' ); ?>
 					<?php
 					break;
 				case 'Close Pingbacks':
 					?>
-					<input type="checkbox" id="ping_status" name="spam_free_wordpress[ping_status]" value="on" <?php checked( $options['ping_status'], 'on' ); ?> /><?php SFW_TOOL_TIPS::tips( 'pingbacks' ); ?>
+					<input type="checkbox" id="ping_status" name="spam_free_wordpress[ping_status]" value="on" <?php checked( $options['ping_status'], 'on' ); ?> /><?php $sfw_tool_tips->tips( 'pingbacks' ); ?>
+					<?php
+					break;
+				case 'Generate Comment Form':
+					?>
+					<input type="checkbox" id="comment_form" name="spam_free_wordpress[comment_form]" value="on" <?php checked( $options['comment_form'], 'on' ); ?> /><?php $sfw_tool_tips->tips( 'comment_form' ); ?>
+					<?php _e( 'Generates a comment form if theme is not compatible with SFW.', 'spam-free-wordpress' ); ?>
 					<?php
 					break;
 				case 'Old Password Fields':
 					?>
 					<input type="checkbox" id="legacy_pwd" name="spam_free_wordpress[legacy_pwd]" value="on" <?php checked( $options['legacy_pwd'], 'on' ); ?> />
-					<?php SFW_TOOL_TIPS::tips( 'legacy_pwd' ); ?>
+					<?php $sfw_tool_tips->tips( 'legacy_pwd' ); ?>
 					<?php _e( "Use only if plugin won't work any other way. (Fields are invisible)", 'spam-free-wordpress' ); ?>
 					<?php
 					break;
 				case 'Nonce Security':
 					?>
 					<input type="checkbox" id="nonce" name="spam_free_wordpress[nonce]" value="on" <?php checked( $options['nonce'], 'on' ); ?> />
-					<?php SFW_TOOL_TIPS::tips( 'nonce' ); ?>
+					<?php $sfw_tool_tips->tips( 'nonce' ); ?>
 					<?php _e( "WordPress Nonce security breaks some installations.", 'spam-free-wordpress' ); ?>
 					<?php
 					break;
@@ -312,11 +326,12 @@ if( !class_exists('SFW_MENU' ) ) {
 		
 		// Outputs Clean Comment Section checkboxes
 		function clean_comment( $clean_comment ) {
+			global $sfw_cleanup, $sfw_key, $sfw_tool_tips;
 			$options = get_option( 'spam_free_wordpress' );
 
 			switch ( $clean_comment ) {
 				case 'Delete Spam':
-					if( SFW_KEY::get_key() == '' ) {
+					if( $sfw_key->get_key() == '' ) {
 						echo '<p class="alert">';
 						_e( 'THIS SECTION REQUIRES A FREE LICENSE KEY.', 'spam-free-wordpress' );
 						echo '</p>';
@@ -324,15 +339,15 @@ if( !class_exists('SFW_MENU' ) ) {
 					}
 					?>
 					<input type="checkbox" id="clean_spam" name="spam_free_wordpress[clean_spam]" value="on" <?php checked( $options['clean_spam'], 'on' ); ?> />
-					<?php SFW_TOOL_TIPS::tips( 'clean_spam' ); ?>
-					<?php echo SFW_CLEANUP::count_spam(); _e( ' Spam comments found.', 'spam-free-wordpress' ); ?>
+					<?php $sfw_tool_tips->tips( 'clean_spam' ); ?>
+					<?php echo $sfw_cleanup->count_spam(); _e( ' Spam comments found.', 'spam-free-wordpress' ); ?>
 					<?php
-					if( SFW_KEY::get_key() == '' ) {
+					if( $sfw_key->get_key() == '' ) {
 						echo '</div>';
 					}
 					break;
 				case 'Delete Trackbacks':
-					if( SFW_KEY::get_key() == '' ) {
+					if( $sfw_key->get_key() == '' ) {
 						echo '<p class="alert">';
 						_e( 'THIS SECTION REQUIRES A FREE LICENSE KEY.', 'spam-free-wordpress' );
 						echo '</p>';
@@ -340,15 +355,15 @@ if( !class_exists('SFW_MENU' ) ) {
 					}
 					?>
 					<input type="checkbox" id="clean_trackbacks" name="spam_free_wordpress[clean_trackbacks]" value="on" <?php checked( $options['clean_trackbacks'], 'on' ); ?> />
-					<?php SFW_TOOL_TIPS::tips( 'clean_trackbacks' ); ?>
-					<?php echo SFW_CLEANUP::count_trackbacks(); _e( ' Trackbacks/Pingbacks found.', 'spam-free-wordpress' ); ?>
+					<?php $sfw_tool_tips->tips( 'clean_trackbacks' ); ?>
+					<?php echo $sfw_cleanup->count_trackbacks(); _e( ' Trackbacks/Pingbacks found.', 'spam-free-wordpress' ); ?>
 					<?php
-					if( SFW_KEY::get_key() == '' ) {
+					if( $sfw_key->get_key() == '' ) {
 						echo '</div>';
 					}
 					break;
 				case 'Delete Unapproved':
-					if( SFW_KEY::get_key() == '' ) {
+					if( $sfw_key->get_key() == '' ) {
 						echo '<p class="alert">';
 						_e( 'THIS SECTION REQUIRES A FREE LICENSE KEY.', 'spam-free-wordpress' );
 						echo '</p>';
@@ -356,10 +371,10 @@ if( !class_exists('SFW_MENU' ) ) {
 					}
 					?>
 					<input type="checkbox" id="clean_unapproved" name="spam_free_wordpress[clean_unapproved]" value="on" <?php checked( $options['clean_unapproved'], 'on' ); ?> />
-					<?php SFW_TOOL_TIPS::tips( 'clean_unapproved' ); ?>
-					<?php echo SFW_CLEANUP::count_unapproved(); _e( ' Unapproved comments found.', 'spam-free-wordpress' ); ?>
+					<?php $sfw_tool_tips->tips( 'clean_unapproved' ); ?>
+					<?php echo $sfw_cleanup->count_unapproved(); _e( ' Unapproved comments found.', 'spam-free-wordpress' ); ?>
 					<?php
-					if( SFW_KEY::get_key() == '' ) {
+					if( $sfw_key->get_key() == '' ) {
 						echo '</div>';
 					}
 					break;

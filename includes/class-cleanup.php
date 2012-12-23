@@ -13,7 +13,7 @@ if( !class_exists('SFW_CLEANUP' ) ) {
 				WHERE comment_approved = %s
 				";
 	
-			$count_spam = $wpdb->query( $wpdb->prepare( $sql, 'spam' ) );
+			$count_spam = $wpdb->get_var( $wpdb->prepare( $sql, 'spam' ) );
 			
 			if( $count_spam == 0 || is_null( $count_spam || empty( $count_spam ) ) ) {
 				$count_spam = '0';
@@ -50,7 +50,7 @@ if( !class_exists('SFW_CLEANUP' ) ) {
 			$sql =
 				"
 				SELECT COUNT(*) FROM $wpdb->comments
-				WHERE comment_approved = %d
+				WHERE comment_approved = %s
 				";
 	
 			$count_unapproved = $wpdb->get_var( $wpdb->prepare( $sql, '0' ) );
@@ -94,7 +94,7 @@ if( !class_exists('SFW_CLEANUP' ) ) {
 			$sql =
 				"
 				DELETE FROM $wpdb->comments
-				WHERE comment_approved = %d
+				WHERE comment_approved = %s
 				";
 			
 			$delete_unapproved = $wpdb->query( $wpdb->prepare( $sql, '0' ) );

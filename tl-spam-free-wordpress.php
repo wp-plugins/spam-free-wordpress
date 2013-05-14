@@ -3,21 +3,21 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.9.2
+Version: 1.9.3
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
 
-	Intellectual Property rights reserved byTodd Lahman, LLC as allowed by law incude,
+	Intellectual Property rights reserved by Todd Lahman, LLC as allowed by law incude,
 	but are not limited to, the working concept, function, and behavior of this plugin,
 	the logical code structure and expression as written. All WordPress functions, objects, and
-	related items, remain the property of WordPress under GPLv3 license, and any WordPress core
-	functions and objects in this plugin operate under the GPLv3 license.
+	related items, remain the property of WordPress under GPLv2 (or later), and any WordPress core
+	functions and objects in this plugin operate under the GPLv2 (or later) license.
 */
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.9.2' );
+	define( 'SFW_VERSION', '1.9.3' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))

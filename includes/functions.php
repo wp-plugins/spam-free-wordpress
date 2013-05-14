@@ -45,7 +45,6 @@ function sfw_comment_form_additions() {
 			
 			// Thesis
 			if( $sfw_wp_get_theme == 'Thesis' ) {
-				add_action('thesis_hook_comment_field', 'sfw_comment_form_extra_fields');
 				add_action('thesis_hook_after_comment_box','sfw_no_html_notice_action');
 			}
 			

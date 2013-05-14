@@ -27,7 +27,8 @@
 	width: 68.9%;
 }
 .sfw-commentlist > li.sfw-comment {
-	background: #f6f6f6;
+	/* background: #f6f6f6; */
+	background-color: transparent;
 	border: 1px solid #ddd;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -72,6 +73,10 @@
 .sfw-commentlist .children li.comment .sfw-comment-content {
 	margin: 1.625em 0 0;
 }
+.sfw-comment-content {
+	font-style: normal;
+	background-color: transparent;
+}
 .sfw-comment-meta a {
 	font-weight: bold;
 }
@@ -108,24 +113,24 @@
 	padding: 0;
 	top: 2.2em;
 }
-sfw-reply a.comment-reply-link {
+.sfw-reply a.comment-reply-link {
 	background: #eee;
 	-webkit-border-radius:3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	color: #666;
 	display: inline-block;
-	font-size: 12px;
-	padding: 0 8px;
+	font-size: 13px;
+	padding: 2px 8px;
 	text-decoration: none;
 }
-sfw-reply a.comment-reply-link:hover,
-sfw-reply a.comment-reply-link:focus,
-sfw-reply a.comment-reply-link:active {
+.sfw-reply a.comment-reply-link:hover,
+.sfw-reply a.comment-reply-link:focus,
+.sfw-reply a.comment-reply-link:active {
 	background: #888;
 	color: #fff;
 }
-sfw-reply a.comment-reply-link > span {
+.sfw-reply a.comment-reply-link > span {
 	display: inline-block;
 	position: relative;
 	top: -1px;
@@ -207,8 +212,12 @@ sfw-reply a.comment-reply-link > span {
 	display: block;
 	line-height: 1.714285714;
 }
-#sfw-respond form input[type="text"],
-#sfw-respond form textarea {
+/* #sfw-respond form input[type="text"], */
+#sfw-respond form textarea,
+#author input[type="text"],
+#email input[type="text"],
+#url input[type="text"],
+#comment {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -217,7 +226,7 @@ sfw-reply a.comment-reply-link > span {
 	line-height: 1.714285714;
 	padding: 10px;
 	padding: 0.714285714rem;
-	width: 100%;
+	width: 90%;
 }
 #sfw-respond form p.form-allowed-tags {
 	margin: 0;
@@ -233,5 +242,5 @@ label ~ span.sfw-required {
 	display: block;
 	float: left;
 	margin: -18px 0 0 -16px;
-	margin: -1.285714286rem 0 0 -1.142857143rem;
+	margin: -1.285714286rem 0 0 -0.5rem;
 }

@@ -106,7 +106,10 @@ if( !class_exists('SFW_MENU' ) ) {
 									'PHP Version',
 									'Database Version',
 									'WordPress Version',
-									'Spam Free Wordpress Version'
+									'Spam Free Wordpress Version',
+									'Generate Comment Form',
+									'Old Password Fields',
+									'Nonce Security'
 								);
 			foreach( $tech_support as $ts ) {
 				add_settings_field( $ts, $ts, array( $this, 'tech_support' ), 'sfw_dashboard', 'tech_support_info', $ts );
@@ -265,11 +268,11 @@ if( !class_exists('SFW_MENU' ) ) {
 		
 		
 		// Outputs Comment Form checkboxes
-		function checkboxes( $checkboxes ) {
+		function checkboxes( $box ) {
 			global $sfw_tool_tips;
 			$options = get_option( 'spam_free_wordpress' );
 
-			switch ( $checkboxes ) {
+			switch ( $box ) {
 				case 'Spam Stats':
 					?>
 					<input type="checkbox" id="cf_spam_stats" name="spam_free_wordpress[cf_spam_stats]" value="on" <?php checked( $options['cf_spam_stats'], 'on' ); ?> /><?php $sfw_tool_tips->tips( 'stats' ) ?>
@@ -385,11 +388,15 @@ if( !class_exists('SFW_MENU' ) ) {
 		// Tech Support Information
 		function tech_support( $ts ) {
 			global $wpdb;
+			$options = get_option( 'spam_free_wordpress' );
 
 			$php_version = phpversion();
 			$db_version = $wpdb->db_version();
 			$wordpress_version = get_bloginfo("version");
 			$sfw_version = SFW_VERSION;
+			$comment_form = $options['comment_form'];
+			$legacy_pwd = $options['legacy_pwd'];
+			$nonce = $options['nonce'];
 			
 			switch ( $ts ) {
 				case 'PHP Version':
@@ -403,6 +410,15 @@ if( !class_exists('SFW_MENU' ) ) {
 					break;
 				case 'Spam Free Wordpress Version':
 					_e( $sfw_version, 'spam-free-wordpress' );
+					break;
+				case 'Generate Comment Form':
+					_e( $comment_form, 'spam-free-wordpress' );
+					break;
+				case 'Old Password Fields':
+					_e( $legacy_pwd, 'spam-free-wordpress' );
+					break;
+				case 'Nonce Security':
+					_e( $nonce, 'spam-free-wordpress' );
 					break;
 			}
 		}
@@ -426,38 +442,28 @@ if( !class_exists('SFW_MENU' ) ) {
 		// displays sidebar
 		function sfw_sidebar() {
 			?>
-						<h3><?php _e( 'Best Selling Plugins', 'spam-free-wordpress' ); ?></h3>
-			<ul class="celist">
-				<li><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Simple Comments', 'spam-free-wordpress' ); ?></a><?php echo ' $30'; ?></li>
-				<li><?php _e( 'Simple Comments is coming soon.', 'spam-free-wordpress' ); ?></li>
-				<li><a href="http://www.toddlahman.com/shop/search-engine-ping/" target="_blank"><?php _e( 'Search Engine Ping', 'spam-free-wordpress' ); ?></a><?php echo ' $15'; ?></li>
-				<li><a href="http://www.toddlahman.com/shop/cachengin-wordpress-cache-plugin-for-nginx/" target="_blank"><?php _e( 'CacheNgin', 'spam-free-wordpress' ); ?></a><?php echo ' $75'; ?></li>
-				<li><a href="http://www.toddlahman.com/shop/translation-cache/" target="_blank"><?php _e( 'Translation Cache', 'spam-free-wordpress' ); ?></a><?php echo ' $15'; ?></li>
-			</ul>
-			<h3><?php _e( 'Hire Todd Lahman', 'spam-free-wordpress' ); ?></h3>
-			<ul class="celist">
-				<p><a href="http://www.toddlahman.com/hire-todd-lahman-search-engine-optimization/" target="_blank"><?php _e( 'Hire Todd Lahman', 'spam-free-wordpress' ); ?></a></p>
-				<p><strong><?php _e( "Todd's services include:", 'spam-free-wordpress' ); ?></strong></p>
-				<li><?php _e( "Search Engine Optimization Expert.", 'spam-free-wordpress' ); ?></li>
-				<li><?php _e( "Make your web site FASTER!.", 'spam-free-wordpress' ); ?></li>
-				<li><?php _e( "Theme and plugin development.", 'spam-free-wordpress' ); ?></li>
-				<li><?php _e( "Custom PHP, JavaScript, jQuery, HTML, MySQL, and CSS.", 'spam-free-wordpress' ); ?></li>
-				<li><?php _e( "Linux server administration.", 'spam-free-wordpress' ); ?></li>
-				<li><?php _e( "Nginx, Apache, MySQL, and Percona server administration.", 'spam-free-wordpress' ); ?></li>
-				<li><a href="http://www.toddlahman.com/spam-free-wordpress-support/" target="_blank"><?php _e( 'Comment Form CSS Styling', 'spam-free-wordpress' ); ?></a></li>
-				<li><a href="http://www.toddlahman.com/spam-free-wordpress-support/" target="_blank"><?php _e( 'Advanced SFW Support', 'spam-free-wordpress' ); ?></a></li>
-			</ul>
 			<h3><?php _e( 'Buy Todd a Coffee', 'spam-free-wordpress' ); ?></h3>
 			<ul class="celist">
-				<p><?php _e( "Given enough coffee I could rule the world.", 'spam-free-wordpress' ); ?></p>
 				<li><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG" target="_blank"><?php _e( 'Buy Todd a Coffee', 'spam-free-wordpress' ); ?></a></li>
+				<li><?php _e( 'Give the plugin 5 stars on', 'spam-free-wordpress' ); ?><br><a href="http://wordpress.org/extend/plugins/spam-free-wordpress/" target="_blank"><?php _e( ' WordPress.org', 'spam-free-wordpress' ); ?></a><img class='icon-pos' src='<?php echo SFW_URL; ?>images/5-star.png' title='' style='padding-bottom: 4px; vertical-align: middle; margin-right:3px;'></li>
 			</ul>
-			<h3><?php _e( 'Support Forum', 'spam-free-wordpress' ); ?></h3>
+			<h3><?php _e( 'Get More Traffic', 'spam-free-wordpress' ); ?></h3>
 			<ul class="celist">
-				<p><?php _e( "Be sure to login to use the support forum after getting a free license key. NOTE: Support is not provided on Wordpress.org.", 'spam-free-wordpress' ); ?></p>
-				<li><a href="http://www.toddlahman.com/spam-free-wordpress/#troubleshooting" target="_blank"><?php _e( 'Troubleshooting', 'spam-free-wordpress' ); ?></a></li>
-				<li><a href="http://www.toddlahman.com/forums/forum/spam-free-wordpress/" target="_blank"><?php _e( 'Support Forum', 'spam-free-wordpress' ); ?></a></li>
-				<li><a href="http://www.toddlahman.com/shop/spam-free-wordpress/" target="_blank"><?php _e( 'Free License Key', 'spam-free-wordpress' ); ?></a></li>
+				<li><a href="http://www.toddlahman.com/shop/search-engine-ping/" target="_blank"><?php _e( 'Search Engine Ping', 'spam-free-wordpress' ); ?></a><?php echo ' $15'; ?></li>
+			</ul>
+			<h3><?php _e( 'Support', 'spam-free-wordpress' ); ?></h3>
+			<p><strong><?php _e( "Support is not provided on Wordpress.org.", 'spam-free-wordpress' ); ?></strong></p>
+			<p><?php _e( "To get support peform the steps below in order:", 'spam-free-wordpress' ); ?></p>
+			<ol class="celist">
+				<li><a href="http://www.toddlahman.com/spam-free-wordpress/#troubleshooting" target="_blank"><?php _e( 'Check the Troubleshooting Page', 'spam-free-wordpress' ); ?></a></li>
+				<li><a href="http://www.toddlahman.com/shop/spam-free-wordpress/" target="_blank"><?php _e( 'Get a Free License Key', 'spam-free-wordpress' ); ?></a></li>
+				<li><a href="http://www.toddlahman.com/my-account/" target="_blank"><?php _e( 'Login to toddlahman.com', 'spam-free-wordpress' ); ?></a></li>
+				<li><a href="http://www.toddlahman.com/support/" target="_blank"><?php _e( 'Fill Out the Support Form', 'spam-free-wordpress' ); ?></a></li>
+			</ol>
+			<h3><?php _e( 'Hire Todd Lahman', 'spam-free-wordpress' ); ?></h3>
+			<p><?php _e( "I am available for specialized work.", 'spam-free-wordpress' ); ?></p>
+			<ul class="celist">
+				<li><a href="http://www.toddlahman.com/hire-todd-lahman-search-engine-optimization/" target="_blank"><?php _e( 'Hire Todd Lahman', 'spam-free-wordpress' ); ?></a></li>
 			</ul>
 			<?php
 		}

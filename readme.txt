@@ -3,14 +3,14 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.7
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
 
 == Description ==
 
-Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+Support is ONLY provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. 
 
@@ -62,7 +62,7 @@ P.S. [Free License Key](http://www.toddlahman.com/shop/spam-free-wordpress/) req
 
 == Installation ==
 
-Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+Support is ONLY provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 
 = WordPress 3.1 and Above =
@@ -77,7 +77,7 @@ See the [Spam Free Wordpress Support page](http://www.toddlahman.com/spam-free-w
 
 == Frequently Asked Questions ==
 
-Support is provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+Support is ONLY provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
 
 = Is Spam Free Wordpress compatible with other comment spam plugins? =
 
@@ -91,6 +91,9 @@ Yes.
 
 Yes.
 
+= My theme might not be working properly with the plugin. What should I do? =
+Get a free license key on [toddlahman.com](http://www.toddlahman.com/shop/spam-free-wordpress/), login to toddlahman.com, fill out the support form asking if you can send a copy of your theme for testing. Once support replies by email, you can attach your theme and send it to support.
+
 == Screenshots ==
 
 1. Spam protection is invisible to the reader.
@@ -99,11 +102,19 @@ Yes.
 
 == Upgrade Notice ==
 
-= 1.9.2 =
+= 1.9.3 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 1.9.3 =
+
+* Fix: Thesis now uses the WP comment_form function, which caused security checks to duplicate and fail.
+* Fix: Main options were not saved properly the first time, requiring a second save changes.
+* Fix: Made comment list and comment form CSS appear more universal on different themes. Still not perfect.
+* Fix: Corrected CSS conflict with Suffusion theme, which prevented text input on comment form fields in Firefox.
+* Enhancement: Expanded tech support information.
 
 = 1.9.2 =
 

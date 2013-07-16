@@ -15,7 +15,7 @@ class SFWform {
 			<?php
 			return;
 		}
-		
+
 		// if comments are open
 		if ( have_comments() ) {
 			?>
@@ -26,7 +26,7 @@ class SFWform {
 			?>
 			</h2>
 			<?php
-			
+
 			// Generates the list of comments
 			?>
 			<ol class="sfw-commentlist">
@@ -35,9 +35,9 @@ class SFWform {
 			?>
 			</ol>
 			<?php
-			
+
 			// if comments are paginated (broken into pages) provides link to next and previous page
-			if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // are there comments to navigate through 
+			if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) { // are there comments to navigate through
 				?>
 				<div id="sfw-comment-nav-above">
 					<div class="sfw-nav-previous">
@@ -54,21 +54,21 @@ class SFWform {
 				<?php
 			}
 		} elseif ( ! comments_open() && ! is_page() && post_type_supports( get_post_type(), 'comments' ) ) {
-	
+
 			?>
 			<p class="sfw-nocomments">Comments are closed.</p>
 			<?php
 		} // Comment form header end
-		
+
 		// Call the comment form template
 		$this->sfw_comment_form();
 	}
-	
+
 	// callback function for wp_list_comments
 	public function SFWlist_comments( $comment, $args, $depth ) {
 
 		$GLOBALS['comment'] = $comment;
-		
+
 		switch ( $comment->comment_type ) :
 			case 'pingback' :
 			case 'trackback' :
@@ -79,7 +79,7 @@ class SFWform {
 			break;
 			default :
 		?>
-		
+
 		<li <?php comment_class( 'sfw-comment' ); ?> id="li-comment-<?php comment_ID(); ?>">
 				<div id="comment-<?php comment_ID(); ?>" class="sfw-comment">
 					<div class="sfw-comment-meta">
@@ -122,9 +122,9 @@ class SFWform {
 		<?php // Note the lack of a trailing </li>. WordPress will add it itself once it's done listing any children and whatnot.
 			break;
 			endswitch;
-		
+
 	}
-	
+
 	// Comment form template
 	public function sfw_comment_form( $args = array(), $post_id = null ) {
 		global $id;

@@ -2,8 +2,8 @@
 /*
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
-Description: Comment spam blocking plugin that uses anonymous password authentication to achieve 100% automated spam blocking with zero false positives, plus a few more features.
-Version: 1.9.3
+Description: Comment spam blocking plugin that blocks automated spam with zero false positives.
+Version: 2.0
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '1.9.3' );
+	define( 'SFW_VERSION', '2.0' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -32,23 +32,16 @@ if(!defined( 'SFW_IS_ADMIN' ) )
     define( 'SFW_IS_ADMIN',  is_admin() );
 if(!defined( 'SFW_HOME_URL' ) )
     define( 'SFW_HOME_URL',  'http://www.toddlahman.com/spam-free-wordpress/' );
-if(!defined( 'SFW_API_KEY_URL' ) )
-    define( 'SFW_API_KEY_URL',  'http://www.toddlahman.com/shop/spam-free-wordpress/' );
-if(!defined( 'SFW_API_KEY_CHECK' ) )
-    define( 'SFW_API_KEY_CHECK',  'http://www.toddlahman.com/api/spam-free-wordpress/class-key-sfw.php' );
 
 // Ready for translation
 load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
 
 require_once( SFW_PATH . 'includes/db.php' );
-require_once( SFW_PATH . 'includes/class-cleanup.php' );
-require_once( SFW_PATH . 'includes/class-key.php' );
 require_once( SFW_PATH . 'includes/functions.php' );
 require_once( SFW_PATH . 'includes/class-comment-form.php' );
 require_once( SFW_PATH . 'includes/legacy.php' );
 
 if ( SFW_IS_ADMIN ) {
-	require_once( SFW_PATH . 'admin/class-tool-tips.php' );
 	require_once( SFW_PATH . 'admin/class-menu.php' );
 }
 
@@ -75,21 +68,9 @@ register_activation_hook( __FILE__, 'sfw_default' );
 */
 if( get_option('spam_free_wordpress') ) {
 	$sfw_options = get_option('spam_free_wordpress');
-	
-	if ( !$sfw_options['bl_keys'] ) {
-		sfw_upgrade_db();
-	}
-	
-	if ( !$sfw_options['clean_spam'] ) {
-		sfw_upgrade_db_clean_spam();
-	}
-	
+
 	if ( !$sfw_options['legacy_pwd'] ) {
 		sfw_upgrade_db_legacy_pwd();
-	}
-	
-	if ( !$sfw_options['nonce'] ) {
-		sfw_upgrade_db_nonce();
 	}
 }
 
@@ -144,18 +125,6 @@ if ( class_exists( 'Jetpack' ) ) {
 	}
 }
 
-// Added 1.8.6. Disable JavaScript security if legacy dual password field option is on.
-if( $sfw_options['legacy_pwd'] == 'off' ) {
-	/*
-	* Load SFW authentication AJAX JavaScript.
-	*/
-	add_action('wp_enqueue_scripts', 'sfw_load_pwd');
-
-	// Actions for password AJAX
-	add_action( 'wp_ajax_nopriv_sfw_i_pwd', 'sfw_pwd_ip' );
-	add_action( 'wp_ajax_sfw_i_pwd', 'sfw_pwd_ip' );
-}
-
 // automatically generate comment form - fixed in 1.7.8.1
 function sfw_comment_form_init() {
 	return dirname(__FILE__) . '/comments.php';
@@ -177,124 +146,16 @@ add_action('after_setup_theme', 'sfw_comment_form_additions', 1);
 // Calls the wp-comments-post.php authentication
 add_action('pre_comment_on_post', 'sfw_comment_post_authentication', 1);
 
+// Checks that the comment form password exists on single page load
+add_action('loop_start', 'sfw_comment_pass_exist_check', 1);
 
-/*
-* Reminder that API Key is required for activation of advanced features and support
-*/
-function sfw_admin_head() {
-	global $sfw_key;
-
-	if ( !current_user_can( 'manage_options' ) )
-		return;
-	if( $sfw_key->get_key() == '' ) {
-		add_action( 'admin_notices', 'sfw_license_nag' );
-	}
-}
-
-function sfw_license_nag() {
-	if ( isset( $_GET['page'] ) && 'sfw_dashboard' == $_GET['page'] )
-		return;
-
-		$message = sprintf(
-			__( '<strong><a href="%1$s">Enter your Free License Key</a></strong> to activate the free plugin support and advanced features, or <strong><a href="'.SFW_API_KEY_URL.'" target="_blank">get one from Todd Lahman LLC</a></strong>.', 'spam-free-wordpress' ),
-				admin_url( 'options-general.php?page=sfw_dashboard' )
-			);
-		$heading = __( 'Spam Free Wordpress needs your attention!', 'spam-free-wordpress' );
-?>
-		<div id="sep-notice" class="sep-notice updated">
-			<div class="sep-message">
-				<h3><?php echo $heading; ?></h3>
-				<p><?php echo $message; ?></p>
-			</div>
-		</div>
-<?php
-}
-
-if( get_option( 'sfw_lic_nag' ) ) {
-	$sfw_lic_nag = get_option( 'sfw_lic_nag' );
-}
-
-if( !isset( $sfw_lic_nag ) || get_option( 'sfw_lic_nag' ) < '2' ) {
-	update_option( 'sfw_lic_nag', $sfw_lic_nag +1 );
-	add_action( 'admin_head', 'sfw_admin_head' );
-}
-
-
-/**********
-* Cron Jobs
-**********/
-	// Clean Spam
-	if( $sfw_options['clean_spam'] == "on" ) {
-		add_action ( 'admin_init', 'sfw_clean_spam_cron' );
-
-		function sfw_clean_spam_cron() {
-			if ( !wp_next_scheduled( 'sfw_clean_spam' ) ) {
-				wp_schedule_event( time(), 'hourly', 'sfw_clean_spam' );
-			}
-		}
-
-		add_action ( 'sfw_clean_spam', 'sfw_clean_spam_func' );
-
-		function sfw_clean_spam_func() {
-			global $sfw_cleanup;
-
-			$sfw_cleanup->delete_spam();
-		}
-	} elseif( $sfw_options['clean_spam'] == "off" ) {
-		$sfw_remove_spam_cron = wp_next_scheduled( 'sfw_clean_spam' );
-		wp_unschedule_event( $sfw_remove_spam_cron, 'sfw_clean_spam' );
-	}
-
-	// Clean Trackbacks
-	if( $sfw_options['clean_trackbacks'] == "on" ) {
-		add_action ( 'admin_init', 'sfw_clean_trackbacks_cron' );
-
-		function sfw_clean_trackbacks_cron() {
-			if ( !wp_next_scheduled( 'sfw_clean_trackbacks' ) ) {
-				wp_schedule_event( time(), 'hourly', 'sfw_clean_trackbacks' );
-			}
-		}
-
-		add_action ( 'sfw_clean_trackbacks', 'sfw_clean_trackbacks_func' );
-
-		function sfw_clean_trackbacks_func() {
-			global $sfw_cleanup;
-
-			$sfw_cleanup->delete_trackbacks();
-		}
-	} elseif( $sfw_options['clean_trackbacks'] == "off" ) {
-		$sfw_remove_trackback_cron = wp_next_scheduled( 'sfw_clean_trackbacks' );
-		wp_unschedule_event( $sfw_remove_trackback_cron, 'sfw_clean_trackbacks' );
-	}
-
-	// Clean Unapproved
-	if( $sfw_options['clean_unapproved'] == "on" ) {
-		add_action ( 'admin_init', 'sfw_clean_unapproved_cron' );
-
-		function sfw_clean_unapproved_cron() {
-			if ( !wp_next_scheduled( 'sfw_clean_unapproved' ) ) {
-				wp_schedule_event( time(), 'hourly', 'sfw_clean_unapproved' );
-			}
-		}
-
-		add_action ( 'sfw_clean_unapproved', 'sfw_clean_unapproved_func' );
-
-		function sfw_clean_unapproved_func() {
-			global $sfw_cleanup;
-
-			$sfw_cleanup->delete_unapproved();
-		}
-	} elseif( $sfw_options['clean_unapproved'] == "off" ) {
-		$sfw_remove_unapproved_cron = wp_next_scheduled( 'sfw_clean_unapproved' );
-		wp_unschedule_event( $sfw_remove_unapproved_cron, 'sfw_clean_unapproved' );
-	}
-/***************
-* Cron Jobs END
-***************/
-
+// Call the function to change password in custom fields when after each new comment is saved in the database.
+add_action('comment_post', 'sfw_new_comment_pass', 1);
 
 // For testing only
 function sfw_delete() {
+	global $wpdb;
+
 	delete_option( 'spam_free_wordpress' );
 	delete_option( 'sfw_close_pings_once' );
 	// Remove Cron Jobs
@@ -304,20 +165,15 @@ function sfw_delete() {
 	wp_unschedule_event( $sfw_remove_trackback_cron, 'sfw_clean_trackbacks' );
 	$sfw_remove_unapproved_cron = wp_next_scheduled( 'sfw_clean_unapproved' );
 	wp_unschedule_event( $sfw_remove_unapproved_cron, 'sfw_clean_unapproved' );
+
+	$sql =
+		"
+		DELETE FROM $wpdb->postmeta
+		WHERE meta_key
+		LIKE %s
+		";
+
+	$wpdb->query( $wpdb->prepare( $sql, 'sfw_pwd' ) );
 }
 
-//register_deactivation_hook( __FILE__, 'sfw_delete' );
-
-/*
-* For troubleshooting Unexpect Output errors
-* http://www.toddlahman.com/the-plugin-generated-x-characters-of-unexpected-output-during-activation/
-* Add the following code to a page that displays in the Admin dashboard, like the plugin settings page
-* <p><?php echo get_option( 'plugin_error' ); ?></p>
-*/
-function sfw_save_error() {
-    update_option( 'plugin_error',  ob_get_contents() );
-}
-
-//add_action( 'activated_plugin', 'sfw_save_error' );
-
-?>
+register_deactivation_hook( __FILE__, 'sfw_delete' );

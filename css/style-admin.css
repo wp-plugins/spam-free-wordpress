@@ -1,3 +1,4 @@
+.main h2, .sidebar h2 { color: black; background-color: #e5f3ff; padding: 8px 8px; margin-top: 5px; border: 4px solid #e6e6e6; }
 .main h3, .sidebar h3 { color: black; background-color: #e5f3ff; padding: 4px 8px; }
 .sidebar { border: 2px solid #e5f3ff; width: 20%; float: right; padding: 0px 10px 0px 10px; margin: 0px 10px 0px 0px; }
 .main { float: left; width: 70%; } 

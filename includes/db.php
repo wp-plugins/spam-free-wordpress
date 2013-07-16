@@ -23,7 +23,7 @@ function sfw_default() {
 			'clean_spam' => 'off',
 			'clean_trackbacks' => 'off',
 			'clean_unapproved' => 'off',
-			'legacy_pwd' => 'off',
+			'legacy_pwd' => 'on',
 			'nonce' => 'off'
 			);
 			update_option( 'spam_free_wordpress', $sfw_options );
@@ -32,13 +32,13 @@ function sfw_default() {
 			update_option( 'default_ping_status', 'closed' );
 			update_option( 'default_pingback_flag', '' );
 			}
-		
+
 		if( !get_option( 'sfw_spam_hits' ) ) {
 			update_option( 'sfw_spam_hits', '1' );
 		}
 	}
 }
-		
+
 
 // Since 1.8
 function sfw_upgrade_db() {
@@ -47,13 +47,13 @@ function sfw_upgrade_db() {
 		wp_die( SFW_WP_REQUIRED_MSG );
 	} else {
 		$sfw_options = get_option('spam_free_wordpress');
-				
+
 		if( isset( $sfw_options['blocklist_keys'] ) ) {
 			$sfw_options['bl_keys'] = $sfw_options['blocklist_keys'];
 		} else {
 			$sfw_options['bl_keys'] = '';
 		}
-				
+
 		if( isset( $sfw_options['toggle_stats_update'] ) ) {
 			$sfw_options['cf_spam_stats'] = $sfw_options['toggle_stats_update'];
 				if( $sfw_options['cf_spam_stats'] == 'disable' ) {
@@ -64,7 +64,7 @@ function sfw_upgrade_db() {
 		} else {
 			$sfw_options['cf_spam_stats'] = 'off';
 		}
-				
+
 		if( isset( $sfw_options['toggle_html'] ) ) {
 			$sfw_options['cf_html'] = $sfw_options['toggle_html'];
 				if( $sfw_options['cf_html'] == 'disable' ) {
@@ -75,7 +75,7 @@ function sfw_upgrade_db() {
 		} else {
 			$sfw_options['cf_html'] = 'on';
 		}
-				
+
 		if( isset( $sfw_options['remove_author_url_field'] ) ) {
 			$sfw_options['website_url'] = $sfw_options['remove_author_url_field'];
 			if( $sfw_options['website_url'] == 'disable' ) {
@@ -86,7 +86,7 @@ function sfw_upgrade_db() {
 		} else {
 			$sfw_options['website_url'] = 'on';
 		}
-				
+
 		if( isset( $sfw_options['remove_author_url'] ) ) {
 			$sfw_options['author_link'] = $sfw_options['remove_author_url'];
 			if( $sfw_options['author_link'] == 'disable' ) {
@@ -97,7 +97,7 @@ function sfw_upgrade_db() {
 		} else {
 			$sfw_options['author_link'] = 'on';
 		}
-				
+
 		if( isset( $sfw_options['ping_status'] ) ) {
 			$sfw_options['ping_status'] = $sfw_options['ping_status'];
 				if( $sfw_options['ping_status'] == 'closed' ) {
@@ -108,31 +108,31 @@ function sfw_upgrade_db() {
 		} else {
 			$sfw_options['ping_status'] = 'on';
 		}
-				
+
 		if( isset( $sfw_options['comment_form'] ) ) {
 			$sfw_options['comment_form'] = $sfw_options['comment_form'];
 		} else {
 			$sfw_options['comment_form'] = 'on';
 		}
-				
+
 		if( isset( $sfw_options['comment_form'] ) ) {
 			$sfw_options['comment_form'] = $sfw_options['comment_form'];
 		} else {
 			$sfw_options['comment_form'] = 'on';
 		}
-				
+
 		if( isset( $sfw_options['special_msg'] ) ) {
 			$sfw_options['cf_msg'] = $sfw_options['special_msg'];
 		} else {
 			$sfw_options['cf_msg'] = '';
 		}
-				
+
 		if( isset( $sfw_options['api_key'] ) ) {
 			$sfw_options['api_key'] = $sfw_options['api_key'];
 		} else {
 			$sfw_options['api_key'] = '';
 		}
-					
+
 		update_option( 'spam_free_wordpress', $sfw_options );
 	}
 }
@@ -144,7 +144,7 @@ function sfw_upgrade_db_clean_spam() {
 		wp_die( SFW_WP_REQUIRED_MSG );
 	} else {
 		$sfw_options = get_option('spam_free_wordpress');
-	
+
 		$oldver = $sfw_options;
 		$newver = array(
 			'clean_spam' => 'off',
@@ -152,9 +152,9 @@ function sfw_upgrade_db_clean_spam() {
 			'clean_unapproved' => 'off'
 			);
 		$mergever = array_merge( $oldver, $newver );
-	
+
 		update_option( 'spam_free_wordpress', $mergever );
-		
+
 	}
 }
 
@@ -166,15 +166,15 @@ function sfw_upgrade_db_legacy_pwd() {
 		wp_die( SFW_WP_REQUIRED_MSG );
 	} else {
 		$sfw_options = get_option('spam_free_wordpress');
-	
+
 		$oldver = $sfw_options;
 		$newver = array(
-			'legacy_pwd' => 'off'
+			'legacy_pwd' => 'on'
 			);
 		$mergever = array_merge( $oldver, $newver );
-	
+
 		update_option( 'spam_free_wordpress', $mergever );
-		
+
 	}
 }
 
@@ -203,5 +203,3 @@ function sfw_upgrade_db_nonce() {
 ********************************************/
 
 // http://xmouse.ithium.net/2004/removing-values-from-a-php-array
-
-?>

@@ -2,45 +2,35 @@
 Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
-Tested up to: 3.7
-Stable tag: 1.9.3
+Tested up to: 3.6
+Stable tag: 2.0
 Requires at least: 3.1
 
-Todd Lahman's comment spam blocking plugin that blocks 100% of the automated spam with zero false positives.
+Todd Lahman's comment spam blocking plugin that blocks automated spam with zero false positives.
 
 == Description ==
 
-Support is ONLY provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+To get bullet proof spam protection, and a lot more features, buy the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
 
-Spam Free WordPress is a comment spam blocking plugin that blocks 100% of the automated spam with zero false positives. 
+Spam Free WordPress is a comment spam blocking plugin that blocks automated spam with zero false positives.
 
-This plugin was born out of necessity in September of 2007. A comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of comment spam on the highest traffic blogs.
+This plugin was born out of necessity in September of 2007. A comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of comment spam on the highest traffic blogs when using the pro version [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Spam Free Wordpress has some limitations, but is perfect for small blogs.
 
 = Spam Free WordPress Features =
 
-This is the easiest comment spam plugin you'll ever use. Works right out of the box.
+The spam blocking contained in this free version is much weaker than that found in the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Over 430,000 blogs are getting 100% of their automated spam blocked by [Simple Comments](http://www.toddlahman.com/shop/simple-comments/), at least that's what the blog owners are telling us.
 
- 1. Automatically blocks 100% of automated comment spam
- 2. Local IP address blocklist for manual spam
- 3. Almost zero database load under the heaviest spam conditions.
- 4. Zero false positives
- 5. Option to strip HTML from comments
- 6. No CAPTCHA
- 7. Saves time and money by eliminating the need to empty the comment spam folder
- 8. Option to automatically delete comments marked as spam, trackbacks/pingbacks, and unapproved.
- 9. Hundreds of thousands of Spam Free Blogs and Counting!
- 
+ * Automatically blocks automated comment spam
+
 The plugin has the option to generate a custom comment list and comment form for themes that do not work automatically with the plugin.
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
 
 The comment form is secured in the background, so your readers just see your comment form.
 
-Read about how Spam Free WordPress works in detail on the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
-
 = About the Author =
 
-Todd Lahman is a [WordPress Consultant](http://www.toddlahman.com/hire-todd-lahman/), and a [Search Engine Optimization expert](http://www.toddlahman.com/hire-todd-lahman/).
+ [Todd Lahman](http://www.toddlahman.com/hire-todd-lahman/) is a WordPress and WooCommerce Developer.
 
 = Languages Supported =
 
@@ -56,43 +46,23 @@ Todd Lahman is a [WordPress Consultant](http://www.toddlahman.com/hire-todd-lahm
 * Swedish - Svenska (sv_SE)
 * Norwegian - (norsk)
 
-= Free License Key Required =
-
-P.S. [Free License Key](http://www.toddlahman.com/shop/spam-free-wordpress/) required for plugin support, and to activate advanced plugin features..
-
 == Installation ==
 
-Support is ONLY provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
+1. Plugins >> Add new
+2. Type in Spam Free Wordpress then click Search Plugins
+3. Install
 
-
-= WordPress 3.1 and Above =
-
-1. Upload to the /wp-content/plugins directory
-2. Activate
-3. Turn on the Spam Stats, and try to leave a comment to make sure it is working.
+There is also the pro version [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
 
 = Troubleshooting =
 
-See the [Spam Free Wordpress Support page](http://www.toddlahman.com/spam-free-wordpress/#troubleshooting) for troubleshooting information.
+If you have any problems they will be resolved if you buy [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). The complexities of a plugin like this were handled much differently in the pro version.
+
+There is no support for this free plugin, but there is support for [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
 
 == Frequently Asked Questions ==
 
-Support is ONLY provided at the [Spam Free WordPress](http://www.toddlahman.com/spam-free-wordpress/) homepage.
-
-= Is Spam Free Wordpress compatible with other comment spam plugins? =
-
-Yes, however, other comment spam plugins will cause false positives, so it is best to disable all of them, including Akismet.
-
-= Does this plugin work on WordPress Multisite? =
-
-Yes.
-
-= Do readers need to have Javascript enabled? =
-
-Yes.
-
-= My theme might not be working properly with the plugin. What should I do? =
-Get a free license key on [toddlahman.com](http://www.toddlahman.com/shop/spam-free-wordpress/), login to toddlahman.com, fill out the support form asking if you can send a copy of your theme for testing. Once support replies by email, you can attach your theme and send it to support.
+There is no support for this free plugin, but there is support for [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
 
 == Screenshots ==
 
@@ -102,11 +72,15 @@ Get a free license key on [toddlahman.com](http://www.toddlahman.com/shop/spam-f
 
 == Upgrade Notice ==
 
-= 1.9.3 =
+= 2.0 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 2.0 =
+
+* Removed free license offer from the plugin.
 
 = 1.9.3 =
 

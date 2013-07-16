@@ -12,21 +12,21 @@ Todd Lahman's comment spam blocking plugin that blocks automated spam with zero 
 
 To get bullet proof spam protection, and a lot more features, buy the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
 
+Want to sell plugins and themes, and provide customers with automatic updates? Try our [WordPress Automatic Update API Manager for WooCommerce](http://www.toddlahman.com/shop/wordpress-automatic-update-api-manager/).
+
 Spam Free WordPress is a comment spam blocking plugin that blocks automated spam with zero false positives.
 
 This plugin was born out of necessity in September of 2007. A comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of comment spam on the highest traffic blogs when using the pro version [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Spam Free Wordpress has some limitations, but is perfect for small blogs.
 
 = Spam Free WordPress Features =
 
-The spam blocking contained in this free version is much weaker than that found in the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Over 430,000 blogs are getting 100% of their automated spam blocked by [Simple Comments](http://www.toddlahman.com/shop/simple-comments/), at least that's what the blog owners are telling us.
+The spam blocking contained in this free version is much weaker than that found in the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Over 450,000 blogs are getting 100% of their automated spam blocked by [Simple Comments](http://www.toddlahman.com/shop/simple-comments/), at least that's what the blog owners are telling us.
 
  * Automatically blocks automated comment spam
 
 The plugin has the option to generate a custom comment list and comment form for themes that do not work automatically with the plugin.
 
 Comment spam damages a blog's SEO ranking. This plugin preserves your SEO.
-
-The comment form is secured in the background, so your readers just see your comment form.
 
 = About the Author =
 

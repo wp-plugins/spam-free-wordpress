@@ -11,7 +11,7 @@ function sfw_default() {
 			wp_die( SFW_WP_REQUIRED_MSG );
 		} else {
 			$sfw_options = array(
-			'comment_form' => 'on',
+			'comment_form' => 'off',
 			'legacy_pwd' => 'on'
 			);
 			update_option( 'spam_free_wordpress', $sfw_options );

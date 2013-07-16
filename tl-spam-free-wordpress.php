@@ -57,6 +57,7 @@ if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), SF
 // Set the default settings if not already set
 if( !get_option( 'spam_free_wordpress' ) ) {
 	sfw_default();
+	update_option('sfw_new_install', true);
 }
 
 // Runs add_default_data function above when plugin activated
@@ -125,6 +126,8 @@ function sfw_delete() {
 
 	delete_option( 'spam_free_wordpress' );
 	delete_option( 'sfw_close_pings_once' );
+	delete_option( 'sfw_new_install' );
+
 	// Remove Cron Jobs
 	$sfw_remove_spam_cron = wp_next_scheduled( 'sfw_clean_spam' );
 	wp_unschedule_event( $sfw_remove_spam_cron, 'sfw_clean_spam' );
@@ -144,3 +147,5 @@ function sfw_delete() {
 }
 
 register_deactivation_hook( __FILE__, 'sfw_delete' );
+
+add_action('init', 'sfw_welcome');

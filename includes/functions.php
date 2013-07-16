@@ -100,3 +100,11 @@ function sfw_load_styles() {
 		wp_enqueue_style( 'sfw-comment-style' );
 	}
 }
+
+function sfw_welcome() {
+	if ( get_option('sfw_new_install') ) {
+		delete_option('sfw_new_install');
+		wp_redirect( ( ( is_ssl() || force_ssl_admin() || force_ssl_login() ) ? str_replace( 'http:', 'https:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) : str_replace( 'https:', 'http:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) ) );
+		exit;
+	}
+}

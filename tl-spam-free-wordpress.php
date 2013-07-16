@@ -62,41 +62,8 @@ if( !get_option( 'spam_free_wordpress' ) ) {
 // Runs add_default_data function above when plugin activated
 register_activation_hook( __FILE__, 'sfw_default' );
 
-/*
-* Since 1.8
-* Upgrade database
-*/
 if( get_option('spam_free_wordpress') ) {
 	$sfw_options = get_option('spam_free_wordpress');
-
-	if ( !$sfw_options['legacy_pwd'] ) {
-		sfw_upgrade_db_legacy_pwd();
-	}
-}
-
-//Pingbacks and trackbacks are closed automatically one time only
-if( get_option( 'sfw_close_pings_once' ) ) {
-	$sfw_close_pings_once = get_option( 'sfw_close_pings_once' );
-}
-
-// Close or open pingbacks depending on settings
-global $pagenow;
-if( !isset( $sfw_close_pings_once ) ) {
-	if ( $pagenow == 'options-discussion.php' || $pagenow == 'edit.php' || $pagenow == 'post.php' ) {
-		sfw_close_pingbacks();
-		update_option( 'sfw_close_pings_once', true );
-	}
-}
-
-// Close or open pingbacks depending on settings
-if( $sfw_options['ping_status'] == 'on' && get_option( 'default_ping_status') == 'open' ) {
-	sfw_close_pingbacks();
-} elseif( $sfw_options['ping_status'] == 'on' && get_option( 'default_pingback_flag') == '1' ) {
-	sfw_close_pingbacks();
-} elseif( $sfw_options['ping_status'] == 'off' && get_option( 'default_ping_status') == 'closed' ) {
-	sfw_open_pingbacks();
-} elseif( $sfw_options['ping_status'] == 'off' && get_option( 'default_pingback_flag') == '' ) {
-	sfw_open_pingbacks();
 }
 
 // settings action link

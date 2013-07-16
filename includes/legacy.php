@@ -6,5 +6,3 @@
 function tl_spam_free_wordpress_comments_form() {
 	sfw_comment_form_extra_fields();
 }
-
-?>

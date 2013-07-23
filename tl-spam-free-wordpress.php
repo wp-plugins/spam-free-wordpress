@@ -153,4 +153,8 @@ register_deactivation_hook( __FILE__, 'sfw_delete' );
 
 add_action( 'admin_init', 'sfw_welcome' );
 
-add_action( 'admin_head', 'sfw_coupon' );
+global $pagenow;
+
+if ( $pagenow == 'options-general.php' ) {
+	add_action( 'admin_notices', 'sfw_coupon' );
+}

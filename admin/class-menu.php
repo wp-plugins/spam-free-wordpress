@@ -50,7 +50,7 @@ if( !class_exists('SFW_MENU' ) ) {
 				// Special offer notice
 				if ( isset( $_GET['notice'] ) ) {
 					if ( $_GET['notice'] == 1 ) {
-						update_option('sfwp_july_coupon', 1);
+						update_option( 'sfwp_july_coupon', 1 );
 					}
 				}
 		}

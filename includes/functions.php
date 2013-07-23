@@ -102,6 +102,16 @@ function sfw_load_styles() {
 }
 
 function sfw_welcome() {
+	// New install redirect to settings page
+	if ( get_option( 'sfw_new_install' ) ) {
+		delete_option( 'sfw_new_install' );
+		wp_redirect( ( ( is_ssl() || force_ssl_admin() || force_ssl_login() ) ? str_replace( 'http:', 'https:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) : str_replace( 'https:', 'http:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) ) );
+		exit;
+	}
+}
+
+
+function sfw_coupon() {
 	// Special offer
 	if ( SFW_COUPON_TIME > time() && ! get_option( 'sfwp_july_coupon' ) ) {
 		?>
@@ -113,12 +123,5 @@ function sfw_welcome() {
 			</div>
 		</div>
 		<?php
-	}
-
-	// New install redirect to settings page
-	if ( get_option( 'sfw_new_install' ) ) {
-		delete_option( 'sfw_new_install' );
-		wp_redirect( ( ( is_ssl() || force_ssl_admin() || force_ssl_login() ) ? str_replace( 'http:', 'https:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) : str_replace( 'https:', 'http:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) ) );
-		exit;
 	}
 }

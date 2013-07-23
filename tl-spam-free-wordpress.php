@@ -129,7 +129,7 @@ function sfw_delete() {
 	delete_option( 'spam_free_wordpress' );
 	delete_option( 'sfw_close_pings_once' );
 	delete_option( 'sfw_new_install' );
-	delete_option( 'sfw_july_coupon' );
+	delete_option( 'sfwp_july_coupon' );
 
 	// Remove Cron Jobs
 	$sfw_remove_spam_cron = wp_next_scheduled( 'sfw_clean_spam' );
@@ -152,3 +152,5 @@ function sfw_delete() {
 register_deactivation_hook( __FILE__, 'sfw_delete' );
 
 add_action( 'admin_init', 'sfw_welcome' );
+
+add_action( 'admin_head', 'sfw_coupon' );

@@ -102,8 +102,22 @@ function sfw_load_styles() {
 }
 
 function sfw_welcome() {
-	if ( get_option('sfw_new_install') ) {
-		delete_option('sfw_new_install');
+	// Special offer
+	if ( SFW_COUPON_TIME > time() && ! get_option( 'sfwp_july_coupon' ) ) {
+		?>
+		<div class="updated">
+			<div>
+				<h3><?php _e( 'Simple Comments is the pro version replacement for Spam Free Wordpress.', 'spam-free-wordpress' ); ?></h3>
+				<p><?php _e( '<strong>Get bullet proof spam protection, more features, and support with <strong><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank">Simples Comments</a></strong>.', 'spam-free-wordpress' ); ?></p>
+				<p><?php _e( 'Until July 31 get <span style="border-bottom:2px solid red; padding:2px;">20% OFF</span> Simple Comments. Use COUPON CODE <span style="border:2px dashed red; padding:5px;">SFWPJUL</span>. <a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank">Learn more</a>. <p style="text-align:right"><a href="options-general.php?page=sfw_dashboard&notice=1">hide</a></p>', 'spam-free-wordpress' ); ?></p>
+			</div>
+		</div>
+		<?php
+	}
+
+	// New install redirect to settings page
+	if ( get_option( 'sfw_new_install' ) ) {
+		delete_option( 'sfw_new_install' );
 		wp_redirect( ( ( is_ssl() || force_ssl_admin() || force_ssl_login() ) ? str_replace( 'http:', 'https:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) : str_replace( 'https:', 'http:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) ) );
 		exit;
 	}

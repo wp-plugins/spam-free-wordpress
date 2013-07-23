@@ -47,6 +47,12 @@ if( !class_exists('SFW_MENU' ) ) {
 				</form>
 			</div>
 			<?php
+				// Special offer notice
+				if ( isset( $_GET['notice'] ) ) {
+					if ( $_GET['notice'] == 1 ) {
+						update_option('sfwp_july_coupon', 1);
+					}
+				}
 		}
 
 
@@ -57,8 +63,7 @@ if( !class_exists('SFW_MENU' ) ) {
 			// Comment Form
 			add_settings_section( 'comment_form', 'Comment Form', array( $this, 'checkbox_text' ), 'sfw_dashboard' );
 			$checkboxes = array(
-									'Generate Comment Form',
-									'Password Fields',
+									'Generate Comment Form'
 								);
 			foreach( $checkboxes as $box ) {
 				add_settings_field( $box, $box, array( $this, 'checkboxes' ), 'sfw_dashboard', 'comment_form', $box );
@@ -79,7 +84,6 @@ if( !class_exists('SFW_MENU' ) ) {
 			$options = get_option( 'spam_free_wordpress' );
 
 			$options['comment_form'] = ( $input['comment_form'] == 'on' ? 'on' : 'off' );
-			$options['legacy_pwd'] = ( $input['legacy_pwd'] == 'on' ? 'on' : 'off' );
 
 			return $options;
 		}
@@ -97,13 +101,6 @@ if( !class_exists('SFW_MENU' ) ) {
 					<span class="description" style="padding-left:10px;"><?php _e( 'Generates a comment form if theme is not compatible with SFW.', 'spam-free-wordpress' ); ?></span>
 					<?php
 					break;
-				case 'Password Fields':
-					?>
-					<input type="checkbox" id="legacy_pwd" name="spam_free_wordpress[legacy_pwd]" value="on" <?php checked( $options['legacy_pwd'], 'on' ); ?> />
-					<span class="description" style="padding-left:10px;"><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Simple Comments', 'spam-free-wordpress' ); ?></a>
-					<?php _e( " provides nearly perfect spam protection!", 'spam-free-wordpress' ); ?></span>
-					<?php
-					break;
 			}
 		}
 
@@ -116,18 +113,13 @@ if( !class_exists('SFW_MENU' ) ) {
 		// displays sidebar
 		function sfw_sidebar() {
 			?>
-			<h2><?php _e( 'Go Pro with Simple Comments', 'spam-free-wordpress' ); ?></h2>
+			<h2><?php _e( 'Simple Comments', 'spam-free-wordpress' ); ?></h2>
 			<ul class="celist">
-				<h3>Get bullet proof spam protection, and a lot more features, with Simple Comments.</h3>
+				<h3>Get bullet proof spam protection, a lot more features, and support with Simple Comments.</h3>
+				<?php if ( SFW_COUPON_TIME > time() ) { ?>
+					<h4>Until July 31 get 20% OFF Simple Comments. Use COUPON CODE <span style="padding:1px; background-color: #e5f3ff">SFWPJUL</span>. <a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank">Learn more</a>.</h4>
+				<?php } ?>
 				<li><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Simple Comments', 'spam-free-wordpress' ); ?></a></li>
-			</ul>
-			<h3><?php _e( 'Sell Plugins and Themes', 'spam-free-wordpress' ); ?></h3>
-			<ul class="celist">
-				<li><a href="http://www.toddlahman.com/shop/woocommerce-plugin-and-theme-update-api-manager/" target="_blank"><?php _e( 'WooCommerce Plugin and Theme Update API Manager', 'spam-free-wordpress' ); ?></a></li>
-			</ul>
-			<h3><?php _e( 'Get More Blog Traffic', 'spam-free-wordpress' ); ?></h3>
-			<ul class="celist">
-				<li><a href="http://www.toddlahman.com/shop/search-engine-ping/" target="_blank"><?php _e( 'Search Engine Ping', 'spam-free-wordpress' ); ?></a></li>
 			</ul>
 			<?php
 		}

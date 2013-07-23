@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spam Free Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-15 22:33-0800\n"
-"PO-Revision-Date: 2013-07-15 22:33-0800\n"
+"POT-Creation-Date: 2013-07-22 20:51-0800\n"
+"PO-Revision-Date: 2013-07-22 20:51-0800\n"
 "Last-Translator: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language-Team: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language: en_US\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid " requires at least WordPress 3.1. Sorry! Click back button to continue."
 msgstr ""
 
-#: tl-spam-free-wordpress.php:111
+#: tl-spam-free-wordpress.php:81
 msgid "Settings"
 msgstr ""
 
-#: tl-spam-free-wordpress.php:112
+#: tl-spam-free-wordpress.php:82
 msgid "Donate"
 msgstr ""
 
@@ -38,36 +38,12 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: admin/class-menu.php:97
+#: admin/class-menu.php:101
 msgid "Generates a comment form if theme is not compatible with SFW."
 msgstr ""
 
-#: admin/class-menu.php:103 admin/class-menu.php:122
+#: admin/class-menu.php:116 admin/class-menu.php:122
 msgid "Simple Comments"
-msgstr ""
-
-#: admin/class-menu.php:104
-msgid " provides nearly perfect spam protection!"
-msgstr ""
-
-#: admin/class-menu.php:119
-msgid "Go Pro with Simple Comments"
-msgstr ""
-
-#: admin/class-menu.php:124
-msgid "Sell Plugins and Themes"
-msgstr ""
-
-#: admin/class-menu.php:126
-msgid "WooCommerce Plugin and Theme Update API Manager"
-msgstr ""
-
-#: admin/class-menu.php:128
-msgid "Get More Blog Traffic"
-msgstr ""
-
-#: admin/class-menu.php:130
-msgid "Search Engine Ping"
 msgstr ""
 
 #: includes/class-comment-form.php:95
@@ -134,4 +110,25 @@ msgstr ""
 
 #: includes/functions.php:62
 msgid "Click back and type in the correct password. (Spam Free Wordpress)"
+msgstr ""
+
+#: includes/functions.php:110
+msgid "Simple Comments is the pro version replacement for Spam Free Wordpress."
+msgstr ""
+
+#: includes/functions.php:111
+msgid ""
+"<strong>Get bullet proof spam protection, more features, and support with "
+"<strong><a href=\"http://www.toddlahman.com/shop/simple-comments/\" target="
+"\"_blank\">Simples Comments</a></strong>."
+msgstr ""
+
+#: includes/functions.php:112
+msgid ""
+"Until July 31 get <span style=\"border-bottom:2px solid red; padding:2px;"
+"\">20% OFF</span> Simple Comments. Use COUPON CODE <span style=\"border:2px "
+"dashed red; padding:5px;\">SFWPJUL</span>. <a href=\"http://www.toddlahman."
+"com/shop/simple-comments/\" target=\"_blank\">Learn more</a>. <p style="
+"\"text-align:right\"><a href=\"options-general.php?"
+"page=sfw_dashboard&notice=1\">hide</a></p>"
 msgstr ""

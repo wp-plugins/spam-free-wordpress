@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
 Description: Comment spam blocking plugin that blocks automated spam with zero false positives.
-Version: 2.0
+Version: 2.1
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '2.0' );
+	define( 'SFW_VERSION', '2.1' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -32,6 +32,8 @@ if(!defined( 'SFW_IS_ADMIN' ) )
     define( 'SFW_IS_ADMIN',  is_admin() );
 if(!defined( 'SFW_HOME_URL' ) )
     define( 'SFW_HOME_URL',  'http://www.toddlahman.com/spam-free-wordpress/' );
+if(!defined( 'SFW_COUPON_TIME' ) )
+    define( 'SFW_COUPON_TIME',  1375315199 ); // July 31, 2013
 
 // Ready for translation
 load_plugin_textdomain( 'spam-free-wordpress', false, dirname( plugin_basename( __FILE__ ) ) . '/translations' );
@@ -57,7 +59,7 @@ if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), SF
 // Set the default settings if not already set
 if( !get_option( 'spam_free_wordpress' ) ) {
 	sfw_default();
-	update_option('sfw_new_install', true);
+	update_option( 'sfw_new_install', true );
 }
 
 // Runs add_default_data function above when plugin activated
@@ -148,4 +150,4 @@ function sfw_delete() {
 
 register_deactivation_hook( __FILE__, 'sfw_delete' );
 
-add_action('init', 'sfw_welcome');
+add_action( 'init', 'sfw_welcome' );

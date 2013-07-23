@@ -12,6 +12,9 @@ delete_option( 'sfw_version' );
 delete_option( 'sfw_close_pings_once' );
 delete_option( 'sfw_run_once' );
 delete_option( 'sfw_stats_reminder' );
+delete_option( 'sfw_new_install' );
+delete_option( 'sfw_july_coupon' );
+
 
 // Delete postmeta meta_key sfw_comment_form_password database entries, since we don't use them anymore
 $sfw_allposts = get_posts( 'numberposts=-1&post_type=post&post_status=any' );

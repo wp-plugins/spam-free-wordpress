@@ -27,7 +27,7 @@ if( !class_exists('SFW_MENU' ) ) {
 				<?php screen_icon(); ?>
 				<h2><?php _e( 'Spam Free Wordpress', 'spam-free-wordpress' ); ?></h2>
 				<form action='options.php' method='post'>
-				<?php settings_fields( 'spam_free_wordpress' ); ?>
+				<?php settings_fields( 'spam_free_wp' ); ?>
 
 				<div class="main">
 					<?php
@@ -47,7 +47,9 @@ if( !class_exists('SFW_MENU' ) ) {
 				</form>
 			</div>
 			<?php
-				// Special offer notice
+				/**
+				 * Special offer notice
+				 */
 				if ( isset( $_GET['notice'] ) ) {
 					if ( $_GET['notice'] == 1 ) {
 						update_option( 'sfwp_july_coupon', 1 );
@@ -58,11 +60,12 @@ if( !class_exists('SFW_MENU' ) ) {
 
 		// Register settings
 		function load_settings() {
-			register_setting( 'spam_free_wordpress', 'spam_free_wordpress', array( $this, 'validate_options' ) );
+			register_setting( 'spam_free_wp', 'spam_free_wp', array( $this, 'validate_options' ) );
 
 			// Comment Form
 			add_settings_section( 'comment_form', 'Comment Form', array( $this, 'checkbox_text' ), 'sfw_dashboard' );
 			$checkboxes = array(
+									'Spam Stats',
 									'Generate Comment Form'
 								);
 			foreach( $checkboxes as $box ) {
@@ -81,9 +84,19 @@ if( !class_exists('SFW_MENU' ) ) {
 		function validate_options( $input ) {
 
 			// Load existing options, validate, and update with changes from input before returning
-			$options = get_option( 'spam_free_wordpress' );
+			$options = get_option( 'spam_free_wp' );
 
-			$options['comment_form'] = ( $input['comment_form'] == 'on' ? 'on' : 'off' );
+			if ( isset( $input['spam_stats'] ) && $input['spam_stats'] == 'on' ) {
+				$options['spam_stats'] = 'on';
+			} else {
+				$options['spam_stats'] = 'off';
+			}
+
+			if ( isset( $input['comment_form'] ) && $input['comment_form'] == 'on' ) {
+				$options['comment_form'] = 'on';
+			} else {
+				$options['comment_form'] = 'off';
+			}
 
 			return $options;
 		}
@@ -92,12 +105,18 @@ if( !class_exists('SFW_MENU' ) ) {
 		// Outputs Comment Form checkboxes
 		function checkboxes( $box ) {
 			global $sfw_tool_tips;
-			$options = get_option( 'spam_free_wordpress' );
+			$options = get_option( 'spam_free_wp' );
 
 			switch ( $box ) {
+				case 'Spam Stats':
+					?>
+					<input type="checkbox" id="spam_stats" name="spam_free_wp[spam_stats]" value="on" <?php checked( $options['spam_stats'], 'on' ); ?> />
+					<span class="description" style="padding-left:10px;"><?php _e( 'See how much spam has been blocked. Appears on comment form.', 'spam-free-wordpress' ); ?></span>
+					<?php
+					break;
 				case 'Generate Comment Form':
 					?>
-					<input type="checkbox" id="comment_form" name="spam_free_wordpress[comment_form]" value="on" <?php checked( $options['comment_form'], 'on' ); ?> />
+					<input type="checkbox" id="comment_form" name="spam_free_wp[comment_form]" value="on" <?php checked( $options['comment_form'], 'on' ); ?> />
 					<span class="description" style="padding-left:10px;"><?php _e( 'Generates a comment form if theme is not compatible with SFW.', 'spam-free-wordpress' ); ?></span>
 					<?php
 					break;

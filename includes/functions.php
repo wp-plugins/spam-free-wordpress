@@ -37,6 +37,14 @@ function sfw_comment_form_extra_fields() {
 	// If the reader is logged in don't require password for comments.php
 	if( !is_user_logged_in() ) {
 
+		echo '<!-- ' . number_format_i18n( get_option( 'sfw_spam_hits' ) );
+		_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
+		echo 'Spam Free Wordpress';
+		_e( ' version ', 'spam-free-wordpress' );
+		echo SFW_VERSION;
+		_e( ' located at ', 'spam-free-wordpress' );
+		echo "http://www.toddlahman.com/shop/simple-comments/ -->\n";
+
 		if( $sfw_options['legacy_pwd'] == 'on' ) {
 		// Reader must enter this password manually on the comment form
 		echo "<p><input type='text' value='".$pwd."' onclick='this.select()' size='20' />
@@ -44,8 +52,14 @@ function sfw_comment_form_extra_fields() {
 		echo "<p><input type='text' name='passthis' id='passthis' value='' size='20' />
 		<b>* Type Or Paste Password Here *</b></p>";
 		}
-
 	}
+
+	if( $sfw_options['spam_stats'] == 'on' ) {
+		echo '<p>' . number_format_i18n( get_option('sfw_spam_hits' ) );
+		_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
+		echo '<a href="http://www.toddlahman.com/shop/simple-comments/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>'."\n";
+	}
+
 }
 
 // Function for wp-comments-post.php file located in the root Wordpress directory. The same directory as the wp-config.php file.
@@ -103,8 +117,8 @@ function sfw_load_styles() {
 
 function sfw_welcome() {
 	// New install redirect to settings page
-	if ( get_option( 'sfw_new_install' ) ) {
-		delete_option( 'sfw_new_install' );
+	if ( get_option( 'sfw_new_install2_2' ) ) {
+		delete_option( 'sfw_new_install2_2' );
 		wp_redirect( ( ( is_ssl() || force_ssl_admin() || force_ssl_login() ) ? str_replace( 'http:', 'https:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) : str_replace( 'https:', 'http:', admin_url( 'options-general.php?page=sfw_dashboard' ) ) ) );
 		exit;
 	}

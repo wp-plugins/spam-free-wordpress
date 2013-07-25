@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Spam Free Wordpress
-Plugin URI: http://www.toddlahman.com/spam-free-wordpress/
+Plugin URI: http://www.toddlahman.com/shop/simple-comments/
 Description: Comment spam blocking plugin that blocks automated spam with zero false positives.
-Version: 2.2
+Version: 2.2.1
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,7 +17,7 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '2.2' );
+	define( 'SFW_VERSION', '2.2.1' );
 if ( !defined('SFW_WP_REQUIRED') )
 	define( 'SFW_WP_REQUIRED', '3.1' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
@@ -31,7 +31,7 @@ if (!defined('SFW_BASENAME') )
 if(!defined( 'SFW_IS_ADMIN' ) )
     define( 'SFW_IS_ADMIN',  is_admin() );
 if(!defined( 'SFW_HOME_URL' ) )
-    define( 'SFW_HOME_URL',  'http://www.toddlahman.com/spam-free-wordpress/' );
+    define( 'SFW_HOME_URL',  'http://www.toddlahman.com/shop/simple-comments/' );
 if(!defined( 'SFW_COUPON_TIME' ) )
     define( 'SFW_COUPON_TIME',  1375315199 ); // July 31, 2013
 
@@ -56,17 +56,29 @@ if ( get_option('sfw_version') && version_compare( get_option('sfw_version'), SF
 	update_option( 'sfw_version', SFW_VERSION );
 }
 
-// Set the default settings if not already set
-if( !get_option( 'spam_free_wordpress' ) ) {
+/**
+ * Set the default settings if not already set
+ * Changed default database key
+ * @since 2.2.1
+ */
+if( !get_option( 'spam_free_wp' ) ) {
 	sfw_default();
-	update_option( 'sfw_new_install', true );
+	update_option( 'sfw_new_install2_2', true );
 }
 
 // Runs add_default_data function above when plugin activated
 register_activation_hook( __FILE__, 'sfw_default' );
 
-if( get_option('spam_free_wordpress') ) {
-	$sfw_options = get_option('spam_free_wordpress');
+if( get_option('spam_free_wp') ) {
+	$sfw_options = get_option('spam_free_wp');
+}
+
+/**
+ * Remove old default settings before 2.0
+ * @since 2.2.1
+ */
+if( get_option( 'spam_free_wordpress' ) ) {
+	delete_option( 'spam_free_wordpress' );
 }
 
 // settings action link
@@ -127,9 +139,11 @@ function sfw_delete() {
 	global $wpdb;
 
 	delete_option( 'spam_free_wordpress' );
+	delete_option( 'spam_free_wp' );
 	delete_option( 'sfw_close_pings_once' );
-	delete_option( 'sfw_new_install' );
 	delete_option( 'sfwp_july_coupon' );
+	delete_option( 'sfw_new_install' );
+	delete_option( 'sfw_new_install2_2' );
 
 	// Remove Cron Jobs
 	$sfw_remove_spam_cron = wp_next_scheduled( 'sfw_clean_spam' );

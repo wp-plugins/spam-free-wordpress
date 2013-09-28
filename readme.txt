@@ -3,24 +3,35 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.6
-Stable tag: trunk
+Stable tag: 2.2.2
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks automated spam with zero false positives.
 
 == Description ==
 
-To get bullet proof spam protection, and a lot more features, buy the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
+= Powerful Form Protection Available from Simple Comments =
 
-Want to sell plugins and themes, and provide customers with automatic updates? Try our [WordPress Automatic Update API Manager for WooCommerce](http://www.toddlahman.com/shop/wordpress-automatic-update-api-manager/).
+= Simple Comments Protects the Following Forms =
+
+* WordPress Comment form (Spambot protection)
+* Gravity Forms (Spambot protection)
+* Contact Form 7 (Spambot protection)
+* WordPress login form (Hackbot protection)
+* WordPress user registration form (Hackbot protection)
+* WooCommerce Product Review form (Spambot protection)
+* WooCommerce Product Enquiry Form (Spambot protection)
+* Simple Comments Generated Forms Coming Soon ...
+
+[Learn More About Simple Comments](http://www.toddlahman.com/shop/simple-comments/)
+
+Spam Free Wordpress provides weak comment spam protection for small blogs. If spam is getting past Spam Free Wordpress you can upgrade to the extremely powerful protection provided by Simple Comments. New features are being added to Simple Comments as development progresses. Once you've tried Simple Comments, you'll wonder why you didn't try it sooner.
 
 Spam Free WordPress is a comment spam blocking plugin that blocks automated spam with zero false positives.
 
-This plugin was born out of necessity in September of 2007. A comment spam fighting plugin was needed that could handle huge visitor traffic, and huge spam attacks. Today the plugin can scale to handle any amount of comment spam on the highest traffic blogs when using the pro version [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Spam Free Wordpress has some limitations, but is perfect for small blogs.
-
 = Spam Free WordPress Features =
 
-The spam blocking contained in this free version is much weaker than that found in the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Over 450,000 blogs are getting 100% of their automated spam blocked by [Simple Comments](http://www.toddlahman.com/shop/simple-comments/), at least that's what the blog owners are telling us.
+The spam blocking contained in this free version is much weaker than that found in the pro version called [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). Over 500,000 blogs are getting 100% of their automated spam blocked by [Simple Comments](http://www.toddlahman.com/shop/simple-comments/), at least that's what the blog owners are telling us.
 
  * Automatically blocks automated comment spam
 
@@ -72,11 +83,16 @@ There is no support for this free plugin, but there is support for [Simple Comme
 
 == Upgrade Notice ==
 
-= 2.2.1 =
+= 2.2.2 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 2.2.2 =
+
+* Cleaned up some code.
+* Added Simple Comments coupon.
 
 = 2.2.1 =
 

@@ -3,10 +3,10 @@
 .main h3.sb_purple, .sidebar h3.sb_purple { border-color: #ccc; background: #B8AFFC; }
 .main h3.sb_yellow, .sidebar h3.sb_yellow { border-color: #ccc; background: #FCF6AC; }
 .main h3.sb_pink, .sidebar h3.sb_pink { border-color: #ccc; background: #FCACEE; }
-.sidebar { /* border: 2px solid #e5f3ff; */ width: 20%; float: right; padding: 0px 10px 0px 10px; margin: 5px 10px 0px 0px; }
+.sidebar { /* border: 2px solid #e5f3ff; */ width: 25%; float: right; padding: 0px 10px 0px 10px; margin: 5px 10px 0px 0px; }
 .sidebar li.promo { padding-top: 3px; padding-bottom: 3px; font-size:150% }
 .main li.promo { padding-top: 3px; padding-bottom: 3px; font-size:150% }
-.main { float: left; width: 70%; }
+.main { float: left; width: 65%; }
 .sidebar ul.celist{ list-style-type: none; list-style-position:inside; text-align: center; border-right: 2px solid #ccc; border-left: 2px solid #ccc; -webkit-border-radius: 20px; border-radius: 20px; }
 .main ul.celist{ list-style-type: none; list-style-position:inside; text-align: center; border-right: 2px solid #ccc; border-left: 2px solid #ccc; -webkit-border-radius: 20px; border-radius: 20px; }
 .hidden {visibility:hidden;}

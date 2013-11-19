@@ -107,19 +107,24 @@ if( !class_exists('SFW_MENU' ) ) {
 
 		public function simple_comments_features_box() {
 			?>
+			<p><strong><?php _e( sprintf( 'Get 10%s Off the purchase of <a href="%s" target="_blank">Simple Comments</a> with Coupon Code WPSFW.', '%', esc_url( 'http://www.toddlahman.com/shop/simple-comments/' ) ), 'spam-free-wordpress' ); ?></strong></p>
+			<h3>Get Much More Powerful Form Protection from Simple Comments</h3>
+			<p><?php esc_html_e( 'Spam Free Wordpress is a free plugin that can help block automated comment spam. The protection is great for some small blogs, but other blogs that are targeted by spammers need something more powerful.', 'spam-free-wordpress' ); ?></p>
+			<p><?php _e( sprintf( '<a href="%s" target="_blank">Simple Comments</a> was created to provide powerful spambot and hackbot protection for nearly all the forms on a blog, including the comment form. The protection is so powerful we\'ve never had a customer complain that spam made it past Simple Comments, and yet no legitamate comments are ever blocked (no false positives), like you get from competing services like Akismet.', esc_url( 'http://www.toddlahman.com/shop/simple-comments/' ) ), 'spam-free-wordpress' ); ?></p>
+			<p><?php esc_html_e( "Spam can damage a blog's Search Engine Optimization (SEO) reputation, and credibility with customers and readers, so it is crtical to be sure spam never appears anywhere on your blog, especially if you are selling products, or care about your reputation.", 'spam-free-wordpress' ); ?></p>
+			<p><?php esc_html_e( "Simple Comments doesn't just protect against automated spambots, it also protects against automated hackbots. The consequences of a hacked blog range from your blog sending out messages to everyone who has an account, to negative posts and comments that appear to be from you, and can even cause your entire blog and database to be deleted. Simple Comment uses unique and innovative technology that is constantly improving to protect your blog.", 'spam-free-wordpress' ); ?></p>
 			<h3 class="sb_yellow"><?php _e( 'Simple Comments Protects the Following Forms', 'spam-free-wordpress' ); ?></h3>
 			<ul class="celist">
-				<li class="promo"><?php _e( 'WordPress Comment form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php _e( 'Gravity Forms (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php _e( 'Contact Form 7 (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php _e( 'WordPress login form (Hackbot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php _e( 'WordPress user registration form (Hackbot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php _e( 'WooCommerce Product Review form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php _e( 'WooCommerce Product Enquiry Form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php _e( 'Simple Comments Generated Forms Coming Soon ...', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WordPress Comment form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'Gravity Forms (Spambot protection)', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'Contact Form 7 (Spambot protection)', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WordPress login form (Hackbot protection)', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WordPress user registration form (Hackbot protection)', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WooCommerce Product Review form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WooCommerce Product Enquiry Form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'Simple Comments Generated Forms Coming Soon ...', 'spam-free-wordpress' ); ?></li>
 			</ul>
 			<h4><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Learn More About Simple Comments', 'spam-free-wordpress' ); ?></a></h4>
-			<p><?php _e( "Spam Free Wordpress provides weak comment spam protection for small blogs. If spam is getting past Spam Free Wordpress you can upgrade to the extremely powerful protection provided by Simple Comments. New features are being added to Simple Comments as development progresses. Once you've tried Simple Comments, you'll wonder why you didn't try it sooner.", 'spam-free-wordpress' ); ?></p>
 			<?php
 		}
 

@@ -3,7 +3,7 @@ Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
 Tested up to: 3.8
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 Requires at least: 3.1
 
 Todd Lahman's comment spam blocking plugin that blocks automated spam with zero false positives.
@@ -71,7 +71,7 @@ There is also the pro version [Simple Comments](http://www.toddlahman.com/shop/s
 
 = Troubleshooting =
 
-If you have any problems they will be resolved if you buy [Simple Comments](http://www.toddlahman.com/shop/simple-comments/). The complexities of a plugin like this were handled much differently in the pro version.
+[Simple Comments](http://www.toddlahman.com/shop/simple-comments/) can resolve many issues that Spam Free Wordpress cannot. Simple Comments also has commercial grade spambot and hackbot protection. Experimenting with free plugins can be time consuming, but Simple Comments is available when you realize you need powerful spam protection.
 
 There is no support for this free plugin, but there is support for [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
 
@@ -81,17 +81,22 @@ There is no support for this free plugin, but there is support for [Simple Comme
 
 == Screenshots ==
 
-1. Spam protection is invisible to the reader.
+1. Spam protection is invisible to the reader. Available in [Simple Comments](http://www.toddlahman.com/shop/simple-comments/) only.
 
 2. Spam Free Wordpress in action.
 
 == Upgrade Notice ==
 
-= 2.2.2 =
+= 2.2.3 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 2.2.3 =
+
+* Readme update.
+* CSS changes.
 
 = 2.2.2 =
 

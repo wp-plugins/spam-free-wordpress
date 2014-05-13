@@ -3,7 +3,7 @@
 Plugin Name: Spam Free Wordpress
 Plugin URI: http://www.toddlahman.com/shop/simple-comments/
 Description: Comment spam blocking plugin that blocks automated spam with zero false positives.
-Version: 2.2.3
+Version: 2.2.4
 Author: Todd Lahman, LLC
 Author URI: http://www.toddlahman.com/
 License: GPLv3
@@ -17,11 +17,11 @@ License: GPLv3
 
 
 if ( !defined('SFW_VERSION') )
-	define( 'SFW_VERSION', '2.2.3' );
+	define( 'SFW_VERSION', '2.2.4' );
 if ( !defined('SFW_WP_REQUIRED') )
-	define( 'SFW_WP_REQUIRED', '3.1' );
+	define( 'SFW_WP_REQUIRED', '3.5' );
 if (!defined('SFW_WP_REQUIRED_MSG'))
-	define( 'SFW_WP_REQUIRED_MSG', 'Spam Free Wordpress' . __( ' requires at least WordPress 3.1. Sorry! Click back button to continue.', 'spam-free-wordpress' ) );
+	define( 'SFW_WP_REQUIRED_MSG', 'Spam Free Wordpress' . __( ' requires at least WordPress 3.5. Sorry! Click back button to continue.', 'spam-free-wordpress' ) );
 if (!defined('SFW_URL') )
 	define( 'SFW_URL', plugin_dir_url(__FILE__) );
 if (!defined('SFW_PATH') )

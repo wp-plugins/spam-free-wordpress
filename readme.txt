@@ -2,9 +2,9 @@
 Contributors: toddlahman
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SFVH6PCCC6TLG
 Tags: spam, antispam, anti-spam, comments, comment, comment spam, rbl, remote proxy, blacklist, blocklist, spam free wordpress, Akismet, WP-SpamFree, Mollom, AVH First Defense, CAPTCHA, Defensio, block spam, spam free, Growmap, spambot, bot, NoSpamNX, Spammer Blocker, recaptcha, Bad Behavior, Antispam Bee, Block Spam By Math Reloaded, block spam, Sabre, ajax, W3 Total Cache, WP Super Cache, pingbacks, trackbacks, security, SI CAPTCHA Anti-Spam, comment love, comment luv, commentlove, commentluv
-Tested up to: 3.8
-Stable tag: 2.2.3
-Requires at least: 3.1
+Tested up to: 3.9.2
+Stable tag: 2.2.4
+Requires at least: 3.5
 
 Todd Lahman's comment spam blocking plugin that blocks automated spam with zero false positives.
 
@@ -12,19 +12,13 @@ Todd Lahman's comment spam blocking plugin that blocks automated spam with zero 
 
 = Special Offer for WordPress.org Members Only =
 
-Get 10% Off the purchase of [Simple Comments](http://www.toddlahman.com/shop/simple-comments/) with Coupon Code WPSFW
+Upgrade to [Simple Comments](https://www.toddlahman.com/shop/simple-comments/). 10% Off with Coupon Code WPSFW.
 
 = Get Much More Powerful Form Protection from Simple Comments =
 
-Spam Free Wordpress is a free plugin that can help block automated comment spam. The protection is great for some small blogs, but other blogs that are targeted by spammers need something more powerful.
+Spam Free Wordpress is a weak free spam protection plugin. Upgrade to Simple Comments for extremely powerful spambot and hackbot protection.
 
-[Simple Comments](http://www.toddlahman.com/shop/simple-comments/) was created to provide powerful spambot and hackbot protection for nearly all the forms on a blog, including the comment form. The protection is so powerful we've never had a customer complain that spam made it past Simple Comments, and yet no legitamate comments are ever blocked (no false positives), like you get from competing services like Akismet.
-
-Spam can damage a blog's Search Engine Optimization (SEO) reputation, and credibility with customers and readers, so it is crtical to be sure spam never appears anywhere on your blog, especially if you are selling products, or care about your reputation.
-
-Simple Comments doesn't just protect against automated spambots, it also protects against automated hackbots. The consequences of a hacked blog range from your blog sending out messages to everyone who has an account, to negative posts and comments that appear to be from you, and can even cause your entire blog and database to be deleted. Simple Comment uses unique and innovative technology that is constantly improving to protect your blog.
-
-= Simple Comments Protects the Following Forms =
+= Simple Comments Provides 99.9% - 100% Spambot and Hackbot Protection for the Following Forms =
 
 * WordPress Comment form (Spambot protection)
 * Gravity Forms (Spambot protection)
@@ -33,19 +27,25 @@ Simple Comments doesn't just protect against automated spambots, it also protect
 * WordPress user registration form (Hackbot protection)
 * WooCommerce Product Review form (Spambot protection)
 * WooCommerce Product Enquiry Form (Spambot protection)
-* Simple Comments Generated Forms Coming Soon ...
+* WooCommerce 2.1 Login Form (Hackbot protection is only available from Simple Comments)
+* WooCommerce 2.1 Registration Form (Spambot protection is only available from Simple Comments)
+* AffiliateWP (Spambot and Hackbot protection)
 
-[Learn More About Simple Comments](http://www.toddlahman.com/shop/simple-comments/)
+= Simple Comments Security Features =
 
-= Spam Free WordPress Features =
+* SEO Hacking Protection
+* Redirection Hacking Protection
+* DDOS Protection
+* XSS Protection
+* CSRF Protection
+* Brute Force Attack Protection
+* XML RPC Service Attack Protection
 
- * Automatically blocks automated comment spam
-
-The plugin has the option to generate a custom comment list and comment form for themes that do not work automatically with the plugin.
+[Learn More About Simple Comments](https://www.toddlahman.com/shop/simple-comments/), and read the customer reviews.
 
 = About the Author =
 
- [Todd Lahman](http://www.toddlahman.com/hire-todd-lahman/) is a WordPress and WooCommerce Developer.
+ [Todd Lahman](https://www.toddlahman.com/hire-todd-lahman/) is a WordPress and WooCommerce Developer.
 
 = Languages Supported =
 
@@ -67,31 +67,37 @@ The plugin has the option to generate a custom comment list and comment form for
 2. Type in Spam Free Wordpress then click Search Plugins
 3. Install
 
-There is also the pro version [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
+Upgrade to [Simple Comments](https://www.toddlahman.com/shop/simple-comments/). 10% Off with Coupon Code WPSFW.
 
 = Troubleshooting =
 
-[Simple Comments](http://www.toddlahman.com/shop/simple-comments/) can resolve many issues that Spam Free Wordpress cannot. Simple Comments also has commercial grade spambot and hackbot protection. Experimenting with free plugins can be time consuming, but Simple Comments is available when you realize you need powerful spam protection.
+[Simple Comments](https://www.toddlahman.com/shop/simple-comments/) can resolve many issues that Spam Free Wordpress cannot. Simple Comments also has commercial grade spambot and hackbot protection. Experimenting with free plugins can be time consuming, but Simple Comments is available when you realize you need powerful spam protection.
 
 There is no support for this free plugin, but there is support for [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
 
 == Frequently Asked Questions ==
 
-There is no support for this free plugin, but there is support for [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
+There is no support for this free plugin, but there is support for [Simple Comments](https://www.toddlahman.com/shop/simple-comments/).
+
+Upgrade to [Simple Comments](https://www.toddlahman.com/shop/simple-comments/). 10% Off with Coupon Code WPSFW.
 
 == Screenshots ==
 
-1. Spam protection is invisible to the reader. Available in [Simple Comments](http://www.toddlahman.com/shop/simple-comments/) only.
+1. Spam protection is invisible to the reader. Available in [Simple Comments](https://www.toddlahman.com/shop/simple-comments/) only.
 
 2. Spam Free Wordpress in action.
 
 == Upgrade Notice ==
 
-= 2.2.3 =
+= 2.2.4 =
 
 Upgrade immediately to keep your blog comment spam free.
 
 == Changelog ==
+
+= 2.2.4 =
+
+* Added esc_attr() to checkboxes for good measure.
 
 = 2.2.3 =
 

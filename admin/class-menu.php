@@ -62,10 +62,6 @@ if( !class_exists('SFW_MENU' ) ) {
 		public function load_settings() {
 			register_setting( 'spam_free_wp', 'spam_free_wp', array( $this, 'validate_options' ) );
 
-			add_settings_section( 'simple_comments', 'Powerful Form Protection Available from Simple Comments', array( $this, 'checkbox_text' ), 'sfw_dashboard' );
-			add_settings_field( 'simple_comments_features', '', array( $this, 'simple_comments_features_box' ), 'sfw_dashboard', 'simple_comments' );
-
-
 			// Comment Form
 			add_settings_section( 'comment_form', 'Comment Form', array( $this, 'checkbox_text' ), 'sfw_dashboard' );
 			$checkboxes = array(
@@ -105,29 +101,6 @@ if( !class_exists('SFW_MENU' ) ) {
 			return $options;
 		}
 
-		public function simple_comments_features_box() {
-			?>
-			<p><strong><?php _e( sprintf( 'Get 10%s Off the purchase of <a href="%s" target="_blank">Simple Comments</a> with Coupon Code WPSFW.', '%', esc_url( 'http://www.toddlahman.com/shop/simple-comments/' ) ), 'spam-free-wordpress' ); ?></strong></p>
-			<h3>Get Much More Powerful Form Protection from Simple Comments</h3>
-			<p><?php esc_html_e( 'Spam Free Wordpress is a free plugin that can help block automated comment spam. The protection is great for some small blogs, but other blogs that are targeted by spammers need something more powerful.', 'spam-free-wordpress' ); ?></p>
-			<p><?php _e( sprintf( '<a href="%s" target="_blank">Simple Comments</a> was created to provide powerful spambot and hackbot protection for nearly all the forms on a blog, including the comment form. The protection is so powerful we\'ve never had a customer complain that spam made it past Simple Comments, and yet no legitamate comments are ever blocked (no false positives), like you get from competing services like Akismet.', esc_url( 'http://www.toddlahman.com/shop/simple-comments/' ) ), 'spam-free-wordpress' ); ?></p>
-			<p><?php esc_html_e( "Spam can damage a blog's Search Engine Optimization (SEO) reputation, and credibility with customers and readers, so it is crtical to be sure spam never appears anywhere on your blog, especially if you are selling products, or care about your reputation.", 'spam-free-wordpress' ); ?></p>
-			<p><?php esc_html_e( "Simple Comments doesn't just protect against automated spambots, it also protects against automated hackbots. The consequences of a hacked blog range from your blog sending out messages to everyone who has an account, to negative posts and comments that appear to be from you, and can even cause your entire blog and database to be deleted. Simple Comment uses unique and innovative technology that is constantly improving to protect your blog.", 'spam-free-wordpress' ); ?></p>
-			<h3 class="sb_yellow"><?php _e( 'Simple Comments Protects the Following Forms', 'spam-free-wordpress' ); ?></h3>
-			<ul class="celist">
-				<li class="promo"><?php esc_html_e( 'WordPress Comment form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php esc_html_e( 'Gravity Forms (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php esc_html_e( 'Contact Form 7 (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php esc_html_e( 'WordPress login form (Hackbot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php esc_html_e( 'WordPress user registration form (Hackbot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php esc_html_e( 'WooCommerce Product Review form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php esc_html_e( 'WooCommerce Product Enquiry Form (Spambot protection)', 'spam-free-wordpress' ); ?></li>
-				<li class="promo"><?php esc_html_e( 'Simple Comments Generated Forms Coming Soon ...', 'spam-free-wordpress' ); ?></li>
-			</ul>
-			<h4><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Learn More About Simple Comments', 'spam-free-wordpress' ); ?></a></h4>
-			<?php
-		}
-
 		// Outputs Comment Form checkboxes
 		public function checkboxes( $box ) {
 			global $sfw_tool_tips;
@@ -136,13 +109,13 @@ if( !class_exists('SFW_MENU' ) ) {
 			switch ( $box ) {
 				case 'Spam Stats':
 					?>
-					<input type="checkbox" id="spam_stats" name="spam_free_wp[spam_stats]" value="on" <?php checked( $options['spam_stats'], 'on' ); ?> />
+					<input type="checkbox" id="spam_stats" name="spam_free_wp[spam_stats]" value="on" <?php checked( esc_attr( $options['spam_stats'] ), 'on' ); ?> />
 					<span class="description" style="padding-left:10px;"><?php _e( 'See how much spam has been blocked. Stats appear on the comment form.', 'spam-free-wordpress' ); ?></span>
 					<?php
 					break;
 				case 'Generate Comment Form':
 					?>
-					<input type="checkbox" id="comment_form" name="spam_free_wp[comment_form]" value="on" <?php checked( $options['comment_form'], 'on' ); ?> />
+					<input type="checkbox" id="comment_form" name="spam_free_wp[comment_form]" value="on" <?php checked( esc_attr( $options['comment_form'] ), 'on' ); ?> />
 					<span class="description" style="padding-left:10px;"><?php _e( 'Generates a comment form if theme is not compatible with SFW.', 'spam-free-wordpress' ); ?></span>
 					<?php
 					break;
@@ -158,10 +131,35 @@ if( !class_exists('SFW_MENU' ) ) {
 		// displays sidebar
 		public function sfw_sidebar() {
 			?>
-			<h3 class="sb_green"><?php _e( 'Get Powerful Anti-Spam Protection', 'simple-comments' ); ?></h3>
+			<h3 class="sb_green"><?php _e( 'Use This Coupon', 'simple-comments' ); ?></h3>
 			<ul class="celist">
-				<li class="promo"><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Simple Comments', 'simple-comments' ); ?></a></li>
+				<li class="promo"><a href="https://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Upgrade to Simple Comments', 'simple-comments' ); ?></a></li>
 				<li class="promo"><?php _e( '10% Off with Coupon Code WPSFW', 'simple-comments' ); ?></li>
+			</ul>
+			<h3 class="sb_yellow"><?php _e( 'Simple Comments Features', 'simple-comments' ); ?></h3>
+			<ul class="celist">
+				<li class="promo"><strong><u><?php esc_html_e( '99.9% - 100% Spambot and Hackbot protection for the following forms:', 'spam-free-wordpress' ); ?></u></strong></li>
+				<li class="promo"><?php esc_html_e( 'WordPress Comment form', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'Gravity Forms', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'Contact Form 7', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WordPress login form', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WordPress user registration form', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WooCommerce Product Review form', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WooCommerce Product Enquiry Form', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WooCommerce 2.1 and above Login Form', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'WooCommerce 2.1 and above Registration Form', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'AffiliateWP', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"></li>
+				<li class="promo"><strong><u><?php esc_html_e( 'Security Features:', 'spam-free-wordpress' ); ?></u></strong></li>
+				<li class="promo"><?php esc_html_e( 'SEO Hacking Protection', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'Redirection Hacking Protection', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'DDOS Protection', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'XSS Protection', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'CSRF Protection', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'Brute Force Attack Protection', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"><?php esc_html_e( 'XML RPC Service Attack Protection', 'spam-free-wordpress' ); ?></li>
+				<li class="promo"></li>
+				<li class="promo"><a href="https://www.toddlahman.com/shop/simple-comments/" target="_blank"><?php _e( 'Read more', 'simple-comments' ); ?></a></li>
 			</ul>
 			<?php
 		}

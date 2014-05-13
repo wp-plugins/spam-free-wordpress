@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Spam Free Wordpress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-27 22:24-0800\n"
-"PO-Revision-Date: 2013-09-27 22:24-0800\n"
+"POT-Creation-Date: 2014-05-12 17:37-0800\n"
+"PO-Revision-Date: 2014-05-12 17:37-0800\n"
 "Last-Translator: Todd Lahman <support@toddlahman.com>\n"
 "Language-Team: Todd Lahman <domainerjunk@gmail.com>\n"
 "Language: en_US\n"
@@ -15,96 +15,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;_e;__\n"
 "X-Poedit-Basepath: ../\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.5\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: tl-spam-free-wordpress.php:24
-msgid " requires at least WordPress 3.1. Sorry! Click back button to continue."
-msgstr ""
-
-#: tl-spam-free-wordpress.php:93
-msgid "Settings"
-msgstr ""
-
-#: tl-spam-free-wordpress.php:94
-msgid "Donate"
-msgstr ""
-
 #: admin/class-menu.php:28
+#, fuzzy
 msgid "Spam Free Wordpress"
-msgstr ""
+msgstr "Prévenir le spam de commentaires"
 
 #: admin/class-menu.php:40
+#, fuzzy
 msgid "Save Changes"
-msgstr ""
-
-#: admin/class-menu.php:110
-msgid "Simple Comments Protects the Following Forms"
-msgstr ""
-
-#: admin/class-menu.php:112
-msgid "WordPress Comment form (Spambot protection)"
-msgstr ""
+msgstr "Sauvegarder les changements"
 
 #: admin/class-menu.php:113
-msgid "Gravity Forms (Spambot protection)"
-msgstr ""
-
-#: admin/class-menu.php:114
-msgid "Contact Form 7 (Spambot protection)"
-msgstr ""
-
-#: admin/class-menu.php:115
-msgid "WordPress login form (Hackbot protection)"
-msgstr ""
-
-#: admin/class-menu.php:116
-msgid "WordPress user registration form (Hackbot protection)"
-msgstr ""
-
-#: admin/class-menu.php:117
-msgid "WooCommerce Product Review form (Spambot protection)"
-msgstr ""
-
-#: admin/class-menu.php:118
-msgid "WooCommerce Product Enquiry Form (Spambot protection)"
-msgstr ""
-
-#: admin/class-menu.php:119
-msgid "Simple Comments Generated Forms Coming Soon ..."
-msgstr ""
-
-#: admin/class-menu.php:121
-msgid "Learn More About Simple Comments"
-msgstr ""
-
-#: admin/class-menu.php:122
-msgid ""
-"Spam Free Wordpress provides weak comment spam protection for small blogs. "
-"If spam is getting past Spam Free Wordpress you can upgrade to the extremely "
-"powerful protection provided by Simple Comments. New features are being "
-"added to Simple Comments as development progresses. Once you've tried Simple "
-"Comments, you'll wonder why you didn't try it sooner."
-msgstr ""
-
-#: admin/class-menu.php:135
 msgid "See how much spam has been blocked. Stats appear on the comment form."
 msgstr ""
 
-#: admin/class-menu.php:141
+#: admin/class-menu.php:119
 msgid "Generates a comment form if theme is not compatible with SFW."
 msgstr ""
 
-#: admin/class-menu.php:156
-msgid "Get Powerful Anti-Spam Protection"
+#: admin/class-menu.php:134
+msgid "Use This Coupon"
 msgstr ""
 
-#: admin/class-menu.php:158
-msgid "Simple Comments"
-msgstr ""
+#: admin/class-menu.php:136
+#, fuzzy
+msgid "Upgrade to Simple Comments"
+msgstr "Simple Comments"
 
-#: admin/class-menu.php:159
+#: admin/class-menu.php:137
 msgid "10% Off with Coupon Code WPSFW"
+msgstr ""
+
+#: admin/class-menu.php:139
+#, fuzzy
+msgid "Simple Comments Features"
+msgstr "Simple Comments"
+
+#: admin/class-menu.php:160
+msgid "Read more"
 msgstr ""
 
 #: includes/class-comment-form.php:95
@@ -113,12 +64,14 @@ msgid "%1$s on %2$s <span class=\"says\">said:</span>"
 msgstr ""
 
 #: includes/class-comment-form.php:145
+#, fuzzy
 msgid "Name"
-msgstr ""
+msgstr "Le nom de l'auteur du logiciel."
 
 #: includes/class-comment-form.php:147
+#, fuzzy
 msgid "Email"
-msgstr ""
+msgstr "Email de la licence"
 
 #: includes/class-comment-form.php:149
 msgid "Website"
@@ -142,8 +95,9 @@ msgid ""
 msgstr ""
 
 #: includes/class-comment-form.php:159
+#, fuzzy
 msgid "Your email address will not be published."
-msgstr ""
+msgstr "Votre adresse email"
 
 #: includes/class-comment-form.php:160
 #, php-format
@@ -157,25 +111,27 @@ msgid "Leave a Reply"
 msgstr ""
 
 #: includes/class-comment-form.php:164
-#, php-format
+#, fuzzy, php-format
 msgid "Leave a Reply to %s"
-msgstr ""
+msgstr "%s sur %s activations restantes"
 
 #: includes/class-comment-form.php:165
 msgid "Cancel reply"
 msgstr ""
 
 #: includes/class-comment-form.php:166
+#, fuzzy
 msgid "Post Comment"
-msgstr ""
+msgstr "Prévenir le spam de commentaires"
 
 #: includes/functions.php:41 includes/functions.php:59
 msgid " Spam Comments Blocked so far by "
 msgstr ""
 
 #: includes/functions.php:43
+#, fuzzy
 msgid " version "
-msgstr ""
+msgstr "Version du logiciel"
 
 #: includes/functions.php:45
 msgid " located at "
@@ -204,4 +160,17 @@ msgid ""
 "com/shop/simple-comments/\" target=\"_blank\">Learn more</a>. <p style="
 "\"text-align:right\"><a href=\"options-general.php?"
 "page=sfw_dashboard&notice=1\">hide</a></p>"
+msgstr ""
+
+#: tl-spam-free-wordpress.php:24
+msgid " requires at least WordPress 3.5. Sorry! Click back button to continue."
+msgstr ""
+
+#: tl-spam-free-wordpress.php:93
+#, fuzzy
+msgid "Settings"
+msgstr "Paramètres globaux"
+
+#: tl-spam-free-wordpress.php:94
+msgid "Donate"
 msgstr ""

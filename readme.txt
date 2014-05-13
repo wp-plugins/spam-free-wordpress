@@ -73,7 +73,7 @@ Upgrade to [Simple Comments](https://www.toddlahman.com/shop/simple-comments/). 
 
 [Simple Comments](https://www.toddlahman.com/shop/simple-comments/) can resolve many issues that Spam Free Wordpress cannot. Simple Comments also has commercial grade spambot and hackbot protection. Experimenting with free plugins can be time consuming, but Simple Comments is available when you realize you need powerful spam protection.
 
-There is no support for this free plugin, but there is support for [Simple Comments](http://www.toddlahman.com/shop/simple-comments/).
+There is no support for this free plugin, but there is support for [Simple Comments](https://www.toddlahman.com/shop/simple-comments/).
 
 == Frequently Asked Questions ==
 

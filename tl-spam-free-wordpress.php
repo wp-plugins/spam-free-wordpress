@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Spam Free Wordpress
-Plugin URI: http://www.toddlahman.com/shop/simple-comments/
+Plugin URI: https://www.toddlahman.com/shop/simple-comments/
 Description: Comment spam blocking plugin that blocks automated spam with zero false positives.
 Version: 2.2.4
 Author: Todd Lahman, LLC
-Author URI: http://www.toddlahman.com/
+Author URI: https://www.toddlahman.com/
 License: GPLv3
 
 	Intellectual Property rights reserved by Todd Lahman, LLC as allowed by law incude,
@@ -31,7 +31,7 @@ if (!defined('SFW_BASENAME') )
 if(!defined( 'SFW_IS_ADMIN' ) )
     define( 'SFW_IS_ADMIN',  is_admin() );
 if(!defined( 'SFW_HOME_URL' ) )
-    define( 'SFW_HOME_URL',  'http://www.toddlahman.com/shop/simple-comments/' );
+    define( 'SFW_HOME_URL',  'https://www.toddlahman.com/shop/simple-comments/' );
 if(!defined( 'SFW_COUPON_TIME' ) )
     define( 'SFW_COUPON_TIME',  1375315199 ); // July 31, 2013
 

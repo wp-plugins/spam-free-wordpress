@@ -43,7 +43,7 @@ function sfw_comment_form_extra_fields() {
 		_e( ' version ', 'spam-free-wordpress' );
 		echo SFW_VERSION;
 		_e( ' located at ', 'spam-free-wordpress' );
-		echo "http://www.toddlahman.com/shop/simple-comments/ -->\n";
+		echo "https://www.toddlahman.com/shop/simple-comments/ -->\n";
 
 		if( $sfw_options['legacy_pwd'] == 'on' ) {
 		// Reader must enter this password manually on the comment form
@@ -57,7 +57,7 @@ function sfw_comment_form_extra_fields() {
 	if( $sfw_options['spam_stats'] == 'on' ) {
 		echo '<p>' . number_format_i18n( get_option('sfw_spam_hits' ) );
 		_e( ' Spam Comments Blocked so far by ', 'spam-free-wordpress' );
-		echo '<a href="http://www.toddlahman.com/shop/simple-comments/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>'."\n";
+		echo '<a href="https://www.toddlahman.com/shop/simple-comments/" title="Spam Free Wordpress" target="_blank">Spam Free Wordpress</a></p>'."\n";
 	}
 
 }
@@ -131,8 +131,8 @@ function sfw_coupon() {
 		?>
 		<div class="updated">
 			<h3><?php _e( 'Simple Comments is the pro version replacement for Spam Free Wordpress.', 'spam-free-wordpress' ); ?></h3>
-			<p><?php _e( 'Get bullet proof spam protection, more features, and support with <strong><a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank">Simples Comments</a>.', 'spam-free-wordpress' ); ?></p>
-			<p><?php _e( 'Until July 31 get <span style="border-bottom:2px solid red; padding:2px;">20% OFF</span> Simple Comments. Use COUPON CODE <span style="border:2px dashed red; padding:5px;">SFWPJUL</span>. <a href="http://www.toddlahman.com/shop/simple-comments/" target="_blank">Learn more</a>. <p style="text-align:right"><a href="options-general.php?page=sfw_dashboard&notice=1">hide</a></p>', 'spam-free-wordpress' ); ?></p>
+			<p><?php _e( 'Get bullet proof spam protection, more features, and support with <strong><a href="https://www.toddlahman.com/shop/simple-comments/" target="_blank">Simples Comments</a>.', 'spam-free-wordpress' ); ?></p>
+			<p><?php _e( 'Until July 31 get <span style="border-bottom:2px solid red; padding:2px;">20% OFF</span> Simple Comments. Use COUPON CODE <span style="border:2px dashed red; padding:5px;">SFWPJUL</span>. <a href="https://www.toddlahman.com/shop/simple-comments/" target="_blank">Learn more</a>. <p style="text-align:right"><a href="options-general.php?page=sfw_dashboard&notice=1">hide</a></p>', 'spam-free-wordpress' ); ?></p>
 		</div>
 		<?php
 	}
